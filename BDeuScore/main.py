@@ -3,8 +3,7 @@ from collections import defaultdict, Counter
 import pandas as pd
 # Output: should be natural log of BDeuScore
 class BDeuScore:
-    def __ini
-        t__(self,dataset_model, alpha):
+    def __init__(self,dataset_model, alpha):
         self.alpha = alpha
         self.dataset_model = dataset_model
         #{"age":[0,1,3],"race":[0,1,2,3]}
