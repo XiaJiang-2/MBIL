@@ -4,6 +4,10 @@ import pandas as pd
 # Output: should be natural log of BDeuScore
 class BDeuScore:
     def __init__(self,dataset_model, alpha):
+        """
+        :param dataset_model:
+        :param alpha: A parameter of Bayesian score
+        """
         self.alpha = alpha
         self.dataset_model = dataset_model
         #{"age":[0,1,3],"race":[0,1,2,3]}
