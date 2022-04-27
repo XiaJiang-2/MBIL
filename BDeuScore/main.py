@@ -1,9 +1,10 @@
 import math
 from collections import defaultdict, Counter
 import pandas as pd
-
+# Output: should be natural log of BDeuScore
 class BDeuScore:
-    def __init__(self,dataset_model, alpha):
+    def __ini
+        t__(self,dataset_model, alpha):
         self.alpha = alpha
         self.dataset_model = dataset_model
         #{"age":[0,1,3],"race":[0,1,2,3]}
@@ -38,9 +39,6 @@ class BDeuScore:
             temp_score += temptemp
             score += temp_score
             return score
-
-
-
 class Dataset:
     def __init__(self, dataset, target, subset):
         self.number_nodes = dataset.ndim
@@ -59,8 +57,6 @@ class Dataset:
 
     def get_feature_count(self, feature_name):
         return Counter(self.dataset[self.target])
-
-
 
 def readDataset(file, sep='\t'):
     dataset_df = pd.read_csv(filepath_or_buffer=file, sep=sep, lineterminator='\n')
