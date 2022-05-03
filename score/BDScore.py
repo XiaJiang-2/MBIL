@@ -15,6 +15,20 @@ class BDScore:
         self.alpha = alpha
         self.dataset_model = dataset_model
         #{"age":[0,1,3],"race":[0,1,2,3]}
+    # we will create one dataset model for each subset
+    def generate_subset(self, feature_list, subset_size):
+        def dfs(index, cur):
+            if len(cur) == subset_size:
+                result.append(cur[:])
+                return
+            for i in range(index, len(feature_list)):
+                dfs(i + 1, cur + [feature_list[i]])
+
+        index = 0
+        cur = []
+        result = []
+        dfs(index, cur)
+        return result
 
     def calculate_score(self):
         '''
@@ -27,6 +41,8 @@ class BDScore:
             :score: the score
         '''
         subset_status_map = self.dataset_model.get_subset_status()
+        subset = self.generate_subset(["A","B","C","D"], 3)
+        print(subset)
         target_status_list= self.dataset_model.get_target_status()
         unique_value_count_onefeature_map = self.dataset_model.get_feature_count(self.dataset_model.target)
         score = 0
@@ -113,6 +129,11 @@ class Dataset:
         '''
         return Counter(self.dataset[self.target])
 
+    def get_feature_list_except_target(self):
+        feature_list_without_target = self.dataset.columns.remove(self.target)
+        return feature_list_without_target
+
+
 def readDataset(file, sep='\t'):
     '''
     A function to read the dataset according to the input directory of this dataset
@@ -148,5 +169,6 @@ if __name__ == "__main__":
     dataset_model = Dataset(dataset,target,subset)
     score = BDScore(dataset_model,alpha)
     res = score.calculate_score()
+
 
     print(res)
