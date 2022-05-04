@@ -1,9 +1,14 @@
+import collections
 import math
 from collections import defaultdict, Counter
 import pandas as pd
 # Output: should be natural log of score
+
+
+
+
 class BDScore:
-    def __init__(self,dataset_model, alpha):
+    def __init__(self,dataset_input_directory, alpha, target, subset_size):
         '''
         init function of BDeuScore class
 
@@ -13,10 +18,36 @@ class BDScore:
 
         '''
         self.alpha = alpha
-        self.dataset_model = dataset_model
-        #{"age":[0,1,3],"race":[0,1,2,3]}
-    # we will create one dataset model for each subset
+        self.dataset_input_directory = dataset_input_directory
+        self.target = target
+        self.subset_size = subset_size
+
+
+    def readDataset(self, file, sep='\t'):
+        '''
+        A function to read the dataset according to the input directory of this dataset
+
+        Parameters:
+            :file: input directory of this dataset
+            :sep: the delimiter of the dataset like '\t' or ','
+
+        Returns:
+            :dataset: the dataset with data frame format in python
+        '''
+        dataset_df = pd.read_csv(filepath_or_buffer=file, sep=sep, lineterminator='\n')
+        # dataset_df = pd.read_csv(file, sep)
+        # dataset_df = dataset_df.iloc[:, :-1]
+        dataset_df = dataset_df.iloc[:,:-1]
+        print(f'dataset directory: {file}')
+        print(f'dataset shape: {dataset_df.shape}')
+        print(f'dataset dimension: {dataset_df.ndim}')
+
+        return dataset_df
+
+
     def generate_subset(self, feature_list, subset_size):
+        if subset_size == 0:
+            return [[]]
         def dfs(index, cur):
             if len(cur) == subset_size:
                 result.append(cur[:])
@@ -40,37 +71,96 @@ class BDScore:
         Returns:
             :score: the score
         '''
-        subset_status_map = self.dataset_model.get_subset_status()
-        subset = self.generate_subset(["A","B","C","D"], 3)
+        dataset_df = self.readDataset(self.dataset_input_directory)
+        feature_list_excepet_target = list(dataset_df.columns)
+        feature_list_excepet_target.remove(self.target)
+        #print(feature_list_excepet_target)
+        subset = self.generate_subset(feature_list_excepet_target, self.subset_size)
+        res = {}
         print(subset)
-        target_status_list= self.dataset_model.get_target_status()
-        unique_value_count_onefeature_map = self.dataset_model.get_feature_count(self.dataset_model.target)
-        score = 0
-        # calculate null_score
-        if not subset_status_map:
-            q = 1
-            sijk_sum = 0
-            alphaijk = alpha / q
-            alphaijkri = alpha / (q * len(target_status_list))
-            alphaijk_lgamma = math.lgamma(alphaijk)
-            alphaijkri_lgamma = math.lgamma(alphaijkri)
-            temp_score = 0
-            temptemp = 0
-            for classifier_value in target_status_list:
-                classifier_count = unique_value_count_onefeature_map[classifier_value]
-                if classifier_count == 0:
-                    continue
-                sijk_sum += classifier_count
-                alphaijkri_sum = alphaijkri + classifier_count
-                sumri_lgamma = math.lgamma(alphaijkri_sum)
-                final_product = sumri_lgamma - alphaijkri_lgamma
-                temptemp += final_product
-            alphaijkAndSumSijk_sum = alphaijk + sijk_sum
-            alphaijkAndSumSijk_sum_lgamma = math.lgamma(alphaijkAndSumSijk_sum)
-            temp_score = alphaijk_lgamma - alphaijkAndSumSijk_sum_lgamma
-            temp_score += temptemp
-            score += temp_score
-            return score
+        for each_com in subset:
+            # print("h")
+            # print(each_com)
+            dataset_model = Dataset(dataset_df, self.target, each_com)
+            subset_status_map = dataset_model.get_subset_status()
+            target_status_list = dataset_model.get_target_status()
+            unique_value_count_onefeature_map = dataset_model.get_feature_count(dataset_model.target)
+            score = 0
+            # calculate null_score
+            if each_com:
+                q = 1
+                for key, val in subset_status_map.items():
+                    q *= len(val)
+                alphaijk = alpha / q
+                # alpha / q * r(the status of the )
+                alphaijkri = alpha / (q * len(target_status_list))
+                gammaAlphaijk = math.lgamma(alphaijk)
+                gammaAlphaijkri = math.lgamma(alphaijkri)
+                # {D:[0,1]}
+                #hash_table = collections.defaultdict(int)
+                for feature_name, val_list in subset_status_map.items():
+                    for val in val_list:
+                        sumOfSijk = 0
+                        temptemp = 0
+                        tempscore = 0
+                        for status in target_status_list:
+                            key = feature_name + str(val) + "classifier" + str(status)
+                            count = dataset_model.get_feature_count_according_target(feature_name,val,status)
+                            #print(count)
+                            if not count:
+                                continue
+                            sumOfSijk += count
+                            sumOfAalphaijkri = alphaijkri + count
+                            gammaSumri = math.lgamma(sumOfAalphaijkri)
+                            finalProduct = gammaSumri - gammaAlphaijkri
+
+                            temptemp += finalProduct
+                    # print(temptemp)
+                        sumOfAlphaAndSumSijk = alphaijk + sumOfSijk
+                        gammaSum = math.lgamma(sumOfAlphaAndSumSijk)
+                        tempscore = gammaAlphaijk - gammaSum
+                        tempscore += temptemp
+                        score += tempscore
+                print(str(each_com) + " score is " + str(score))
+            else:
+                q = 1
+                sijk_sum = 0
+                alphaijk = alpha / q
+                alphaijkri = alpha / (q * len(target_status_list))
+                gammaAlphaijk = math.lgamma(alphaijk)
+                gammaAlphaijkri = math.lgamma(alphaijkri)
+                temp_score = 0
+                temptemp = 0
+                for classifier_value in target_status_list:
+                    classifier_count = unique_value_count_onefeature_map[classifier_value]
+                    if classifier_count == 0:
+                        continue
+                    sijk_sum += classifier_count
+                    alphaijkri_sum = alphaijkri + classifier_count
+                    sumri_lgamma = math.lgamma(alphaijkri_sum)
+                    final_product = sumri_lgamma - gammaAlphaijkri
+                    temptemp += final_product
+                alphaijkAndSumSijk_sum = alphaijk + sijk_sum
+                alphaijkAndSumSijk_sum_lgamma = math.lgamma(alphaijkAndSumSijk_sum)
+                temp_score = gammaAlphaijk - alphaijkAndSumSijk_sum_lgamma
+                temp_score += temptemp
+                score += temp_score
+                print("the null score is " + str(score))
+            res[str(each_com)] = score
+        return res
+
+
+
+
+
+
+
+
+
+    # {"age":[0,1,3],"race":[0,1,2,3]}
+    # we will create one dataset model for each subset
+
+
 
 class Dataset:
     def __init__(self, dataset, target, subset):
@@ -129,46 +219,27 @@ class Dataset:
         '''
         return Counter(self.dataset[self.target])
 
-    def get_feature_list_except_target(self):
-        feature_list_without_target = self.dataset.columns.remove(self.target)
-        return feature_list_without_target
+
+    def get_feature_count_according_target(self,feature_name, feature_value,target_value):
+        df2 = self.dataset[(self.dataset[feature_name] == int(feature_value)) & (self.dataset[self.target] == int(target_value))]
+        #print(df2)
+        return df2.shape[0]
 
 
-def readDataset(file, sep='\t'):
-    '''
-    A function to read the dataset according to the input directory of this dataset
-
-    Parameters:
-        :file: input directory of this dataset
-        :sep: the delimiter of the dataset like '\t' or ','
-
-    Returns:
-        :dataset: the dataset with data frame format in python
-    '''
-    dataset_df = pd.read_csv(filepath_or_buffer=file, sep=sep, lineterminator='\n')
-    #dataset_df = pd.read_csv(file, sep)
-    #dataset_df = dataset_df.iloc[:, :-1]
-    #dataset_df = dataset_df.iloc[:,:-1]
-    print(f'dataset directory: {file}')
-    print(f'dataset shape: {dataset_df.shape}')
-    print(f'dataset dimension: {dataset_df.ndim}')
-
-    return dataset_df
 
 
 if __name__ == "__main__":
-    #input_directory = "C:/Users/CHX37/PycharmProjects/TEST.txt"
-    input_directory = "C:/Users/CHX37/PycharmProjects/LSM-15Year.txt"
+    dataset_input_directory = "C:/Users/CHX37/PycharmProjects/TEST.txt"
+    #dataset_input_directory = "C:/Users/CHX37/PycharmProjects/LSM-15Year.txt"
     output_directory = "C:/Users/CHX37/Practice"
-    dataset = readDataset(input_directory)
-    print(dataset)
     alpha = 4
-    target = "distant_recurrence\r"
-    #target = "E"
-    subset = []
-    dataset_model = Dataset(dataset,target,subset)
-    score = BDScore(dataset_model,alpha)
+    target = "E"
+    #target = "distant_recurrence\r"
+    subset_size = 2
+    score = BDScore(dataset_input_directory, alpha, target, subset_size)
     res = score.calculate_score()
-
-
     print(res)
+
+
+
+
