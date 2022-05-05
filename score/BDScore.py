@@ -2,6 +2,7 @@ import collections
 import math
 from collections import defaultdict, Counter
 import pandas as pd
+import itertools
 # Output: should be natural log of score
 
 
@@ -35,9 +36,12 @@ class BDScore:
             :dataset: the dataset with data frame format in python
         '''
         dataset_df = pd.read_csv(filepath_or_buffer=file, sep=sep, lineterminator='\n')
+        columns_name = list(dataset_df.columns)
+        columns_name[-1] = columns_name[-1].strip()
+        dataset_df.columns = columns_name
         # dataset_df = pd.read_csv(file, sep)
         # dataset_df = dataset_df.iloc[:, :-1]
-        dataset_df = dataset_df.iloc[:,:-1]
+        #dataset_df = dataset_df.iloc[:,:-1]
         print(f'dataset directory: {file}')
         print(f'dataset shape: {dataset_df.shape}')
         print(f'dataset dimension: {dataset_df.ndim}')
@@ -73,6 +77,8 @@ class BDScore:
         '''
         dataset_df = self.readDataset(self.dataset_input_directory)
         feature_list_excepet_target = list(dataset_df.columns)
+
+        print(feature_list_excepet_target)
         feature_list_excepet_target.remove(self.target)
         #print(feature_list_excepet_target)
         subset = self.generate_subset(feature_list_excepet_target, self.subset_size)
@@ -83,6 +89,7 @@ class BDScore:
             # print(each_com)
             dataset_model = Dataset(dataset_df, self.target, each_com)
             subset_status_map = dataset_model.get_subset_status()
+            parent_set = dataset_model.get_parent(subset_status_map)
             target_status_list = dataset_model.get_target_status()
             unique_value_count_onefeature_map = dataset_model.get_feature_count(dataset_model.target)
             score = 0
@@ -98,14 +105,14 @@ class BDScore:
                 gammaAlphaijkri = math.lgamma(alphaijkri)
                 # {D:[0,1]}
                 #hash_table = collections.defaultdict(int)
-                for feature_name, val_list in subset_status_map.items():
-                    for val in val_list:
+                #parent_set = [[0,1],[]]
+                for parent in parent_set:
                         sumOfSijk = 0
                         temptemp = 0
                         tempscore = 0
-                        for status in target_status_list:
-                            key = feature_name + str(val) + "classifier" + str(status)
-                            count = dataset_model.get_feature_count_according_target(feature_name,val,status)
+                        for target_status in target_status_list:
+                            #key = feature_name + str(val) + "classifier" + str(status)
+                            count = dataset_model.get_all_count(each_com,parent,target_status)
                             #print(count)
                             if not count:
                                 continue
@@ -148,14 +155,6 @@ class BDScore:
                 print("the null score is " + str(score))
             res[str(each_com)] = score
         return res
-
-
-
-
-
-
-
-
 
     # {"age":[0,1,3],"race":[0,1,2,3]}
     # we will create one dataset model for each subset
@@ -219,6 +218,30 @@ class Dataset:
         '''
         return Counter(self.dataset[self.target])
 
+    def get_parent(self,subset_status_map):
+        #defaultdict(<class 'list'>, {'B': array([2, 3], dtype=int64), 'C': array([1, 0], dtype=int64)})
+        node_list = list(subset_status_map.values())
+        n = len(node_list)
+        for i in range(n):
+            node_list[i] = list(node_list[i])
+
+        print(node_list)
+        parent_list = list(itertools.product(*node_list))
+        print(parent_list)
+        return parent_list
+
+    def get_all_count(self,subset,parent,target_status):
+        select_df = self.dataset
+        for i in range(len(subset)):
+            select_df = select_df[(select_df[subset[i]] == int(parent[i]))]
+        select_df = select_df[(select_df[self.target] == target_status)]
+        # subset= [B,C]
+        # parent[(2,1)]
+        # target_status = 0
+        return select_df.shape[0]
+
+
+    #count = dataset_model.get_all_count(each_com, parent, target_status)
 
     def get_feature_count_according_target(self,feature_name, feature_value,target_value):
         df2 = self.dataset[(self.dataset[feature_name] == int(feature_value)) & (self.dataset[self.target] == int(target_value))]
@@ -235,10 +258,12 @@ if __name__ == "__main__":
     alpha = 4
     target = "E"
     #target = "distant_recurrence\r"
-    subset_size = 2
-    score = BDScore(dataset_input_directory, alpha, target, subset_size)
-    res = score.calculate_score()
-    print(res)
+    subset_size_list = [2]
+    #subset_size = 2
+    for subset_size in subset_size_list:
+        score = BDScore(dataset_input_directory, alpha, target, subset_size)
+        res = score.calculate_score()
+        print(res)
 
 
 
