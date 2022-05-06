@@ -5,8 +5,13 @@ import pandas as pd
 import itertools
 # Output: should be natural log of score
 
-
-
+# example dataset E is the target
+# B C D	E
+# 2	1 0	0
+# 3	0 1	1
+# 3	0 1	1
+# 3	0 1	1
+# 2	1 2	0
 
 class BDScore:
     def __init__(self,dataset_input_directory, alpha, target, subset_size):
@@ -219,6 +224,16 @@ class Dataset:
         return Counter(self.dataset[self.target])
 
     def get_parent(self,subset_status_map):
+        '''
+        A function to get all the possible parent based on the current dataset
+
+        Parameters:
+           :self: the instance of dataset class
+           :subset_status_map: a map that the key is the name of current feature and the value is the corresponding unique values of this feature
+
+        Returns:
+           :parent_list:  a list that include all possible parent combinations, when the subset_status_map is {"B":[2,3],"C":[0,1]}, the parent list will be [[0,0], [0,1], [1,0], [1,1]]
+        '''
         #defaultdict(<class 'list'>, {'B': array([2, 3], dtype=int64), 'C': array([1, 0], dtype=int64)})
         node_list = list(subset_status_map.values())
         n = len(node_list)
@@ -231,6 +246,18 @@ class Dataset:
         return parent_list
 
     def get_all_count(self,subset,parent,target_status):
+        '''
+        A function to get the count of different feature by feature name
+
+        Parameters:
+           :self: the instance of dataset class
+           :subset: the current subset like ["B","C"] or ["C","D"]
+           :parent: one of possible parents based on the current subset, if the subset is ["B","C"],B(2,3),C(0,1) the parent list will be [0,0] or [0,1] or [1,0] or [1,1]
+           :target_status: the current target status like "0" or "1"
+
+        Returns:
+           :count: it will be the int the represents how many records you have in the dataset based these conditions
+        '''
         select_df = self.dataset
         for i in range(len(subset)):
             select_df = select_df[(select_df[subset[i]] == int(parent[i]))]
@@ -258,7 +285,7 @@ if __name__ == "__main__":
     alpha = 4
     target = "E"
     #target = "distant_recurrence\r"
-    subset_size_list = [2]
+    subset_size_list = [3]
     #subset_size = 2
     for subset_size in subset_size_list:
         score = BDScore(dataset_input_directory, alpha, target, subset_size)
