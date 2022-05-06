@@ -1,5 +1,5 @@
 # pandoc generated pdf
-*.pdf
+#*.pdf
 .DS_STORE
 new_sk_model.csv
 # zip files
