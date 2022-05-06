@@ -31,11 +31,12 @@ class BDScore:
 
     def readDataset(self, file, sep='\t'):
         '''
+        Def
         A function to read the dataset according to the input directory of this dataset
 
         Parameters:
             :file: input directory of this dataset
-            :sep: the delimiter of the dataset like '\t' or ','
+            :sep: the delimiter of the dataset like '\t' or ',', default='\t'
 
         Returns:
             :dataset: the dataset with data frame format in python
@@ -301,13 +302,13 @@ class Dataset:
 
 
 if __name__ == "__main__":
-    dataset_input_directory = "C:/Users/CHX37/PycharmProjects/TEST.txt"
+    dataset_input_directory = "../datasets/TEST.txt"
     #dataset_input_directory = "C:/Users/CHX37/PycharmProjects/LSM-15Year.txt"
     output_directory = "C:/Users/CHX37/Practice"
     alpha = 4
     target = "E"
     #target = "distant_recurrence\r"
-    subset_size_list = [3]
+    subset_size_list = [0,1,2,3]
     #subset_size = 2
     for subset_size in subset_size_list:
         score = BDScore(dataset_input_directory, alpha, target, subset_size)
