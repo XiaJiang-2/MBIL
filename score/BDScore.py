@@ -55,6 +55,16 @@ class BDScore:
 
 
     def generate_subset(self, feature_list, subset_size):
+        '''
+        A function to generate all posiible subset according to the subset_size
+
+        Parameters:
+            :feature_list: the list that includes all features in the dataset, it will be ["B", "C", "D"] based on example dataset
+            :subset_size: the size of the subset you want to generate
+
+        Returns:
+            :list: a list that include all possible subset, if the subset_size == 2, it will be ["B", "C"], ["B", "D"], ["C", "D"]]
+        '''
         if subset_size == 0:
             return [[]]
         def dfs(index, cur):
@@ -247,7 +257,7 @@ class Dataset:
 
     def get_all_count(self,subset,parent,target_status):
         '''
-        A function to get the count of different feature by feature name
+        A function to get the count of records according to current subset and parent set
 
         Parameters:
            :self: the instance of dataset class
@@ -271,6 +281,18 @@ class Dataset:
     #count = dataset_model.get_all_count(each_com, parent, target_status)
 
     def get_feature_count_according_target(self,feature_name, feature_value,target_value):
+        '''
+        A function to get the count of different feature by feature name and feature value
+
+        Parameters:
+           :self: the instance of dataset class
+           :feature_name: the name of current feature like "B"
+           :feature_value: one feature name will have different values, for feature "B", it includes "2" or "3"
+           :target_value: the current target value like "0" or "1"
+
+        Returns:
+           :count: it will be the int the represents how many records you have according to the specific condition for the input
+        '''
         df2 = self.dataset[(self.dataset[feature_name] == int(feature_value)) & (self.dataset[self.target] == int(target_value))]
         #print(df2)
         return df2.shape[0]
