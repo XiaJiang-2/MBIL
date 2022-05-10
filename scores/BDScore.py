@@ -81,6 +81,55 @@ class BDScore:
         dfs(index, cur)
         return result
 
+    def calculate_information_gain(self, ig_size):
+        dataset_df = self.readDataset(self.dataset_input_directory)
+        m = dataset_df.shape[0]
+        feature_list_excepet_target = list(dataset_df.columns)
+        res = {}
+
+        print(feature_list_excepet_target)
+        feature_list_excepet_target.remove(self.target)
+        subset = self.generate_subset(feature_list_excepet_target, ig_size)
+
+        for each_com in subset:
+            score = 0
+
+            if len(each_com) == 0:
+                score = 1
+            else:
+                dataset_model = Dataset(dataset_df, self.target, each_com)
+                subset_status_map = dataset_model.get_subset_status()
+                parent_set = dataset_model.get_parent(subset_status_map)
+                target_status_list = dataset_model.get_target_status()
+                unique_value_count_onefeature_map = dataset_model.get_feature_count(dataset_model.target)
+                jointCounts = [] * len(target_status_list)
+                classifierProbabilities = [] * len(target_status_list)
+
+                for parent in parent_set:
+                    sumCounts = 0
+                    i = 0
+                    for target_status in target_status_list:
+                        count = dataset_model.get_all_count(each_com, parent, target_status)
+                        jointCounts[i] = count
+                        sumCounts += jointCounts[i]
+                        i += 1
+                    if sumCounts == 0:
+                        continue
+                    parentCountProb = sumCounts / m
+                    for k in range(len(target_status_list)):
+                        jointCount = jointCounts[k]
+                        if jointCount == 0:
+                            continue
+                        jointCountProb = jointCount/m
+                        logscore = jointCountProb * (math.log2(jointCountProb) - (math.log2(classifierProbabilities[k]) + math.log2(parentCountProb)))
+                        score += logscore
+            res[each_com] = score
+        return res
+                    # if count == 0:
+                    #     jointCounts[i] = 0
+                    #     i += 1
+                    #     continue
+
     def calculate_score(self):
         '''
         A function to calculate BDeuScore
@@ -174,6 +223,10 @@ class BDScore:
 
     # {"age":[0,1,3],"race":[0,1,2,3]}
     # we will create one dataset model for each subset
+
+
+
+
 
 
 
@@ -297,6 +350,9 @@ class Dataset:
         df2 = self.dataset[(self.dataset[feature_name] == int(feature_value)) & (self.dataset[self.target] == int(target_value))]
         #print(df2)
         return df2.shape[0]
+
+    def get_dataset_size(self):
+        return(self.dataset.shape)
 
 
 
