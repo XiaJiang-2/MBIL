@@ -81,7 +81,7 @@ class BDScore:
         dfs(index, cur)
         return result
 
-    def calculate_information_gain(self, ig_size):
+    def calculate_information_gain(self):
         dataset_df = self.readDataset(self.dataset_input_directory)
         m = dataset_df.shape[0]
         feature_list_excepet_target = list(dataset_df.columns)
@@ -89,7 +89,7 @@ class BDScore:
 
         print(feature_list_excepet_target)
         feature_list_excepet_target.remove(self.target)
-        subset = self.generate_subset(feature_list_excepet_target, ig_size)
+        subset = self.generate_subset(feature_list_excepet_target, self.subset_size)
 
         for each_com in subset:
             score = 0
@@ -102,13 +102,15 @@ class BDScore:
                 parent_set = dataset_model.get_parent(subset_status_map)
                 target_status_list = dataset_model.get_target_status()
                 unique_value_count_onefeature_map = dataset_model.get_feature_count(dataset_model.target)
-                jointCounts = [] * len(target_status_list)
-                classifierProbabilities = [] * len(target_status_list)
+                jointCounts = [0] * len(target_status_list)
+                classifierProbabilities = [0] * len(target_status_list)
 
                 for parent in parent_set:
                     sumCounts = 0
                     i = 0
                     for target_status in target_status_list:
+                        if classifierProbabilities[i] == 0:
+                            classifierProbabilities[i] = unique_value_count_onefeature_map[target_status] / m
                         count = dataset_model.get_all_count(each_com, parent, target_status)
                         jointCounts[i] = count
                         sumCounts += jointCounts[i]
@@ -121,9 +123,14 @@ class BDScore:
                         if jointCount == 0:
                             continue
                         jointCountProb = jointCount/m
+                        # print("jointCountProb")
+                        # print(jointCountProb)
+                        # print(classifierProbabilities)
+                        # print(classifierProbabilities[k])
+                        # print(math.log2(parentCountProb))
                         logscore = jointCountProb * (math.log2(jointCountProb) - (math.log2(classifierProbabilities[k]) + math.log2(parentCountProb)))
                         score += logscore
-            res[each_com] = score
+            res[str(each_com)] = score
         return res
                     # if count == 0:
                     #     jointCounts[i] = 0
@@ -364,11 +371,13 @@ if __name__ == "__main__":
     alpha = 4
     target = "E"
     #target = "distant_recurrence\r"
-    subset_size_list = [0,1,2,3]
+    #subset_size_list = [0,1,2,3]
+    subset_size_list = [1]
     #subset_size = 2
     for subset_size in subset_size_list:
         score = BDScore(dataset_input_directory, alpha, target, subset_size)
         res = score.calculate_score()
+        #res = score.calculate_information_gain()
         print(res)
 
 
