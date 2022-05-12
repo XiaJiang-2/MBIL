@@ -1,7 +1,8 @@
 BDScore module
 ==============
 
-.. automodule:: BDScore
+.. automodule:: BDeuScore
    :members:
    :undoc-members:
    :show-inheritance:
+   :special-members: __init__

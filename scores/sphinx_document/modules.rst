@@ -5,4 +5,4 @@ score
    :maxdepth: 4
 
    AICScore
-   BDScore
+   BDeuScore
