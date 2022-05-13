@@ -1,5 +1,5 @@
-score
-=====
+scores
+======
 
 .. toctree::
    :maxdepth: 4

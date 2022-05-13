@@ -36,7 +36,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../modules.html">score</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">scores</a></li>
 </ul>
 
         </div>
@@ -80,24 +80,25 @@
 <span class="c1"># 2	1 2	0</span>
 
 <div class="viewcode-block" id="BDeuScore"><a class="viewcode-back" href="../BDeuScore.html#BDeuScore.BDeuScore">[docs]</a><span class="k">class</span> <span class="nc">BDeuScore</span><span class="p">:</span>
-<div class="viewcode-block" id="BDeuScore.__init__"><a class="viewcode-back" href="../BDeuScore.html#BDeuScore.BDeuScore.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">dataset_input_directory</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">subset_size</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">dataset_input_directory</span><span class="o">=</span><span class="s2">&quot;../datasets/TEST.txt&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">4.0</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;distant_recurrence&quot;</span><span class="p">,</span> <span class="n">subset_size</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        init function of BDeuScore class</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            :dataset_model: instance of Dataset class which is helpful for some dataset operations</span>
+<span class="sd">        Parameter:</span>
+<span class="sd">            :dataset_input_directory: the directory of the dataset you want to use</span>
 <span class="sd">            :alpha: A parameter of Bayesian score</span>
+<span class="sd">            :target: the name of the target you want to use, the target must be included in dataset</span>
+<span class="sd">            :subset_size: the size of the subset</span>
 
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="n">alpha</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dataset_input_directory</span> <span class="o">=</span> <span class="n">dataset_input_directory</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">target</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">subset_size</span> <span class="o">=</span> <span class="n">subset_size</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subset_size</span> <span class="o">=</span> <span class="n">subset_size</span>
 
 
 <div class="viewcode-block" id="BDeuScore.readDataset"><a class="viewcode-back" href="../BDeuScore.html#BDeuScore.BDeuScore.readDataset">[docs]</a>    <span class="k">def</span> <span class="nf">readDataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">        Def</span>
 <span class="sd">        A function to read the dataset according to the input directory of this dataset</span>
 
 <span class="sd">        Parameters:</span>
@@ -304,21 +305,19 @@
 
 
 <div class="viewcode-block" id="Dataset"><a class="viewcode-back" href="../BDeuScore.html#BDeuScore.Dataset">[docs]</a><span class="k">class</span> <span class="nc">Dataset</span><span class="p">:</span>
-<div class="viewcode-block" id="Dataset.__init__"><a class="viewcode-back" href="../BDeuScore.html#BDeuScore.Dataset.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">subset</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="s2">&quot;E&quot;</span><span class="p">,</span> <span class="n">subset</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">]):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        init function of Dataset class</span>
 
-<span class="sd">        Parameters:</span>
+<span class="sd">        Prameters:</span>
 <span class="sd">            :dataset: the return df from readDataset function</span>
 <span class="sd">            :target: the name of the classifier of the model</span>
 <span class="sd">            :subset: the name of parent node you want to use in the bayesian network</span>
-
-
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">number_nodes</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">ndim</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">subset</span> <span class="o">=</span> <span class="n">subset</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">target</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">target</span>
 
 <div class="viewcode-block" id="Dataset.get_target_status"><a class="viewcode-back" href="../BDeuScore.html#BDeuScore.Dataset.get_target_status">[docs]</a>    <span class="k">def</span> <span class="nf">get_target_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
