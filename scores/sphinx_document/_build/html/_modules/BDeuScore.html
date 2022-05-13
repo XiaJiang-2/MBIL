@@ -80,33 +80,30 @@
 <span class="c1"># 2	1 2	0</span>
 
 <div class="viewcode-block" id="BDeuScore"><a class="viewcode-back" href="../BDeuScore.html#BDeuScore.BDeuScore">[docs]</a><span class="k">class</span> <span class="nc">BDeuScore</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">dataset_input_directory</span><span class="o">=</span><span class="s2">&quot;../datasets/TEST.txt&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">4.0</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;distant_recurrence&quot;</span><span class="p">,</span> <span class="n">subset_size</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+<div class="viewcode-block" id="BDeuScore.__init__"><a class="viewcode-back" href="../BDeuScore.html#BDeuScore.BDeuScore.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">dataset_input_directory</span><span class="o">=</span><span class="s2">&quot;../datasets/TEST.txt&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">4.0</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;E&quot;</span><span class="p">,</span> <span class="n">subset_size</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        init function of BDeuScore class</span>
 
-<span class="sd">        Parameter:</span>
-<span class="sd">            :dataset_input_directory: the directory of the dataset you want to use</span>
-<span class="sd">            :alpha: A parameter of Bayesian score</span>
-<span class="sd">            :target: the name of the target you want to use, the target must be included in dataset</span>
-<span class="sd">            :subset_size: the size of the subset</span>
+<span class="sd">        :param dataset_input_directory: the directory of the dataset you want to use</span>
+<span class="sd">        :param alpha: A parameter of Bayesian score</span>
+<span class="sd">        :param target: the name of the target you want to use, the target must be included in dataset</span>
+<span class="sd">        :param subset_size: the size of the subset</span>
 
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="n">alpha</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dataset_input_directory</span> <span class="o">=</span> <span class="n">dataset_input_directory</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">target</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">subset_size</span> <span class="o">=</span> <span class="n">subset_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subset_size</span> <span class="o">=</span> <span class="n">subset_size</span></div>
 
 
 <div class="viewcode-block" id="BDeuScore.readDataset"><a class="viewcode-back" href="../BDeuScore.html#BDeuScore.BDeuScore.readDataset">[docs]</a>    <span class="k">def</span> <span class="nf">readDataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        A function to read the dataset according to the input directory of this dataset</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            :file: input directory of this dataset</span>
-<span class="sd">            :sep: the delimiter of the dataset like &#39;\t&#39; or &#39;,&#39;, default=&#39;\t&#39;</span>
+<span class="sd">        :param file: input directory of this dataset</span>
+<span class="sd">        :param sep: the delimiter of the dataset like &#39;\t&#39; or &#39;,&#39;, default=&#39;\t&#39;</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            :dataset: the dataset with data frame format in python</span>
+<span class="sd">        :return dataset: the dataset with data frame format in python</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">dataset_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filepath_or_buffer</span><span class="o">=</span><span class="n">file</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="n">sep</span><span class="p">,</span> <span class="n">lineterminator</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
         <span class="n">columns_name</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">dataset_df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
@@ -126,12 +123,10 @@
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        A function to generate all posiible subset according to the subset_size</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            :feature_list: the list that includes all features in the dataset, it will be [&quot;B&quot;, &quot;C&quot;, &quot;D&quot;] based on example dataset</span>
-<span class="sd">            :subset_size: the size of the subset you want to generate</span>
+<span class="sd">        :param feature_list: the list that includes all features in the dataset, it will be [&quot;B&quot;, &quot;C&quot;, &quot;D&quot;] based on example dataset</span>
+<span class="sd">        :param subset_size:  the size of the subset you want to generate</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            :list: a list that include all possible subset, if the subset_size == 2, it will be [&quot;B&quot;, &quot;C&quot;], [&quot;B&quot;, &quot;D&quot;], [&quot;C&quot;, &quot;D&quot;]]</span>
+<span class="sd">        :return list: a list that include all possible subset, if the subset_size == 2, it will be [&quot;B&quot;, &quot;C&quot;], [&quot;B&quot;, &quot;D&quot;], [&quot;C&quot;, &quot;D&quot;]]</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">subset_size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">[[]]</span>
@@ -208,11 +203,9 @@
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        A function to calculate BDeuScore</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            :self: instance of BDeuScore class</span>
+<span class="sd">        :param self: instance of BDeuScore class</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            :score: the score</span>
+<span class="sd">        :return score: the score</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">dataset_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">readDataset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_input_directory</span><span class="p">)</span>
         <span class="n">feature_list_excepet_target</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">dataset_df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
@@ -305,29 +298,26 @@
 
 
 <div class="viewcode-block" id="Dataset"><a class="viewcode-back" href="../BDeuScore.html#BDeuScore.Dataset">[docs]</a><span class="k">class</span> <span class="nc">Dataset</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="s2">&quot;E&quot;</span><span class="p">,</span> <span class="n">subset</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">]):</span>
+<div class="viewcode-block" id="Dataset.__init__"><a class="viewcode-back" href="../BDeuScore.html#BDeuScore.Dataset.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="s2">&quot;E&quot;</span><span class="p">,</span> <span class="n">subset</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">]):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        init function of Dataset class</span>
+<span class="sd">        :param dataset: the return df from readDataset function</span>
+<span class="sd">        :param target: the name of the classifier of the model</span>
+<span class="sd">        :param subset: the name of parent node you want to use in the bayesian network</span>
 
-<span class="sd">        Prameters:</span>
-<span class="sd">            :dataset: the return df from readDataset function</span>
-<span class="sd">            :target: the name of the classifier of the model</span>
-<span class="sd">            :subset: the name of parent node you want to use in the bayesian network</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">number_nodes</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">ndim</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">subset</span> <span class="o">=</span> <span class="n">subset</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">target</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">target</span></div>
 
 <div class="viewcode-block" id="Dataset.get_target_status"><a class="viewcode-back" href="../BDeuScore.html#BDeuScore.Dataset.get_target_status">[docs]</a>    <span class="k">def</span> <span class="nf">get_target_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        A function to get the status of classifier</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            :self: the instance of dataset class</span>
+<span class="sd">        :param self: the instance of dataset class</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            :list: A list that include all unique values of classifier</span>
+<span class="sd">        :return list: A list that include all unique values of classifier</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span></div>
 
@@ -335,11 +325,9 @@
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        A function to get the status of the feature in subset</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            :self: the instance of dataset class</span>
+<span class="sd">        :param self: the instance of dataset class</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            :map: A map include all unique values of features in subset</span>
+<span class="sd">        :return map: A map include all unique values of features in subset</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">subset_status_map</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">subset</span><span class="p">:</span>
@@ -350,12 +338,10 @@
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        A function to get the count of different feature by feature name</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            :self: the instance of dataset class</span>
-<span class="sd">            :feature_name: the name of feature you want to count</span>
+<span class="sd">        :param self: the instance of dataset class</span>
+<span class="sd">        :param feature_name: the name of feature you want to count</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            :Counter: A map that key is the different values for this feature_name and the value is the corresponding count of this value</span>
+<span class="sd">        :return Counter: A map that key is the different values for this feature_name and the value is the corresponding count of this value</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="n">Counter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">])</span></div>
 
@@ -363,12 +349,11 @@
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        A function to get all the possible parent based on the current dataset</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">           :self: the instance of dataset class</span>
-<span class="sd">           :subset_status_map: a map that the key is the name of current feature and the value is the corresponding unique values of this feature</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">           :parent_list:  a list that include all possible parent combinations, when the subset_status_map is {&quot;B&quot;:[2,3],&quot;C&quot;:[0,1]}, the parent list will be [[0,0], [0,1], [1,0], [1,1]]</span>
+<span class="sd">        :param self: the instance of dataset class</span>
+<span class="sd">        :param subset_status_map: a map that the key is the name of current feature and the value is the corresponding unique values of this feature</span>
+
+<span class="sd">        :return parent_list:  a list that include all possible parent combinations, when the subset_status_map is {&quot;B&quot;:[2,3],&quot;C&quot;:[0,1]}, the parent list will be [[0,0], [0,1], [1,0], [1,1]]</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="c1">#defaultdict(&lt;class &#39;list&#39;&gt;, {&#39;B&#39;: array([2, 3], dtype=int64), &#39;C&#39;: array([1, 0], dtype=int64)})</span>
         <span class="n">node_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">subset_status_map</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
@@ -385,14 +370,12 @@
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        A function to get the count of records according to current subset and parent set</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">           :self: the instance of dataset class</span>
-<span class="sd">           :subset: the current subset like [&quot;B&quot;,&quot;C&quot;] or [&quot;C&quot;,&quot;D&quot;]</span>
-<span class="sd">           :parent: one of possible parents based on the current subset, if the subset is [&quot;B&quot;,&quot;C&quot;],B(2,3),C(0,1) the parent list will be [0,0] or [0,1] or [1,0] or [1,1]</span>
-<span class="sd">           :target_status: the current target status like &quot;0&quot; or &quot;1&quot;</span>
+<span class="sd">        :param self: the instance of dataset class</span>
+<span class="sd">        :param subset: the current subset like [&quot;B&quot;,&quot;C&quot;] or [&quot;C&quot;,&quot;D&quot;]</span>
+<span class="sd">        :param parent: one of possible parents based on the current subset, if the subset is [&quot;B&quot;,&quot;C&quot;],B(2,3),C(0,1) the parent list will be [0,0] or [0,1] or [1,0] or [1,1]</span>
+<span class="sd">        :param target_status: the current target status like &quot;0&quot; or &quot;1&quot;</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">           :count: it will be the int the represents how many records you have in the dataset based these conditions</span>
+<span class="sd">        :return count: it will be the int the represents how many records you have in the dataset based these conditions</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">select_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">subset</span><span class="p">)):</span>
@@ -410,14 +393,13 @@
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        A function to get the count of different feature by feature name and feature value</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">           :self: the instance of dataset class</span>
-<span class="sd">           :feature_name: the name of current feature like &quot;B&quot;</span>
-<span class="sd">           :feature_value: one feature name will have different values, for feature &quot;B&quot;, it includes &quot;2&quot; or &quot;3&quot;</span>
-<span class="sd">           :target_value: the current target value like &quot;0&quot; or &quot;1&quot;</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">           :count: it will be the int the represents how many records you have according to the specific condition for the input</span>
+<span class="sd">        :param self: the instance of dataset class</span>
+<span class="sd">        :param feature_name: the name of current feature like &quot;B&quot;</span>
+<span class="sd">        :param feature_value: one feature name will have different values, for feature &quot;B&quot;, it includes &quot;2&quot; or &quot;3&quot;</span>
+<span class="sd">        :param target_value: the current target value like &quot;0&quot; or &quot;1&quot;</span>
+
+<span class="sd">        :return count: it will be the int the represents how many records you have according to the specific condition for the input</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">df2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">[</span><span class="n">feature_name</span><span class="p">]</span> <span class="o">==</span> <span class="nb">int</span><span class="p">(</span><span class="n">feature_value</span><span class="p">))</span> <span class="o">&amp;</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">]</span> <span class="o">==</span> <span class="nb">int</span><span class="p">(</span><span class="n">target_value</span><span class="p">))]</span>
         <span class="c1">#print(df2)</span>

@@ -74,8 +74,24 @@
 <span id="bdeuscore-module"></span><h1>BDeuScore module<a class="headerlink" href="#module-BDeuScore" title="Permalink to this headline"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="BDeuScore.BDeuScore">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">BDeuScore.</span></span><span class="sig-name descname"><span class="pre">BDeuScore</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_input_directory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'../datasets/TEST.txt'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'distant_recurrence'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subset_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/BDeuScore.html#BDeuScore"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BDeuScore.BDeuScore" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">BDeuScore.</span></span><span class="sig-name descname"><span class="pre">BDeuScore</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_input_directory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'../datasets/TEST.txt'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'E'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subset_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/BDeuScore.html#BDeuScore"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BDeuScore.BDeuScore" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="BDeuScore.BDeuScore.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_input_directory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'../datasets/TEST.txt'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'E'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subset_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/BDeuScore.html#BDeuScore.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BDeuScore.BDeuScore.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>init function of BDeuScore class</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset_input_directory</strong> – the directory of the dataset you want to use</p></li>
+<li><p><strong>alpha</strong> – A parameter of Bayesian score</p></li>
+<li><p><strong>target</strong> – the name of the target you want to use, the target must be included in dataset</p></li>
+<li><p><strong>subset_size</strong> – the size of the subset</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="BDeuScore.BDeuScore.calculate_information_gain">
 <span class="sig-name descname"><span class="pre">calculate_information_gain</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/BDeuScore.html#BDeuScore.calculate_information_gain"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BDeuScore.BDeuScore.calculate_information_gain" title="Permalink to this definition"></a></dt>
@@ -85,10 +101,12 @@
 <dt class="sig sig-object py" id="BDeuScore.BDeuScore.calculate_score">
 <span class="sig-name descname"><span class="pre">calculate_score</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/BDeuScore.html#BDeuScore.calculate_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BDeuScore.BDeuScore.calculate_score" title="Permalink to this definition"></a></dt>
 <dd><p>A function to calculate BDeuScore</p>
-<p>:param : self: instance of BDeuScore class</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>score: the score</p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>self</strong> – instance of BDeuScore class</p>
+</dd>
+<dt class="field-even">Return score</dt>
+<dd class="field-even"><p>the score</p>
 </dd>
 </dl>
 </dd></dl>
@@ -97,11 +115,15 @@
 <dt class="sig sig-object py" id="BDeuScore.BDeuScore.generate_subset">
 <span class="sig-name descname"><span class="pre">generate_subset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subset_size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/BDeuScore.html#BDeuScore.generate_subset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BDeuScore.BDeuScore.generate_subset" title="Permalink to this definition"></a></dt>
 <dd><p>A function to generate all posiible subset according to the subset_size</p>
-<p>:param : feature_list: the list that includes all features in the dataset, it will be [“B”, “C”, “D”] based on example dataset
-:param : subset_size: the size of the subset you want to generate</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>list: a list that include all possible subset, if the subset_size == 2, it will be [“B”, “C”], [“B”, “D”], [“C”, “D”]]</p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>feature_list</strong> – the list that includes all features in the dataset, it will be [“B”, “C”, “D”] based on example dataset</p></li>
+<li><p><strong>subset_size</strong> – the size of the subset you want to generate</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return list</dt>
+<dd class="field-even"><p>a list that include all possible subset, if the subset_size == 2, it will be [“B”, “C”], [“B”, “D”], [“C”, “D”]]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -110,11 +132,15 @@
 <dt class="sig sig-object py" id="BDeuScore.BDeuScore.readDataset">
 <span class="sig-name descname"><span class="pre">readDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'\t'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/BDeuScore.html#BDeuScore.readDataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BDeuScore.BDeuScore.readDataset" title="Permalink to this definition"></a></dt>
 <dd><p>A function to read the dataset according to the input directory of this dataset</p>
-<p>:param : file: input directory of this dataset
-:param : sep: the delimiter of the dataset like ‘   ‘ or ‘,’, default=’     ‘</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>dataset: the dataset with data frame format in python</p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file</strong> – input directory of this dataset</p></li>
+<li><p><strong>sep</strong> – the delimiter of the dataset like ‘ ‘ or ‘,’, default=’     ‘</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return dataset</dt>
+<dd class="field-even"><p>the dataset with data frame format in python</p>
 </dd>
 </dl>
 </dd></dl>
@@ -126,16 +152,29 @@
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">BDeuScore.</span></span><span class="sig-name descname"><span class="pre">Dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'E'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['B',</span> <span class="pre">'C']</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/BDeuScore.html#Dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BDeuScore.Dataset" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
+<dt class="sig sig-object py" id="BDeuScore.Dataset.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'E'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['B',</span> <span class="pre">'C']</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/BDeuScore.html#Dataset.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BDeuScore.Dataset.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>init function of Dataset class
+:param dataset: the return df from readDataset function
+:param target: the name of the classifier of the model
+:param subset: the name of parent node you want to use in the bayesian network</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="BDeuScore.Dataset.get_all_count">
 <span class="sig-name descname"><span class="pre">get_all_count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_status</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/BDeuScore.html#Dataset.get_all_count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BDeuScore.Dataset.get_all_count" title="Permalink to this definition"></a></dt>
 <dd><p>A function to get the count of records according to current subset and parent set</p>
-<p>:param : self: the instance of dataset class
-:param : subset: the current subset like [“B”,”C”] or [“C”,”D”]
-:param : parent: one of possible parents based on the current subset, if the subset is [“B”,”C”],B(2,3),C(0,1) the parent list will be [0,0] or [0,1] or [1,0] or [1,1]
-:param : target_status: the current target status like “0” or “1”</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>count: it will be the int the represents how many records you have in the dataset based these conditions</p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> – the instance of dataset class</p></li>
+<li><p><strong>subset</strong> – the current subset like [“B”,”C”] or [“C”,”D”]</p></li>
+<li><p><strong>parent</strong> – one of possible parents based on the current subset, if the subset is [“B”,”C”],B(2,3),C(0,1) the parent list will be [0,0] or [0,1] or [1,0] or [1,1]</p></li>
+<li><p><strong>target_status</strong> – the current target status like “0” or “1”</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return count</dt>
+<dd class="field-even"><p>it will be the int the represents how many records you have in the dataset based these conditions</p>
 </dd>
 </dl>
 </dd></dl>
@@ -149,11 +188,15 @@
 <dt class="sig sig-object py" id="BDeuScore.Dataset.get_feature_count">
 <span class="sig-name descname"><span class="pre">get_feature_count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/BDeuScore.html#Dataset.get_feature_count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BDeuScore.Dataset.get_feature_count" title="Permalink to this definition"></a></dt>
 <dd><p>A function to get the count of different feature by feature name</p>
-<p>:param : self: the instance of dataset class
-:param : feature_name: the name of feature you want to count</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Counter: A map that key is the different values for this feature_name and the value is the corresponding count of this value</p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> – the instance of dataset class</p></li>
+<li><p><strong>feature_name</strong> – the name of feature you want to count</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return Counter</dt>
+<dd class="field-even"><p>A map that key is the different values for this feature_name and the value is the corresponding count of this value</p>
 </dd>
 </dl>
 </dd></dl>
@@ -162,13 +205,17 @@
 <dt class="sig sig-object py" id="BDeuScore.Dataset.get_feature_count_according_target">
 <span class="sig-name descname"><span class="pre">get_feature_count_according_target</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/BDeuScore.html#Dataset.get_feature_count_according_target"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BDeuScore.Dataset.get_feature_count_according_target" title="Permalink to this definition"></a></dt>
 <dd><p>A function to get the count of different feature by feature name and feature value</p>
-<p>:param : self: the instance of dataset class
-:param : feature_name: the name of current feature like “B”
-:param : feature_value: one feature name will have different values, for feature “B”, it includes “2” or “3”
-:param : target_value: the current target value like “0” or “1”</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>count: it will be the int the represents how many records you have according to the specific condition for the input</p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> – the instance of dataset class</p></li>
+<li><p><strong>feature_name</strong> – the name of current feature like “B”</p></li>
+<li><p><strong>feature_value</strong> – one feature name will have different values, for feature “B”, it includes “2” or “3”</p></li>
+<li><p><strong>target_value</strong> – the current target value like “0” or “1”</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return count</dt>
+<dd class="field-even"><p>it will be the int the represents how many records you have according to the specific condition for the input</p>
 </dd>
 </dl>
 </dd></dl>
@@ -177,11 +224,15 @@
 <dt class="sig sig-object py" id="BDeuScore.Dataset.get_parent">
 <span class="sig-name descname"><span class="pre">get_parent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subset_status_map</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/BDeuScore.html#Dataset.get_parent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BDeuScore.Dataset.get_parent" title="Permalink to this definition"></a></dt>
 <dd><p>A function to get all the possible parent based on the current dataset</p>
-<p>:param : self: the instance of dataset class
-:param : subset_status_map: a map that the key is the name of current feature and the value is the corresponding unique values of this feature</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>parent_list:  a list that include all possible parent combinations, when the subset_status_map is {“B”:[2,3],”C”:[0,1]}, the parent list will be [[0,0], [0,1], [1,0], [1,1]]</p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> – the instance of dataset class</p></li>
+<li><p><strong>subset_status_map</strong> – a map that the key is the name of current feature and the value is the corresponding unique values of this feature</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return parent_list</dt>
+<dd class="field-even"><p>a list that include all possible parent combinations, when the subset_status_map is {“B”:[2,3],”C”:[0,1]}, the parent list will be [[0,0], [0,1], [1,0], [1,1]]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -190,10 +241,12 @@
 <dt class="sig sig-object py" id="BDeuScore.Dataset.get_subset_status">
 <span class="sig-name descname"><span class="pre">get_subset_status</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/BDeuScore.html#Dataset.get_subset_status"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BDeuScore.Dataset.get_subset_status" title="Permalink to this definition"></a></dt>
 <dd><p>A function to get the status of the feature in subset</p>
-<p>:param : self: the instance of dataset class</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>map: A map include all unique values of features in subset</p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>self</strong> – the instance of dataset class</p>
+</dd>
+<dt class="field-even">Return map</dt>
+<dd class="field-even"><p>A map include all unique values of features in subset</p>
 </dd>
 </dl>
 </dd></dl>
@@ -202,10 +255,12 @@
 <dt class="sig sig-object py" id="BDeuScore.Dataset.get_target_status">
 <span class="sig-name descname"><span class="pre">get_target_status</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/BDeuScore.html#Dataset.get_target_status"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BDeuScore.Dataset.get_target_status" title="Permalink to this definition"></a></dt>
 <dd><p>A function to get the status of classifier</p>
-<p>:param : self: the instance of dataset class</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>list: A list that include all unique values of classifier</p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>self</strong> – the instance of dataset class</p>
+</dd>
+<dt class="field-even">Return list</dt>
+<dd class="field-even"><p>A list that include all unique values of classifier</p>
 </dd>
 </dl>
 </dd></dl>
