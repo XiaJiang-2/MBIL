@@ -46,9 +46,9 @@ class BDeuScore:
         # dataset_df = pd.read_csv(file, sep)
         # dataset_df = dataset_df.iloc[:, :-1]
         #dataset_df = dataset_df.iloc[:,:-1]
-        print(f'dataset directory: {file}')
-        print(f'dataset shape: {dataset_df.shape}')
-        print(f'dataset dimension: {dataset_df.ndim}')
+        #print(f'dataset directory: {file}')
+        #print(f'dataset shape: {dataset_df.shape}')
+        #print(f'dataset dimension: {dataset_df.ndim}')
 
         return dataset_df
 
@@ -83,7 +83,7 @@ class BDeuScore:
         feature_list_excepet_target = list(dataset_df.columns)
         res = {}
 
-        print(feature_list_excepet_target)
+        #print(feature_list_excepet_target)
         feature_list_excepet_target.remove(self.target)
         subset = self.generate_subset(feature_list_excepet_target, self.subset_size)
 
@@ -105,6 +105,7 @@ class BDeuScore:
                     sumCounts = 0
                     i = 0
                     for target_status in target_status_list:
+                        #print(classifierProbabilities[i])
                         if classifierProbabilities[i] == 0:
                             classifierProbabilities[i] = unique_value_count_onefeature_map[target_status] / m
                         count = dataset_model.get_all_count(each_com, parent, target_status)
@@ -144,12 +145,12 @@ class BDeuScore:
         dataset_df = self.readDataset(self.dataset_input_directory)
         feature_list_excepet_target = list(dataset_df.columns)
 
-        print(feature_list_excepet_target)
+        #print(feature_list_excepet_target)
         feature_list_excepet_target.remove(self.target)
         #print(feature_list_excepet_target)
         subset = self.generate_subset(feature_list_excepet_target, self.subset_size)
         res = {}
-        print(subset)
+        #print(subset)
         for each_com in subset:
             # print("h")
             # print(each_com)
@@ -194,7 +195,7 @@ class BDeuScore:
                         tempscore = gammaAlphaijk - gammaSum
                         tempscore += temptemp
                         score += tempscore
-                print(str(each_com) + " score is " + str(score))
+                #print(str(each_com) + " score is " + str(score))
             else:
                 q = 1
                 sijk_sum = 0
@@ -295,9 +296,9 @@ class Dataset:
         for i in range(n):
             node_list[i] = list(node_list[i])
 
-        print(node_list)
+        #print(node_list)
         parent_list = list(itertools.product(*node_list))
-        print(parent_list)
+        #print(parent_list)
         return parent_list
 
     def get_all_count(self,subset,parent,target_status):
@@ -352,14 +353,19 @@ if __name__ == "__main__":
     alpha = 4
     target = "E"
     #target = "distant_recurrence\r"
-    #subset_size_list = [0,1,2,3]
-    subset_size_list = [1]
+    subset_size_list = [0,1,2,3]
+    #subset_size_list = [1]
     #subset_size = 2
+    res1 = []
+    res2 = []
     for subset_size in subset_size_list:
         score = BDeuScore(dataset_input_directory, alpha, target, subset_size)
-        res = score.calculate_score()
-        #res = score.calculate_information_gain()
-        print(res)
+        ir_score = score.calculate_score()
+        res1.append(ir_score)
+        ig_score = score.calculate_information_gain()
+        res2.append(ig_score)
+    print(res1)
+    print(res2)
 
 
 
