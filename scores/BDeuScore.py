@@ -77,7 +77,14 @@ class BDeuScore:
         dfs(index, cur)
         return result
 
-    def calculate_information_gain(self):
+    def calculate_information_gain(self,top = "all"):
+        '''
+        A function to calculate information gain
+
+        :param self: instance of BDeuScore class
+
+        :return score: the score
+        '''
         dataset_df = self.readDataset(self.dataset_input_directory)
         m = dataset_df.shape[0]
         feature_list_excepet_target = list(dataset_df.columns)
@@ -128,13 +135,16 @@ class BDeuScore:
                         logscore = jointCountProb * (math.log2(jointCountProb) - (math.log2(classifierProbabilities[k]) + math.log2(parentCountProb)))
                         score += logscore
             res[str(each_com)] = score
-        return res
+        if top == 'all':
+            return res
+        else:
+            return sorted(res.items(), key=lambda item: item[1], reverse=True)[:top]
                     # if count == 0:
                     #     jointCounts[i] = 0
                     #     i += 1
                     #     continue
 
-    def calculate_score(self):
+    def calculate_score(self, top = "all"):
         '''
         A function to calculate BDeuScore
 
@@ -165,9 +175,9 @@ class BDeuScore:
                 q = 1
                 for key, val in subset_status_map.items():
                     q *= len(val)
-                alphaijk = alpha / q
-                # alpha / q * r(the status of the )
-                alphaijkri = alpha / (q * len(target_status_list))
+                alphaijk =self.alpha/ q
+                #self.alpha/ q * r(the status of the )
+                alphaijkri =self.alpha/ (q * len(target_status_list))
                 gammaAlphaijk = math.lgamma(alphaijk)
                 gammaAlphaijkri = math.lgamma(alphaijkri)
                 # {D:[0,1]}
@@ -199,8 +209,8 @@ class BDeuScore:
             else:
                 q = 1
                 sijk_sum = 0
-                alphaijk = alpha / q
-                alphaijkri = alpha / (q * len(target_status_list))
+                alphaijk =self.alpha/ q
+                alphaijkri =self.alpha/ (q * len(target_status_list))
                 gammaAlphaijk = math.lgamma(alphaijk)
                 gammaAlphaijkri = math.lgamma(alphaijkri)
                 temp_score = 0
@@ -221,7 +231,10 @@ class BDeuScore:
                 score += temp_score
                 print("the null score is " + str(score))
             res[str(each_com)] = score
-        return res
+        if top == 'all':
+            return res
+        else:
+            return sorted(res.items(), key=lambda item: item[1], reverse=True)[:top]
 
     # {"age":[0,1,3],"race":[0,1,2,3]}
     # we will create one dataset model for each subset
@@ -347,25 +360,31 @@ class Dataset:
 
 
 if __name__ == "__main__":
-    dataset_input_directory = "../datasets/TEST.txt"
-    #dataset_input_directory = "C:/Users/CHX37/PycharmProjects/LSM-15Year.txt"
+    #dataset_input_directory = "../datasets/TEST.txt"
+    dataset_input_directory = "../datasets/LSM-15Year.txt"
     output_directory = "C:/Users/CHX37/Practice"
-    alpha = 4
-    target = "E"
-    #target = "distant_recurrence\r"
-    subset_size_list = [0,1,2,3]
+    #alpha = 4
+    alpha = 240
+    #target = "E"
+    target = "distant_recurrence"
+    subset_size_list = [0,1,2]
+    top = 20
     #subset_size_list = [1]
     #subset_size = 2
-    res1 = []
-    res2 = []
+    res1 = {}
+    res2 = {}
     for subset_size in subset_size_list:
         score = BDeuScore(dataset_input_directory, alpha, target, subset_size)
         ir_score = score.calculate_score()
-        res1.append(ir_score)
+        res1.update(ir_score)
+        #res1.append(ir_score)
         ig_score = score.calculate_information_gain()
-        res2.append(ig_score)
-    print(res1)
-    print(res2)
+        res2.update(ig_score)
+        #res2.append(ig_score)
+    res1_sorted = sorted(res1.items(), key=lambda item: item[1])
+    res2_sorted = sorted(res2.items(), key=lambda item: item[1])
+    print(res1_sorted[:top])
+    print(res2_sorted[:top])
 
 
 
