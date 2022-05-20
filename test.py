@@ -1,16 +1,21 @@
 from scores import BDeuScore
 
-dataset_input_directory = "datasets/TEST.txt"
-#dataset_input_directory = "datasets/LSM-15Year.txt"
-output_directory = "C:/Users/CHX37/Practice"
-alpha = 4
-#alpha = 240
-target = "E"
-#target = "distant_recurrence"
-subset_size = 2
+# dataset_input_directory = "datasets/TEST.txt"
+# output_directory = "C:/Users/CHX37/Practice"
+# alpha = 4
+# target = "E"
+# subset_size = 3
+# top = 20
+# threshold = 0.05
+
+dataset_input_directory = "datasets/LSM-15Year.txt"
+alpha = 240
+target = "distant_recurrence"
+threshold=0.05
+subset_size = 3
+
 #subset_size_list = [0, 1, 2]
-top = 20
-threshold = 0.05
+
 
 score = BDeuScore.BDeuScore(dataset_input_directory = dataset_input_directory, alpha = alpha, target = target, subset_size = subset_size)
 # ir_score = score.calculate_score(top = top)

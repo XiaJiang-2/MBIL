@@ -348,22 +348,16 @@ class BDeuScore:
             return sorted(res.items(), key=lambda item: item[1], reverse=True)[:top]
 
     def check_if_add(self, curset, threshold = 0.05):
-        # print("xu")
-        # print(curset)
         m = self.m
         target = self.target
         dataset_df = self.dataset_df
         def isExitCase(single_set,single_set_ig,curset,curset_ig):
-            # print(curset)
-            # print("h")
-            # print(single_set)
-            # print(single_set[0])
             set_minus_A = curset[:]
             set_minus_A.remove(single_set[0])
             # print(set_minus_A)
             dataset_model_withoutA = Dataset(dataset_df, target,set_minus_A)
             set_minus_A_ig = self.calculate_informationgain_each_subset(set_minus_A, dataset_model_withoutA) * m
-            set_minus_A_score = self.calculate_score_each_subset(set_minus_A, dataset_model_withoutA) * m
+            #set_minus_A_score = self.calculate_score_each_subset(set_minus_A, dataset_model_withoutA) * m
             sum_score = single_set_ig + set_minus_A_ig
             cur_is = (curset_ig - sum_score) / curset_ig
             if cur_is < self.IS:
@@ -374,7 +368,7 @@ class BDeuScore:
                 single_set = [feature]
                 dataset_model_single = Dataset(dataset_df, target, single_set)
                 single_set_ig = self.calculate_informationgain_each_subset(single_set, dataset_model_single) * m
-                single_set_score = self.calculate_score_each_subset(single_set, dataset_model_single) * m
+                #single_set_score = self.calculate_score_each_subset(single_set, dataset_model_single) * m
                 # calculate the set without the single
                 # print(curset)
 
@@ -385,11 +379,14 @@ class BDeuScore:
         self.IS = 1
         dataset_model = Dataset(self.dataset_df, self.target, curset)
         curset_ig = self.calculate_informationgain_each_subset(curset, dataset_model) * self.m
-        curset_score = self.calculate_score_each_subset(curset, dataset_model) * self.m
+        #curset_score = self.calculate_score_each_subset(curset, dataset_model) * self.m
 
         if len(curset) > 1:
             add = stillAddable(curset,curset_ig)
         # is the size of subset is greater than 3, we need to use recursive to break it into all two possible combination
+
+        # if add and len(curset) > 3:
+
         if add:
             self.interaction_strength[str(curset)] = self.IS
         return add
