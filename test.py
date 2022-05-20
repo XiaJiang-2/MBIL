@@ -1,21 +1,24 @@
 from scores import BDeuScore
 
-# dataset_input_directory = "../datasets/TEST.txt"
-dataset_input_directory = "datasets/LSM-15Year.txt"
+dataset_input_directory = "datasets/TEST.txt"
+#dataset_input_directory = "datasets/LSM-15Year.txt"
 output_directory = "C:/Users/CHX37/Practice"
-# alpha = 4
-alpha = 240
-# target = "E"
-target = "distant_recurrence"
-subset_size = 1
+alpha = 4
+#alpha = 240
+target = "E"
+#target = "distant_recurrence"
+subset_size = 2
 #subset_size_list = [0, 1, 2]
 top = 20
+threshold = 0.05
 
-score = BDeuScore.BDeuScore(dataset_input_directory, alpha, target, subset_size)
-ir_score = score.calculate_score(top = top)
-ig_score = score.calculate_information_gain(top = top)
-print(ir_score)
-print(ig_score)
+score = BDeuScore.BDeuScore(dataset_input_directory = dataset_input_directory, alpha = alpha, target = target, subset_size = subset_size)
+# ir_score = score.calculate_score(top = top)
+# ig_score = score.calculate_information_gain(top = top)
+search = score.calculate_interaction_strength(threshold = threshold)
+# print(ir_score)
+# print(ig_score)
+print(search)
 # subset_size_list = [1]
 # subset_size = 2
 # res1 = {}
