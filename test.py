@@ -1,29 +1,39 @@
 from scores import BDeuScore
 
-# dataset_input_directory = "datasets/TEST.txt"
-# output_directory = "C:/Users/CHX37/Practice"
-# alpha = 4
-# target = "E"
-# subset_size = 3
-# top = 20
-# threshold = 0.05
+dataset_input_directory = "datasets/TEST.txt"
+output_directory = "C:/Users/CHX37/Practice"
+alpha = 4
+target = "E"
+subset_size = [1,2,3]
+top = 20
+threshold = 0.05
 
-dataset_input_directory = "datasets/LSM-15Year.txt"
-alpha = 240
-target = "distant_recurrence"
-threshold=0.05
-subset_size = 3
+# dataset_input_directory = "datasets/LSM-15Year.txt"
+# alpha = 240
+# target = "distant_recurrence"
+# threshold=0.05
+# subset_size = 3
 
 #subset_size_list = [0, 1, 2]
 
 
-score = BDeuScore.BDeuScore(dataset_input_directory = dataset_input_directory, alpha = alpha, target = target, subset_size = subset_size)
-# ir_score = score.calculate_score(top = top)
-# ig_score = score.calculate_information_gain(top = top)
-search = score.calculate_interaction_strength(threshold = threshold)
+score = BDeuScore.BDeuScore(dataset_input_directory = dataset_input_directory, alpha = alpha, target = target)
+#self, threshold, max_single_predictors, max_interaction_predictors, max_size_interaction,dataset_input_directory, alpha, target):
+search = BDeuScore.Search(threshold=threshold,max_single_predictors= 20,max_interaction_predictors=20, max_size_interaction= 3, dataset_input_directory = dataset_input_directory, alpha = alpha, target = target)
+#
+# res = search.get_top_singel_predictors_score()
+res = search.get_top_interaction_predictors_score()
+print(res)
+# ir_score = score.calculate_score(top = top, subset_size = 2)
+# ig_score = score.calculate_information_gain(top = top,subset_size = 2)
+#strength_score = score.calculate_interaction_strength(threshold = threshold,subset_size = 5)
+
 # print(ir_score)
 # print(ig_score)
-print(search)
+#print(strength_score)
+# print(ir_score_2)
+# print(ir_score_1)
+# print(ir_score_3)
 # subset_size_list = [1]
 # subset_size = 2
 # res1 = {}
