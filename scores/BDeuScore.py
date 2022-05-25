@@ -3,6 +3,7 @@ import math
 from collections import defaultdict, Counter
 import pandas as pd
 import itertools
+
 # Output: should be natural log of score
 
 # example dataset E is the target
@@ -354,10 +355,85 @@ class Search:
         #return Counter(self.top_interaction_list).most_common(1)
         return Counter(interaction_res).most_common(self.max_interaction_predictors)
 
-    # def get_new_dataset_after_transform(self):
-    #     for item in self.top_single_list:
-    #         new_col = []
-    #         item_status =
+    def get_new_dataset_after_transform(self):
+        def generate_inter_list(interaction):
+            interaction = list(interaction[0][1:-1].split(", "))
+            new_col = []
+            for i in range(score.m):
+                new_val = ""
+                for item in interaction:
+                    item = item.strip("'")
+                    new_val += str(score.dataset_df[item][i])
+
+                new_col.append(new_val)
+            return new_col
+        score = BDeuScore(dataset_input_directory=self.dataset_input_directory, alpha=self.alpha, target=self.target)
+
+        #new_dataset = collections.defaultdict(list)
+        new_dataset = {}
+        for item in self.top_single_list:
+            new_col = []
+            hash_table = {}
+            i = 0
+            feature_original_list = list(score.dataset_df[item[0]])
+            for val in feature_original_list:
+                if val not in hash_table:
+                    hash_table[val] = i
+                    i += 1
+                new_col.append(hash_table[val])
+            new_dataset[item[0]] = new_col
+        #print(new_dataset)
+        for item in self.top_interaction_list:
+            new_feature_list = generate_inter_list(item)
+            new_col = []
+            hash_table = {}
+            i = 0
+            for val in new_feature_list:
+                if val not in hash_table:
+                    hash_table[val] = i
+                    i += 1
+                new_col.append(hash_table[val])
+            new_dataset[item[0]] = new_col
+        print(new_dataset)
+
+
+
+        # for item in self.top_interaction_list:
+        #     status = item[0]
+        #     status = list(status[1:-1].split(", "))
+        #     new_status = ""
+        #     print(status)
+        #     new_list = []
+        #     for item in status:
+        #         item = item.strip()
+        #         new_status += item
+        #
+        #     print(new_status)
+        #
+
+        #     dataset_model = Dataset(score.dataset_df, score.target, status)
+        #     subset_status = dataset_model.get_subset_status()
+        #     #print(subset_status)
+        #     possible_value_list = list(list(subset_status.values()))
+        #     possible_value_list.reverse()
+        #     #print(possible_value_list)
+        #     hash_table = {}
+        #     new_col = []
+        #     i = 0
+        #     for item in itertools.product(*possible_value_list):
+        #         val = str(list(reversed(item)))
+        #         if val not in hash_table:
+        #             hash_table[val] = i
+        #             i += 1
+        #         new_col.append(hash_table[val])
+        #     new_dataset[str(status)] = new_col
+        # print(new_dataset)
+            # for i in range(len(possible_value_list) -1,-1):
+
+
+
+
+
 
 
 
@@ -405,7 +481,9 @@ class Dataset:
         :return map: A map include all unique values of features in subset
         '''
         subset_status_map = defaultdict(list)
+        #print(self.subset)
         for item in self.subset:
+            item = item.strip("'")
             subset_status_map[item] = self.dataset[item].unique()
         return subset_status_map
 
