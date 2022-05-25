@@ -1,0 +1,24 @@
+B	C	D	E
+2	1	0	0
+3	1	1	1
+3	0	1	0
+3	0	1	1
+2	1	2	0
+
+If B, C, D are interacting, then we can transform them into a new feature called F, wh0ich should contain 12 different values, as mapped below:
+0: 2, 0, 0
+1: 3, 0, 0
+2: 2, 1, 0
+3: 3, 1, 0
+4: 3, 1, 1
+...
+11: 3, 1, 2
+
+Once F is created, then the dataset will look like this:
+
+B	C	D	F	E
+2	1	0	2	0
+3	1	1	4	1
+3	0	1	?	0
+3	0	1	?	1
+2	1	2	?	0
