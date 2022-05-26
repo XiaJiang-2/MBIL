@@ -367,6 +367,20 @@ class Search:
 
                 new_col.append(new_val)
             return new_col
+        def generate_new_status_dataset(newdataset):
+            newdataset_matrix = list(newdataset.values())
+            m = len(newdataset_matrix)
+            n = len(newdataset_matrix[0])
+            new_status_dataset = [[0 for _ in range(n) ] for _ in range(m)]
+            for i in range(m):
+                status_size = len(set(newdataset_matrix[i]))
+                status_set = list(set(newdataset_matrix[i]))
+                status_set_add_size = [status_size]
+                #print(status_set_add_size)
+                status_set_add_size.extend(status_set)
+                for j in range(len(status_set_add_size)):
+                    new_status_dataset[i][j] = status_set_add_size[j]
+            return new_status_dataset
         score = BDeuScore(dataset_input_directory=self.dataset_input_directory, alpha=self.alpha, target=self.target)
 
         #new_dataset = collections.defaultdict(list)
@@ -394,7 +408,10 @@ class Search:
                     i += 1
                 new_col.append(hash_table[val])
             new_dataset[item[0]] = new_col
-        print(new_dataset)
+        new_dataset[score.target] = list(score.dataset_df[score.target])
+        new_status_dataset = generate_new_status_dataset(new_dataset)
+        return [new_dataset,new_status_dataset]
+
 
 
 
