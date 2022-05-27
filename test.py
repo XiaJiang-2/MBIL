@@ -17,9 +17,9 @@ threshold = 0.05
 #subset_size_list = [0, 1, 2]
 
 
-score = BDeuScore.BDeuScore(dataset_input_directory = dataset_input_directory, alpha = alpha, target = target)
+#score = BDeuScore.BDeuScore(dataset_input_directory = dataset_input_directory, alpha = alpha, target = target)
 #self, threshold, max_single_predictors, max_interaction_predictors, max_size_interaction,dataset_input_directory, alpha, target):
-search = BDeuScore.Search(threshold=threshold,max_single_predictors= 20,max_interaction_predictors=20, max_size_interaction= 3, dataset_input_directory = dataset_input_directory, alpha = alpha, target = target)
+search = BDeuScore.Search(threshold=threshold,max_single_predictors= 20,max_interaction_predictors=20, max_size_interaction= 3,maximum_number_of_edges=7,dataset_input_directory = dataset_input_directory, alpha = alpha, target = target)
 #
 # res = search.get_top_singel_predictors_score()
 #res = search.get_top_interaction_predictors_score()

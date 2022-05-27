@@ -82,7 +82,8 @@ class BDeuScore:
         dfs(index, cur)
         return result
 
-    def calculate_informationgain_each_subset(self, subset, dataset_model):
+    def calculate_informationgain_each_subset(self, subset):
+        dataset_model = Dataset(self.dataset_df, self.target, subset)
         if len(subset) == 0:
             score = 1
         else:
@@ -143,8 +144,7 @@ class BDeuScore:
             if len(each_com) == 0:
                 score = 1
             else:
-                dataset_model = Dataset(self.dataset_df, self.target, each_com)
-                score = self.calculate_informationgain_each_subset(each_com, dataset_model)
+                score = self.calculate_informationgain_each_subset(each_com)
             res[str(each_com)] = score
 
         if top == 'all':
@@ -152,9 +152,8 @@ class BDeuScore:
         else:
             return sorted(res.items(), key=lambda item: item[1], reverse=True)[:top]
 
-
-
-    def calculate_score_each_subset(self, each_com, dataset_model):
+    def calculate_score_each_subset(self, each_com):
+        dataset_model = Dataset(self.dataset_df, self.target, each_com)
         subset_status_map = dataset_model.get_subset_status()
         parent_set = dataset_model.get_parent(subset_status_map)
         target_status_list = dataset_model.get_target_status()
@@ -242,8 +241,8 @@ class BDeuScore:
         for each_com in subset:
             # print("h")
             # print(each_com)
-            dataset_model = Dataset(self.dataset_df, self.target, each_com)
-            res[str(each_com)] = self.calculate_score_each_subset(each_com, dataset_model)
+
+            res[str(each_com)] = self.calculate_score_each_subset(each_com)
 
         if top == 'all':
             return res
@@ -258,8 +257,7 @@ class BDeuScore:
             set_minus_A = curset[:]
             set_minus_A.remove(single_set[0])
             # print(set_minus_A)
-            dataset_model_withoutA = Dataset(dataset_df, target,set_minus_A)
-            set_minus_A_ig = self.calculate_informationgain_each_subset(set_minus_A, dataset_model_withoutA) * m
+            set_minus_A_ig = self.calculate_informationgain_each_subset(set_minus_A) * m
             #set_minus_A_score = self.calculate_score_each_subset(set_minus_A, dataset_model_withoutA) * m
             sum_score = single_set_ig + set_minus_A_ig
             cur_is = (curset_ig - sum_score) / curset_ig
@@ -269,8 +267,7 @@ class BDeuScore:
         def stillAddable(curset,curset_ig):
             for feature in curset:
                 single_set = [feature]
-                dataset_model_single = Dataset(dataset_df, target, single_set)
-                single_set_ig = self.calculate_informationgain_each_subset(single_set, dataset_model_single) * m
+                single_set_ig = self.calculate_informationgain_each_subset(single_set) * m
                 #single_set_score = self.calculate_score_each_subset(single_set, dataset_model_single) * m
                 # calculate the set without the single
                 # print(curset)
@@ -280,8 +277,7 @@ class BDeuScore:
             return True
         add = False
         self.IS = 1
-        dataset_model = Dataset(self.dataset_df, self.target, curset)
-        curset_ig = self.calculate_informationgain_each_subset(curset, dataset_model) * self.m
+        curset_ig = self.calculate_informationgain_each_subset(curset) * self.m
         #curset_score = self.calculate_score_each_subset(curset, dataset_model) * self.m
 
         if len(curset) > 1:
@@ -316,25 +312,80 @@ class BDeuScore:
     # {"age":[0,1,3],"race":[0,1,2,3]}
     # we will create one dataset model for each subset
 class Search:
-    def __init__(self, threshold, max_single_predictors, max_interaction_predictors, max_size_interaction,dataset_input_directory, alpha, target):
+    def __init__(self, threshold, max_single_predictors, max_interaction_predictors, max_size_interaction,maximum_number_of_edges,dataset_input_directory, alpha, target):
         self.dataset_input_directory = dataset_input_directory
         self.alpha = alpha
         self.target = target
         self.threshold = threshold
+        self.maximum_number_of_edges = maximum_number_of_edges
         self.max_single_predictors = max_single_predictors
         self.max_interaction_predictors = max_interaction_predictors
         self.max_size_interaction = max_size_interaction
+        self.score = BDeuScore(dataset_input_directory=dataset_input_directory, alpha=alpha, target=target)
         #self.top_interaction_list = collections.OrderedDict()
         self.top_interaction_list = self.get_top_interaction_predictors_score()
         self.top_single_list = self.get_top_singel_predictors_score()
+        self.new_dataset = {}
+        self.new_status_dataset = {}
+
+
+    def detecting_true_parents(self, parent_list):
+        # parent_list will be["B", "BC" ,"BF", "DF", "CD","CF"] 0,1,2,3,4,5
+        # 1. ["BC" ,"BF", "DF", "CD","CF",0,]
+        # 2. parent_list = [1,0], i = 1, [],[]
+        def getsubsets(input ,length):
+            def dfs(input, length, start_index, acc, sol):
+                if (len(acc) == length):
+                    sol.append(acc[:])
+                    return
+                if start_index == len(input):
+                    return
+                element = input[start_index]
+                acc.append(element)
+                dfs(input, length, start_index + 1, acc, sol)
+                acc.remove(element)
+                dfs(input, length, start_index + 1, acc,sol)
+            res = []
+            dfs(input, length, 0, [], res)
+            return res
+
+
+        def increaseScore(B):
+            cur_list_score = self.score.calculate_score_each_subset(B)
+            print("Score computed for set "+ str(B) +" is: "+ str(cur_list_score))
+            for item in B:
+                copy_list = B[:]
+                copy_list.remove(item)
+                if len(copy_list) == 0:
+                    print("stop")
+                new_score = self.score.calculate_score_each_subset(copy_list)
+                print("New score is " + str(copy_list) + str(new_score))
+                if new_score > cur_list_score:
+                    cur_list_score = new_score
+                    B.remove(item)
+
+        i = 0
+        while (len(parent_list) > i) and (i <= self.maximum_number_of_edges):
+            for predictor in parent_list:
+                cur_parent = parent_list
+                cur_parent = cur_parent.remove(predictor)
+                blockersofsizeI = getsubsets(cur_parent)
+                for subset in blockersofsizeI:
+                    B = []
+                    if predictor in parent_list:
+                        B = subset
+                        B.add(predictor)
+                        increaseScore(B)
+                        if predictor not in B:
+                            parent_list.remove(predictor)
+            i+=1
 
     def get_top_singel_predictors_score(self):
-        score = BDeuScore(dataset_input_directory=self.dataset_input_directory, alpha=self.alpha, target=self.target)
-        predictors_list = score.dataset_head
+        predictors_list = self.score.dataset_head
         predictors_list.remove(self.target)
-        null_score = score.calculate_score(subset_size=0, top="all").values()
+        null_score = self.score.calculate_score(subset_size=0, top="all").values()
         null_score = list(null_score)[0]
-        score_dict = score.calculate_score(subset_size=1, top="all")
+        score_dict = self.score.calculate_score(subset_size=1, top="all")
         single_res = []
 
         for key,val in score_dict.items():
@@ -344,11 +395,11 @@ class Search:
 
     def get_top_interaction_predictors_score(self):
         interaction_res = {}
-        score = BDeuScore(dataset_input_directory=self.dataset_input_directory, alpha=self.alpha, target=self.target)
+        #score = BDeuScore(dataset_input_directory=self.dataset_input_directory, alpha=self.alpha, target=self.target)
         #number_of_predictors = score.n
         for i in range(2,self.max_size_interaction + 1):
-            cur_infoGain_stren = score.calculate_interaction_strength(subset_size=i,threshold = self.threshold)
-            cur_score_dict = score.calculate_score(subset_size=i, top="all")
+            cur_infoGain_stren = self.score.calculate_interaction_strength(subset_size=i,threshold = self.threshold)
+            cur_score_dict = self.score.calculate_score(subset_size=i, top="all")
             for key,val in cur_score_dict.items():
                 if key in cur_infoGain_stren:
                     interaction_res[key] = cur_score_dict[key]
@@ -359,14 +410,15 @@ class Search:
         def generate_inter_list(interaction):
             interaction = list(interaction[0][1:-1].split(", "))
             new_col = []
-            for i in range(score.m):
+            for i in range(self.score.m):
                 new_val = ""
                 for item in interaction:
                     item = item.strip("'")
-                    new_val += str(score.dataset_df[item][i])
+                    new_val += str(self.score.dataset_df[item][i])
 
                 new_col.append(new_val)
             return new_col
+
         def generate_new_status_dataset(newdataset):
             newdataset_matrix = list(newdataset.values())
             m = len(newdataset_matrix)
@@ -381,22 +433,24 @@ class Search:
                 for j in range(len(status_set_add_size)):
                     new_status_dataset[i][j] = status_set_add_size[j]
             return new_status_dataset
-        score = BDeuScore(dataset_input_directory=self.dataset_input_directory, alpha=self.alpha, target=self.target)
+
+
+        # score = BDeuScore(dataset_input_directory=self.dataset_input_directory, alpha=self.alpha, target=self.target)
 
         #new_dataset = collections.defaultdict(list)
-        new_dataset = {}
+        #self.new_dataset = {}
         for item in self.top_single_list:
             new_col = []
             hash_table = {}
             i = 0
-            feature_original_list = list(score.dataset_df[item[0]])
+            feature_original_list = list(self.score.dataset_df[item[0]])
             for val in feature_original_list:
                 if val not in hash_table:
                     hash_table[val] = i
                     i += 1
                 new_col.append(hash_table[val])
-            new_dataset[item[0]] = new_col
-        #print(new_dataset)
+            self.new_dataset[item[0]] = new_col
+        # print(new_dataset)
         for item in self.top_interaction_list:
             new_feature_list = generate_inter_list(item)
             new_col = []
@@ -407,10 +461,12 @@ class Search:
                     hash_table[val] = i
                     i += 1
                 new_col.append(hash_table[val])
-            new_dataset[item[0]] = new_col
-        new_dataset[score.target] = list(score.dataset_df[score.target])
-        new_status_dataset = generate_new_status_dataset(new_dataset)
-        return [new_dataset,new_status_dataset]
+            self.new_dataset[item[0]] = new_col
+        self.new_dataset[self.score.target] = list(self.score.dataset_df[self.score.target])
+        self.new_status_dataset = generate_new_status_dataset(self.new_dataset)
+        print(self.new_dataset)
+        #self.detecting_true_parents()
+        return
 
 
 
