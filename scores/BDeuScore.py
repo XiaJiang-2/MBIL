@@ -329,7 +329,8 @@ class Search:
         self.new_status_dataset = {}
 
 
-    def detecting_true_parents(self, parent_list):
+    def detecting_true_parents(self, new_dataset):
+
         # parent_list will be["B", "BC" ,"BF", "DF", "CD","CF"] 0,1,2,3,4,5
         # 1. ["BC" ,"BF", "DF", "CD","CF",0,]
         # 2. parent_list = [1,0], i = 1, [],[]
@@ -464,8 +465,8 @@ class Search:
             self.new_dataset[item[0]] = new_col
         self.new_dataset[self.score.target] = list(self.score.dataset_df[self.score.target])
         self.new_status_dataset = generate_new_status_dataset(self.new_dataset)
-        print(self.new_dataset)
-        #self.detecting_true_parents()
+        #print(self.new_dataset)
+        self.detecting_true_parents(self.new_dataset)
         return
 
 

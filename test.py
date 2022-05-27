@@ -26,6 +26,8 @@ search = BDeuScore.Search(threshold=threshold,max_single_predictors= 20,max_inte
 print(search.top_single_list)
 print(search.top_interaction_list)
 search.get_new_dataset_after_transform()
+print(search.new_dataset)
+print(search.new_status_dataset)
 # ir_score = score.calculate_score(top = top, subset_size = 2)
 # ig_score = score.calculate_information_gain(top = top,subset_size = 2)
 #strength_score = score.calculate_interaction_strength(threshold = threshold,subset_size = 5)
