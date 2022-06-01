@@ -13,29 +13,12 @@ import itertools
 # 3	 0	1	1	0
 # 3	 0	1	1	1
 # 2	 1	2	2	0
-
-class BDeuScore:
-    def __init__(self,dataset_input_directory="../datasets/TEST.txt", alpha=4.0, target="E"):
-        '''
-        init function of BDeuScore class
-
-        :param dataset_input_directory: the directory of the dataset you want to use
-        :param alpha: A parameter of Bayesian score
-        :param target: the name of the target you want to use, the target must be included in dataset
-        :param subset_size: the size of the subset
-
-        '''
-        self.alpha = alpha
-        self.dataset_input_directory = dataset_input_directory
-        self.target = target
-        self.dataset_df = self.readDataset(file=dataset_input_directory, sep='\t')
-        self.dataset_head = list(self.dataset_df.columns)
-        self.m = self.dataset_df.shape[0]
-        self.n = self.dataset_df.shape[1]
-        self.interaction_strength = {}
-
-
-    def readDataset(self, file, sep='\t'):
+class ReadDataset:
+    def __init__(self, file, sep='\t'):
+        self.file = file
+        self.sep = sep
+        self.dataset_df = self.read()
+    def read(self):
         '''
         A function to read the dataset according to the input directory of this dataset
 
@@ -44,7 +27,7 @@ class BDeuScore:
 
         :return dataset: the dataset with data frame format in python
         '''
-        dataset_df = pd.read_csv(filepath_or_buffer=file, sep=sep, lineterminator='\n')
+        dataset_df = pd.read_csv(filepath_or_buffer=self.file, sep=self.sep, lineterminator='\n')
         columns_name = list(dataset_df.columns)
         columns_name[-1] = columns_name[-1].strip()
         dataset_df.columns = columns_name
@@ -56,6 +39,28 @@ class BDeuScore:
         #print(f'dataset dimension: {dataset_df.ndim}')
 
         return dataset_df
+
+class BDeuScore:
+    def __init__(self,dataset_df, alpha=4.0, target="E"):
+        '''
+        init function of BDeuScore class
+
+        :param dataset_input_directory: the dataset df you want to use
+        :param alpha: A parameter of Bayesian score
+        :param target: the name of the target you want to use, the target must be included in dataset
+        :param subset_size: the size of the subset
+
+        '''
+        self.alpha = alpha
+        self.target = target
+        self.dataset_df = dataset_df
+        self.dataset_head = list(self.dataset_df.columns)
+        self.m = self.dataset_df.shape[0]
+        self.n = self.dataset_df.shape[1]
+        self.interaction_strength = {}
+
+
+
 
 
     def generate_subset(self, feature_list, subset_size):
@@ -218,7 +223,7 @@ class BDeuScore:
             temp_score = gammaAlphaijk - alphaijkAndSumSijk_sum_lgamma
             temp_score += temptemp
             score += temp_score
-            print("the null score is " + str(score))
+            #print("the null score is " + str(score))
         return score
 
     def calculate_score(self, subset_size, top = "all"):
@@ -311,35 +316,32 @@ class BDeuScore:
 
     # {"age":[0,1,3],"race":[0,1,2,3]}
     # we will create one dataset model for each subset
-class Search:
-    def __init__(self, threshold, max_single_predictors, max_interaction_predictors, max_size_interaction,maximum_number_of_edges,dataset_input_directory, alpha, target):
-        self.dataset_input_directory = dataset_input_directory
-        self.alpha = alpha
+class TrueParents:
+    def __init__(self, new_dataset,alpha,target,maximum_number_of_edges):
+        self.new_dataset = new_dataset
+        self.parent_list = list(self.new_dataset.columns)
         self.target = target
-        self.threshold = threshold
+        self.alpha = alpha
+        self.parent_list.remove(self.target)
+        self.score = BDeuScore(dataset_df=self.new_dataset, alpha=self.alpha, target=self.target)
         self.maximum_number_of_edges = maximum_number_of_edges
-        self.max_single_predictors = max_single_predictors
-        self.max_interaction_predictors = max_interaction_predictors
-        self.max_size_interaction = max_size_interaction
-        self.score = BDeuScore(dataset_input_directory=dataset_input_directory, alpha=alpha, target=target)
-        #self.top_interaction_list = collections.OrderedDict()
-        self.top_interaction_list = self.get_top_interaction_predictors_score()
-        self.top_single_list = self.get_top_singel_predictors_score()
-        self.new_dataset = {}
-        self.new_status_dataset = {}
+        self.true_parents = self.detecting_true_parents()
 
 
-    def detecting_true_parents(self, new_dataset):
-
-        # parent_list will be["B", "BC" ,"BF", "DF", "CD","CF"] 0,1,2,3,4,5
+    def detecting_true_parents(self):
+        # parent_list will be B  ['B', 'C']  ['B', 'F']  ['C', 'D']  ['D', 'F']  ['C', 'F']  E
         # 1. ["BC" ,"BF", "DF", "CD","CF",0,]
         # 2. parent_list = [1,0], i = 1, [],[]
+        # print(new_dataset)
+        # parent_list = list(new_dataset.columns)
+        # print(parent_list)
         def getsubsets(input ,length):
+            #print(input)
             def dfs(input, length, start_index, acc, sol):
                 if (len(acc) == length):
                     sol.append(acc[:])
                     return
-                if start_index == len(input):
+                if input and start_index == len(input):
                     return
                 element = input[start_index]
                 acc.append(element)
@@ -350,12 +352,13 @@ class Search:
             dfs(input, length, 0, [], res)
             return res
 
-
-        def increaseScore(B):
-            cur_list_score = self.score.calculate_score_each_subset(B)
+        def increaseScore(input):
+            index = -1
+            cur_list_score = self.score.calculate_score_each_subset(input)
             print("Score computed for set "+ str(B) +" is: "+ str(cur_list_score))
-            for item in B:
-                copy_list = B[:]
+            list_B = input[:]
+            for item in list_B:
+                copy_list = list_B[:]
                 copy_list.remove(item)
                 if len(copy_list) == 0:
                     print("stop")
@@ -363,23 +366,51 @@ class Search:
                 print("New score is " + str(copy_list) + str(new_score))
                 if new_score > cur_list_score:
                     cur_list_score = new_score
-                    B.remove(item)
-
+                    index = list_B.index(item)
+            if index != -1:
+                input.remove(list_B[index])
+        # parent_list =
         i = 0
-        while (len(parent_list) > i) and (i <= self.maximum_number_of_edges):
-            for predictor in parent_list:
-                cur_parent = parent_list
-                cur_parent = cur_parent.remove(predictor)
-                blockersofsizeI = getsubsets(cur_parent)
+        while (len(self.parent_list) > i) and (i <= self.maximum_number_of_edges):
+            for predictor in self.parent_list:
+                cur_parent = self.parent_list[:]
+                cur_parent.remove(predictor)
+                print("cur_parent " + str(cur_parent) +" i " + str(i))
+                blockersofsizeI = getsubsets(cur_parent,i)
+                print("blockersofsizeI " + str(blockersofsizeI))
+                #print()
                 for subset in blockersofsizeI:
                     B = []
-                    if predictor in parent_list:
-                        B = subset
-                        B.add(predictor)
+                    if predictor in self.parent_list:
+                        B = subset[:]
+                        #print(predictor)
+                        B.append(predictor)
                         increaseScore(B)
                         if predictor not in B:
-                            parent_list.remove(predictor)
+                            self.parent_list.remove(predictor)
             i+=1
+        print("hhhhh")
+        print(self.parent_list)
+
+    # self.detecting_true_parents(self.new_dataset)
+
+class Search:
+    # get top single predictors and top interaction predictors and transform dataset df and new_status_dataset
+    def __init__(self, threshold, max_single_predictors, max_interaction_predictors, max_size_interaction,dataset_df, alpha, target):
+        self.alpha = alpha
+        self.target = target
+        self.threshold = threshold
+        self.max_single_predictors = max_single_predictors
+        self.max_interaction_predictors = max_interaction_predictors
+        self.max_size_interaction = max_size_interaction
+        self.score = BDeuScore(dataset_df=dataset_df, alpha=alpha, target=target)
+        #self.top_interaction_list = collections.OrderedDict()
+        self.top_interaction_list = self.get_top_interaction_predictors_score()
+        self.top_single_list = self.get_top_singel_predictors_score()
+        self.new_dataset = {}
+        self.transformed_dataset = self.get_new_dataset_after_transform()
+        self.new_status_dataset = {}
+
 
     def get_top_singel_predictors_score(self):
         predictors_list = self.score.dataset_head
@@ -465,9 +496,13 @@ class Search:
             self.new_dataset[item[0]] = new_col
         self.new_dataset[self.score.target] = list(self.score.dataset_df[self.score.target])
         self.new_status_dataset = generate_new_status_dataset(self.new_dataset)
-        #print(self.new_dataset)
-        self.detecting_true_parents(self.new_dataset)
-        return
+        print(self.new_dataset)
+        self.new_dataset = pd.DataFrame(self.new_dataset)
+        # format the key from "['B','C']" to "BC"
+        # for key,val in self.new_dataset.items():
+        #     key = key[1:-1].split(',')
+        #     print(key)
+        return self.new_dataset
 
 
 
