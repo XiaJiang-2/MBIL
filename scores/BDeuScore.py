@@ -335,6 +335,9 @@ class TrueParents:
         # print(new_dataset)
         # parent_list = list(new_dataset.columns)
         # print(parent_list)
+        def iterator(parent_list):
+            for item in parent_list:
+                yield item
         def getsubsets(input ,length):
             #print(input)
             def dfs(input, length, start_index, acc, sol):
@@ -372,7 +375,8 @@ class TrueParents:
         # parent_list =
         i = 0
         while (len(self.parent_list) > i) and (i <= self.maximum_number_of_edges):
-            for predictor in self.parent_list:
+            #self.parent_list = iterator(self.parent_list)
+            for predictor in self.parent_list[:]:
                 cur_parent = self.parent_list[:]
                 cur_parent.remove(predictor)
                 print("cur_parent " + str(cur_parent) +" i " + str(i))
