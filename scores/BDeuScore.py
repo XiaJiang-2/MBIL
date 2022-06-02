@@ -7,12 +7,12 @@ import itertools
 # Output: should be natural log of score
 
 # example dataset E is the target
-# B	 C	D	F	E
-# 2	 1	0	1	0
-# 3	 1	1	2	1
-# 3	 0	1	1	0
-# 3	 0	1	1	1
-# 2	 1	2	2	0
+# B	C	D	F	E
+# 2	1	0	1	0
+# 3	1	1	2	1
+# 3	0	1	1	0
+# 3	0	1	1	1
+# 2	1	2	2	0
 class ReadDataset:
     def __init__(self, file, sep='\t'):
         self.file = file
