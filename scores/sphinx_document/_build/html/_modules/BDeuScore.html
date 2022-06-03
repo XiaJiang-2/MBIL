@@ -69,34 +69,22 @@
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span><span class="p">,</span> <span class="n">Counter</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">itertools</span>
+
 <span class="c1"># Output: should be natural log of score</span>
 
 <span class="c1"># example dataset E is the target</span>
-<span class="c1"># B C D	E</span>
-<span class="c1"># 2	1 0	0</span>
-<span class="c1"># 3	0 1	1</span>
-<span class="c1"># 3	0 1	1</span>
-<span class="c1"># 3	0 1	1</span>
-<span class="c1"># 2	1 2	0</span>
-
-<div class="viewcode-block" id="BDeuScore"><a class="viewcode-back" href="../BDeuScore.html#BDeuScore.BDeuScore">[docs]</a><span class="k">class</span> <span class="nc">BDeuScore</span><span class="p">:</span>
-<div class="viewcode-block" id="BDeuScore.__init__"><a class="viewcode-back" href="../BDeuScore.html#BDeuScore.BDeuScore.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">dataset_input_directory</span><span class="o">=</span><span class="s2">&quot;../datasets/TEST.txt&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">4.0</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;E&quot;</span><span class="p">,</span> <span class="n">subset_size</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">        init function of BDeuScore class</span>
-
-<span class="sd">        :param dataset_input_directory: the directory of the dataset you want to use</span>
-<span class="sd">        :param alpha: A parameter of Bayesian score</span>
-<span class="sd">        :param target: the name of the target you want to use, the target must be included in dataset</span>
-<span class="sd">        :param subset_size: the size of the subset</span>
-
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="n">alpha</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dataset_input_directory</span> <span class="o">=</span> <span class="n">dataset_input_directory</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">target</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">subset_size</span> <span class="o">=</span> <span class="n">subset_size</span></div>
-
-
-<div class="viewcode-block" id="BDeuScore.readDataset"><a class="viewcode-back" href="../BDeuScore.html#BDeuScore.BDeuScore.readDataset">[docs]</a>    <span class="k">def</span> <span class="nf">readDataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">):</span>
+<span class="c1"># B	C	D	F	E</span>
+<span class="c1"># 2	1	0	1	0</span>
+<span class="c1"># 3	1	1	2	1</span>
+<span class="c1"># 3	0	1	1	0</span>
+<span class="c1"># 3	0	1	1	1</span>
+<span class="c1"># 2	1	2	2	0</span>
+<div class="viewcode-block" id="ReadDataset"><a class="viewcode-back" href="../BDeuScore.html#BDeuScore.ReadDataset">[docs]</a><span class="k">class</span> <span class="nc">ReadDataset</span><span class="p">:</span>
+<div class="viewcode-block" id="ReadDataset.__init__"><a class="viewcode-back" href="../BDeuScore.html#BDeuScore.ReadDataset.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="n">file</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sep</span> <span class="o">=</span> <span class="n">sep</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataset_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">()</span></div>
+<div class="viewcode-block" id="ReadDataset.read"><a class="viewcode-back" href="../BDeuScore.html#BDeuScore.ReadDataset.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        A function to read the dataset according to the input directory of this dataset</span>
 
@@ -105,28 +93,43 @@
 
 <span class="sd">        :return dataset: the dataset with data frame format in python</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="n">dataset_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filepath_or_buffer</span><span class="o">=</span><span class="n">file</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="n">sep</span><span class="p">,</span> <span class="n">lineterminator</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">dataset_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filepath_or_buffer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sep</span><span class="p">,</span> <span class="n">lineterminator</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
         <span class="n">columns_name</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">dataset_df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
         <span class="n">columns_name</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">columns_name</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
         <span class="n">dataset_df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">columns_name</span>
-        <span class="c1"># dataset_df = pd.read_csv(file, sep)</span>
-        <span class="c1"># dataset_df = dataset_df.iloc[:, :-1]</span>
-        <span class="c1">#dataset_df = dataset_df.iloc[:,:-1]</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;dataset directory: </span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;dataset shape: </span><span class="si">{</span><span class="n">dataset_df</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;dataset dimension: </span><span class="si">{</span><span class="n">dataset_df</span><span class="o">.</span><span class="n">ndim</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">dataset_df</span></div>
+        <span class="k">return</span> <span class="n">dataset_df</span></div></div>
+
+<div class="viewcode-block" id="BDeuScore"><a class="viewcode-back" href="../BDeuScore.html#BDeuScore.BDeuScore">[docs]</a><span class="k">class</span> <span class="nc">BDeuScore</span><span class="p">:</span>
+<div class="viewcode-block" id="BDeuScore.__init__"><a class="viewcode-back" href="../BDeuScore.html#BDeuScore.BDeuScore.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">dataset_df</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">4.0</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;E&quot;</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        init function of BDeuScore class,include functions &quot;generate_subset&quot;, &quot;calculate_information_gain&quot;, &quot;calculate_score&quot; and so on.</span>
+
+<span class="sd">        :param dataset_df: the dataset df you want to use, the return object from ReadDataset class</span>
+<span class="sd">        :param alpha: A parameter of Bayesian score</span>
+<span class="sd">        :param target: the name of the target you want to use, the target must be included in dataset</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="n">alpha</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">target</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataset_df</span> <span class="o">=</span> <span class="n">dataset_df</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataset_head</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">interaction_strength</span> <span class="o">=</span> <span class="p">{}</span></div>
+
+
+
 
 
 <div class="viewcode-block" id="BDeuScore.generate_subset"><a class="viewcode-back" href="../BDeuScore.html#BDeuScore.BDeuScore.generate_subset">[docs]</a>    <span class="k">def</span> <span class="nf">generate_subset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">feature_list</span><span class="p">,</span> <span class="n">subset_size</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">        A function to generate all posiible subset according to the subset_size</span>
+<span class="sd">        A function to generate all possible subset according to the subset_size</span>
 
-<span class="sd">        :param feature_list: the list that includes all features in the dataset, it will be [&quot;B&quot;, &quot;C&quot;, &quot;D&quot;] based on example dataset</span>
+<span class="sd">        :param feature_list: the list that includes all features in the dataset, it will be [&quot;B&quot;, &quot;C&quot;, &quot;D&quot;, &quot;F&quot;] based on example dataset</span>
 <span class="sd">        :param subset_size:  the size of the subset you want to generate</span>
 
-<span class="sd">        :return list: a list that include all possible subset, if the subset_size == 2, it will be [&quot;B&quot;, &quot;C&quot;], [&quot;B&quot;, &quot;D&quot;], [&quot;C&quot;, &quot;D&quot;]]</span>
+<span class="sd">        :return list: a list that include all possible subset, if the subset_size == 2, it will be [[&quot;B&quot;, &quot;C&quot;], [&quot;B&quot;, &quot;D&quot;], [&quot;B&quot;, &quot;F&quot;], [&quot;C&quot;, &quot;D&quot;],[&quot;C&quot;, &quot;F&quot;], [&quot;D&quot;,&quot;F&quot;]]</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">subset_size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">[[]]</span>
@@ -143,63 +146,155 @@
         <span class="n">dfs</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">cur</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
-<div class="viewcode-block" id="BDeuScore.calculate_information_gain"><a class="viewcode-back" href="../BDeuScore.html#BDeuScore.BDeuScore.calculate_information_gain">[docs]</a>    <span class="k">def</span> <span class="nf">calculate_information_gain</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">dataset_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">readDataset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_input_directory</span><span class="p">)</span>
-        <span class="n">m</span> <span class="o">=</span> <span class="n">dataset_df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">feature_list_excepet_target</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">dataset_df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+<div class="viewcode-block" id="BDeuScore.calculate_informationgain_each_subset"><a class="viewcode-back" href="../BDeuScore.html#BDeuScore.BDeuScore.calculate_informationgain_each_subset">[docs]</a>    <span class="k">def</span> <span class="nf">calculate_informationgain_each_subset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subset</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        A function to calculate information gain for each_subset</span>
+
+<span class="sd">        :param subset: the specific subset, like [&quot;B&quot;, &quot;C&quot;] or [&quot;B&quot;, &quot;D&quot;] based on example dataset</span>
+
+<span class="sd">        :return float: the corresponding information gain score of this subset</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="n">dataset_model</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_df</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">,</span> <span class="n">subset</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">subset</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">score</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">score</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">subset_status_map</span> <span class="o">=</span> <span class="n">dataset_model</span><span class="o">.</span><span class="n">get_subset_status</span><span class="p">()</span>
+            <span class="n">parent_set</span> <span class="o">=</span> <span class="n">dataset_model</span><span class="o">.</span><span class="n">get_parent</span><span class="p">(</span><span class="n">subset_status_map</span><span class="p">)</span>
+            <span class="n">target_status_list</span> <span class="o">=</span> <span class="n">dataset_model</span><span class="o">.</span><span class="n">get_target_status</span><span class="p">()</span>
+            <span class="n">unique_value_count_onefeature_map</span> <span class="o">=</span> <span class="n">dataset_model</span><span class="o">.</span><span class="n">get_feature_count</span><span class="p">(</span><span class="n">dataset_model</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
+            <span class="n">jointCounts</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">target_status_list</span><span class="p">)</span>
+            <span class="n">classifierProbabilities</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">target_status_list</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">parent</span> <span class="ow">in</span> <span class="n">parent_set</span><span class="p">:</span>
+                <span class="n">sumCounts</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="k">for</span> <span class="n">target_status</span> <span class="ow">in</span> <span class="n">target_status_list</span><span class="p">:</span>
+                    <span class="c1">#print(classifierProbabilities[i])</span>
+                    <span class="k">if</span> <span class="n">classifierProbabilities</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">classifierProbabilities</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">unique_value_count_onefeature_map</span><span class="p">[</span><span class="n">target_status</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">m</span>
+                    <span class="n">count</span> <span class="o">=</span> <span class="n">dataset_model</span><span class="o">.</span><span class="n">get_all_count</span><span class="p">(</span><span class="n">subset</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">target_status</span><span class="p">)</span>
+                    <span class="n">jointCounts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">count</span>
+                    <span class="n">sumCounts</span> <span class="o">+=</span> <span class="n">jointCounts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">sumCounts</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="n">parentCountProb</span> <span class="o">=</span> <span class="n">sumCounts</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">m</span>
+                <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">target_status_list</span><span class="p">)):</span>
+                    <span class="n">jointCount</span> <span class="o">=</span> <span class="n">jointCounts</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">jointCount</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="k">continue</span>
+                    <span class="n">jointCountProb</span> <span class="o">=</span> <span class="n">jointCount</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">m</span>
+                    <span class="c1"># print(&quot;jointCountProb&quot;)</span>
+                    <span class="c1"># print(jointCountProb)</span>
+                    <span class="c1"># print(classifierProbabilities)</span>
+                    <span class="c1"># print(classifierProbabilities[k])</span>
+                    <span class="c1"># print(math.log2(parentCountProb))</span>
+                    <span class="n">logscore</span> <span class="o">=</span> <span class="n">jointCountProb</span> <span class="o">*</span> <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">jointCountProb</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">classifierProbabilities</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="o">+</span> <span class="n">math</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">parentCountProb</span><span class="p">)))</span>
+                    <span class="n">score</span> <span class="o">+=</span> <span class="n">logscore</span>
+        <span class="k">return</span> <span class="n">score</span></div>
+
+<div class="viewcode-block" id="BDeuScore.calculate_information_gain"><a class="viewcode-back" href="../BDeuScore.html#BDeuScore.BDeuScore.calculate_information_gain">[docs]</a>    <span class="k">def</span> <span class="nf">calculate_information_gain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">subset_size</span><span class="p">,</span><span class="n">top</span> <span class="o">=</span> <span class="s2">&quot;all&quot;</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        A function to calculate information gain based on subset_size, it will return the score of all possible specific subset with the input subset_size</span>
+
+<span class="sd">        :param self: instance of BDeuScore class</span>
+<span class="sd">        :param subset_size: a int to represent the length of the subset</span>
+
+<span class="sd">        :return score: a hash map to store all possible result, the key is the subset and the value is the information score, like{&quot;[&#39;B&#39;,&#39;C&#39;]&quot;:0.5709505944546684, &quot;[&#39;B&#39;,&#39;D&#39;]&quot;:0.4199730940219749,...}</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="n">m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">feature_list_excepet_target</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
         <span class="n">res</span> <span class="o">=</span> <span class="p">{}</span>
 
-        <span class="nb">print</span><span class="p">(</span><span class="n">feature_list_excepet_target</span><span class="p">)</span>
+        <span class="c1">#print(feature_list_excepet_target)</span>
         <span class="n">feature_list_excepet_target</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
-        <span class="n">subset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_subset</span><span class="p">(</span><span class="n">feature_list_excepet_target</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">subset_size</span><span class="p">)</span>
+        <span class="n">subset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_subset</span><span class="p">(</span><span class="n">feature_list_excepet_target</span><span class="p">,</span> <span class="n">subset_size</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">each_com</span> <span class="ow">in</span> <span class="n">subset</span><span class="p">:</span>
             <span class="n">score</span> <span class="o">=</span> <span class="mi">0</span>
-
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">each_com</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">score</span> <span class="o">=</span> <span class="mi">1</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">dataset_model</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">dataset_df</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">,</span> <span class="n">each_com</span><span class="p">)</span>
-                <span class="n">subset_status_map</span> <span class="o">=</span> <span class="n">dataset_model</span><span class="o">.</span><span class="n">get_subset_status</span><span class="p">()</span>
-                <span class="n">parent_set</span> <span class="o">=</span> <span class="n">dataset_model</span><span class="o">.</span><span class="n">get_parent</span><span class="p">(</span><span class="n">subset_status_map</span><span class="p">)</span>
-                <span class="n">target_status_list</span> <span class="o">=</span> <span class="n">dataset_model</span><span class="o">.</span><span class="n">get_target_status</span><span class="p">()</span>
-                <span class="n">unique_value_count_onefeature_map</span> <span class="o">=</span> <span class="n">dataset_model</span><span class="o">.</span><span class="n">get_feature_count</span><span class="p">(</span><span class="n">dataset_model</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
-                <span class="n">jointCounts</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">target_status_list</span><span class="p">)</span>
-                <span class="n">classifierProbabilities</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">target_status_list</span><span class="p">)</span>
-
-                <span class="k">for</span> <span class="n">parent</span> <span class="ow">in</span> <span class="n">parent_set</span><span class="p">:</span>
-                    <span class="n">sumCounts</span> <span class="o">=</span> <span class="mi">0</span>
-                    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
-                    <span class="k">for</span> <span class="n">target_status</span> <span class="ow">in</span> <span class="n">target_status_list</span><span class="p">:</span>
-                        <span class="k">if</span> <span class="n">classifierProbabilities</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                            <span class="n">classifierProbabilities</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">unique_value_count_onefeature_map</span><span class="p">[</span><span class="n">target_status</span><span class="p">]</span> <span class="o">/</span> <span class="n">m</span>
-                        <span class="n">count</span> <span class="o">=</span> <span class="n">dataset_model</span><span class="o">.</span><span class="n">get_all_count</span><span class="p">(</span><span class="n">each_com</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">target_status</span><span class="p">)</span>
-                        <span class="n">jointCounts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">count</span>
-                        <span class="n">sumCounts</span> <span class="o">+=</span> <span class="n">jointCounts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-                        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
-                    <span class="k">if</span> <span class="n">sumCounts</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                        <span class="k">continue</span>
-                    <span class="n">parentCountProb</span> <span class="o">=</span> <span class="n">sumCounts</span> <span class="o">/</span> <span class="n">m</span>
-                    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">target_status_list</span><span class="p">)):</span>
-                        <span class="n">jointCount</span> <span class="o">=</span> <span class="n">jointCounts</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
-                        <span class="k">if</span> <span class="n">jointCount</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                            <span class="k">continue</span>
-                        <span class="n">jointCountProb</span> <span class="o">=</span> <span class="n">jointCount</span><span class="o">/</span><span class="n">m</span>
-                        <span class="c1"># print(&quot;jointCountProb&quot;)</span>
-                        <span class="c1"># print(jointCountProb)</span>
-                        <span class="c1"># print(classifierProbabilities)</span>
-                        <span class="c1"># print(classifierProbabilities[k])</span>
-                        <span class="c1"># print(math.log2(parentCountProb))</span>
-                        <span class="n">logscore</span> <span class="o">=</span> <span class="n">jointCountProb</span> <span class="o">*</span> <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">jointCountProb</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">classifierProbabilities</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="o">+</span> <span class="n">math</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">parentCountProb</span><span class="p">)))</span>
-                        <span class="n">score</span> <span class="o">+=</span> <span class="n">logscore</span>
+                <span class="n">score</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculate_informationgain_each_subset</span><span class="p">(</span><span class="n">each_com</span><span class="p">)</span>
             <span class="n">res</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">each_com</span><span class="p">)]</span> <span class="o">=</span> <span class="n">score</span>
-        <span class="k">return</span> <span class="n">res</span></div>
-                    <span class="c1"># if count == 0:</span>
-                    <span class="c1">#     jointCounts[i] = 0</span>
-                    <span class="c1">#     i += 1</span>
-                    <span class="c1">#     continue</span>
 
-<div class="viewcode-block" id="BDeuScore.calculate_score"><a class="viewcode-back" href="../BDeuScore.html#BDeuScore.BDeuScore.calculate_score">[docs]</a>    <span class="k">def</span> <span class="nf">calculate_score</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">top</span> <span class="o">==</span> <span class="s1">&#39;all&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">res</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">item</span><span class="p">:</span> <span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)[:</span><span class="n">top</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="BDeuScore.calculate_score_each_subset"><a class="viewcode-back" href="../BDeuScore.html#BDeuScore.BDeuScore.calculate_score_each_subset">[docs]</a>    <span class="k">def</span> <span class="nf">calculate_score_each_subset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">each_com</span><span class="p">):</span>
+        <span class="n">dataset_model</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_df</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">,</span> <span class="n">each_com</span><span class="p">)</span>
+        <span class="n">subset_status_map</span> <span class="o">=</span> <span class="n">dataset_model</span><span class="o">.</span><span class="n">get_subset_status</span><span class="p">()</span>
+        <span class="n">parent_set</span> <span class="o">=</span> <span class="n">dataset_model</span><span class="o">.</span><span class="n">get_parent</span><span class="p">(</span><span class="n">subset_status_map</span><span class="p">)</span>
+        <span class="n">target_status_list</span> <span class="o">=</span> <span class="n">dataset_model</span><span class="o">.</span><span class="n">get_target_status</span><span class="p">()</span>
+        <span class="n">unique_value_count_onefeature_map</span> <span class="o">=</span> <span class="n">dataset_model</span><span class="o">.</span><span class="n">get_feature_count</span><span class="p">(</span><span class="n">dataset_model</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
+        <span class="n">score</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c1"># calculate null_score</span>
+        <span class="k">if</span> <span class="n">each_com</span><span class="p">:</span>
+            <span class="n">q</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">subset_status_map</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">q</span> <span class="o">*=</span> <span class="nb">len</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+            <span class="n">alphaijk</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">/</span> <span class="n">q</span>
+            <span class="c1"># self.alpha/ q * r(the status of the )</span>
+            <span class="n">alphaijkri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">/</span> <span class="p">(</span><span class="n">q</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">target_status_list</span><span class="p">))</span>
+            <span class="n">gammaAlphaijk</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">lgamma</span><span class="p">(</span><span class="n">alphaijk</span><span class="p">)</span>
+            <span class="n">gammaAlphaijkri</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">lgamma</span><span class="p">(</span><span class="n">alphaijkri</span><span class="p">)</span>
+            <span class="c1"># {D:[0,1]}</span>
+            <span class="c1"># hash_table = collections.defaultdict(int)</span>
+            <span class="c1"># parent_set = [[0,1],[]]</span>
+            <span class="k">for</span> <span class="n">parent</span> <span class="ow">in</span> <span class="n">parent_set</span><span class="p">:</span>
+                <span class="n">sumOfSijk</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">temptemp</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">tempscore</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="k">for</span> <span class="n">target_status</span> <span class="ow">in</span> <span class="n">target_status_list</span><span class="p">:</span>
+                    <span class="c1"># key = feature_name + str(val) + &quot;classifier&quot; + str(status)</span>
+                    <span class="n">count</span> <span class="o">=</span> <span class="n">dataset_model</span><span class="o">.</span><span class="n">get_all_count</span><span class="p">(</span><span class="n">each_com</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">target_status</span><span class="p">)</span>
+                    <span class="c1"># print(count)</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">count</span><span class="p">:</span>
+                        <span class="k">continue</span>
+                    <span class="n">sumOfSijk</span> <span class="o">+=</span> <span class="n">count</span>
+                    <span class="n">sumOfAalphaijkri</span> <span class="o">=</span> <span class="n">alphaijkri</span> <span class="o">+</span> <span class="n">count</span>
+                    <span class="n">gammaSumri</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">lgamma</span><span class="p">(</span><span class="n">sumOfAalphaijkri</span><span class="p">)</span>
+                    <span class="n">finalProduct</span> <span class="o">=</span> <span class="n">gammaSumri</span> <span class="o">-</span> <span class="n">gammaAlphaijkri</span>
+
+                    <span class="n">temptemp</span> <span class="o">+=</span> <span class="n">finalProduct</span>
+                <span class="c1"># print(temptemp)</span>
+                <span class="n">sumOfAlphaAndSumSijk</span> <span class="o">=</span> <span class="n">alphaijk</span> <span class="o">+</span> <span class="n">sumOfSijk</span>
+                <span class="n">gammaSum</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">lgamma</span><span class="p">(</span><span class="n">sumOfAlphaAndSumSijk</span><span class="p">)</span>
+                <span class="n">tempscore</span> <span class="o">=</span> <span class="n">gammaAlphaijk</span> <span class="o">-</span> <span class="n">gammaSum</span>
+                <span class="n">tempscore</span> <span class="o">+=</span> <span class="n">temptemp</span>
+                <span class="n">score</span> <span class="o">+=</span> <span class="n">tempscore</span>
+            <span class="c1"># print(str(each_com) + &quot; score is &quot; + str(score))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">q</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">sijk_sum</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">alphaijk</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">/</span> <span class="n">q</span>
+            <span class="n">alphaijkri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">/</span> <span class="p">(</span><span class="n">q</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">target_status_list</span><span class="p">))</span>
+            <span class="n">gammaAlphaijk</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">lgamma</span><span class="p">(</span><span class="n">alphaijk</span><span class="p">)</span>
+            <span class="n">gammaAlphaijkri</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">lgamma</span><span class="p">(</span><span class="n">alphaijkri</span><span class="p">)</span>
+            <span class="n">temp_score</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">temptemp</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">classifier_value</span> <span class="ow">in</span> <span class="n">target_status_list</span><span class="p">:</span>
+                <span class="n">classifier_count</span> <span class="o">=</span> <span class="n">unique_value_count_onefeature_map</span><span class="p">[</span><span class="n">classifier_value</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">classifier_count</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="n">sijk_sum</span> <span class="o">+=</span> <span class="n">classifier_count</span>
+                <span class="n">alphaijkri_sum</span> <span class="o">=</span> <span class="n">alphaijkri</span> <span class="o">+</span> <span class="n">classifier_count</span>
+                <span class="n">sumri_lgamma</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">lgamma</span><span class="p">(</span><span class="n">alphaijkri_sum</span><span class="p">)</span>
+                <span class="n">final_product</span> <span class="o">=</span> <span class="n">sumri_lgamma</span> <span class="o">-</span> <span class="n">gammaAlphaijkri</span>
+                <span class="n">temptemp</span> <span class="o">+=</span> <span class="n">final_product</span>
+            <span class="n">alphaijkAndSumSijk_sum</span> <span class="o">=</span> <span class="n">alphaijk</span> <span class="o">+</span> <span class="n">sijk_sum</span>
+            <span class="n">alphaijkAndSumSijk_sum_lgamma</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">lgamma</span><span class="p">(</span><span class="n">alphaijkAndSumSijk_sum</span><span class="p">)</span>
+            <span class="n">temp_score</span> <span class="o">=</span> <span class="n">gammaAlphaijk</span> <span class="o">-</span> <span class="n">alphaijkAndSumSijk_sum_lgamma</span>
+            <span class="n">temp_score</span> <span class="o">+=</span> <span class="n">temptemp</span>
+            <span class="n">score</span> <span class="o">+=</span> <span class="n">temp_score</span>
+            <span class="c1">#print(&quot;the null score is &quot; + str(score))</span>
+        <span class="k">return</span> <span class="n">score</span></div>
+
+<div class="viewcode-block" id="BDeuScore.calculate_score"><a class="viewcode-back" href="../BDeuScore.html#BDeuScore.BDeuScore.calculate_score">[docs]</a>    <span class="k">def</span> <span class="nf">calculate_score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subset_size</span><span class="p">,</span> <span class="n">top</span> <span class="o">=</span> <span class="s2">&quot;all&quot;</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        A function to calculate BDeuScore</span>
 
@@ -207,89 +302,325 @@
 
 <span class="sd">        :return score: the score</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="n">dataset_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">readDataset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_input_directory</span><span class="p">)</span>
-        <span class="n">feature_list_excepet_target</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">dataset_df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
 
-        <span class="nb">print</span><span class="p">(</span><span class="n">feature_list_excepet_target</span><span class="p">)</span>
+        <span class="n">feature_list_excepet_target</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+
+        <span class="c1">#print(feature_list_excepet_target)</span>
         <span class="n">feature_list_excepet_target</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
         <span class="c1">#print(feature_list_excepet_target)</span>
-        <span class="n">subset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_subset</span><span class="p">(</span><span class="n">feature_list_excepet_target</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">subset_size</span><span class="p">)</span>
+        <span class="n">subset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_subset</span><span class="p">(</span><span class="n">feature_list_excepet_target</span><span class="p">,</span> <span class="n">subset_size</span><span class="p">)</span>
         <span class="n">res</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">subset</span><span class="p">)</span>
+        <span class="c1">#print(subset)</span>
         <span class="k">for</span> <span class="n">each_com</span> <span class="ow">in</span> <span class="n">subset</span><span class="p">:</span>
             <span class="c1"># print(&quot;h&quot;)</span>
             <span class="c1"># print(each_com)</span>
-            <span class="n">dataset_model</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">dataset_df</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">,</span> <span class="n">each_com</span><span class="p">)</span>
-            <span class="n">subset_status_map</span> <span class="o">=</span> <span class="n">dataset_model</span><span class="o">.</span><span class="n">get_subset_status</span><span class="p">()</span>
-            <span class="n">parent_set</span> <span class="o">=</span> <span class="n">dataset_model</span><span class="o">.</span><span class="n">get_parent</span><span class="p">(</span><span class="n">subset_status_map</span><span class="p">)</span>
-            <span class="n">target_status_list</span> <span class="o">=</span> <span class="n">dataset_model</span><span class="o">.</span><span class="n">get_target_status</span><span class="p">()</span>
-            <span class="n">unique_value_count_onefeature_map</span> <span class="o">=</span> <span class="n">dataset_model</span><span class="o">.</span><span class="n">get_feature_count</span><span class="p">(</span><span class="n">dataset_model</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
-            <span class="n">score</span> <span class="o">=</span> <span class="mi">0</span>
-            <span class="c1"># calculate null_score</span>
-            <span class="k">if</span> <span class="n">each_com</span><span class="p">:</span>
-                <span class="n">q</span> <span class="o">=</span> <span class="mi">1</span>
-                <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">subset_status_map</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                    <span class="n">q</span> <span class="o">*=</span> <span class="nb">len</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
-                <span class="n">alphaijk</span> <span class="o">=</span> <span class="n">alpha</span> <span class="o">/</span> <span class="n">q</span>
-                <span class="c1"># alpha / q * r(the status of the )</span>
-                <span class="n">alphaijkri</span> <span class="o">=</span> <span class="n">alpha</span> <span class="o">/</span> <span class="p">(</span><span class="n">q</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">target_status_list</span><span class="p">))</span>
-                <span class="n">gammaAlphaijk</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">lgamma</span><span class="p">(</span><span class="n">alphaijk</span><span class="p">)</span>
-                <span class="n">gammaAlphaijkri</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">lgamma</span><span class="p">(</span><span class="n">alphaijkri</span><span class="p">)</span>
-                <span class="c1"># {D:[0,1]}</span>
-                <span class="c1">#hash_table = collections.defaultdict(int)</span>
-                <span class="c1">#parent_set = [[0,1],[]]</span>
-                <span class="k">for</span> <span class="n">parent</span> <span class="ow">in</span> <span class="n">parent_set</span><span class="p">:</span>
-                        <span class="n">sumOfSijk</span> <span class="o">=</span> <span class="mi">0</span>
-                        <span class="n">temptemp</span> <span class="o">=</span> <span class="mi">0</span>
-                        <span class="n">tempscore</span> <span class="o">=</span> <span class="mi">0</span>
-                        <span class="k">for</span> <span class="n">target_status</span> <span class="ow">in</span> <span class="n">target_status_list</span><span class="p">:</span>
-                            <span class="c1">#key = feature_name + str(val) + &quot;classifier&quot; + str(status)</span>
-                            <span class="n">count</span> <span class="o">=</span> <span class="n">dataset_model</span><span class="o">.</span><span class="n">get_all_count</span><span class="p">(</span><span class="n">each_com</span><span class="p">,</span><span class="n">parent</span><span class="p">,</span><span class="n">target_status</span><span class="p">)</span>
-                            <span class="c1">#print(count)</span>
-                            <span class="k">if</span> <span class="ow">not</span> <span class="n">count</span><span class="p">:</span>
-                                <span class="k">continue</span>
-                            <span class="n">sumOfSijk</span> <span class="o">+=</span> <span class="n">count</span>
-                            <span class="n">sumOfAalphaijkri</span> <span class="o">=</span> <span class="n">alphaijkri</span> <span class="o">+</span> <span class="n">count</span>
-                            <span class="n">gammaSumri</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">lgamma</span><span class="p">(</span><span class="n">sumOfAalphaijkri</span><span class="p">)</span>
-                            <span class="n">finalProduct</span> <span class="o">=</span> <span class="n">gammaSumri</span> <span class="o">-</span> <span class="n">gammaAlphaijkri</span>
 
-                            <span class="n">temptemp</span> <span class="o">+=</span> <span class="n">finalProduct</span>
-                    <span class="c1"># print(temptemp)</span>
-                        <span class="n">sumOfAlphaAndSumSijk</span> <span class="o">=</span> <span class="n">alphaijk</span> <span class="o">+</span> <span class="n">sumOfSijk</span>
-                        <span class="n">gammaSum</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">lgamma</span><span class="p">(</span><span class="n">sumOfAlphaAndSumSijk</span><span class="p">)</span>
-                        <span class="n">tempscore</span> <span class="o">=</span> <span class="n">gammaAlphaijk</span> <span class="o">-</span> <span class="n">gammaSum</span>
-                        <span class="n">tempscore</span> <span class="o">+=</span> <span class="n">temptemp</span>
-                        <span class="n">score</span> <span class="o">+=</span> <span class="n">tempscore</span>
-                <span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">each_com</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; score is &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">score</span><span class="p">))</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">q</span> <span class="o">=</span> <span class="mi">1</span>
-                <span class="n">sijk_sum</span> <span class="o">=</span> <span class="mi">0</span>
-                <span class="n">alphaijk</span> <span class="o">=</span> <span class="n">alpha</span> <span class="o">/</span> <span class="n">q</span>
-                <span class="n">alphaijkri</span> <span class="o">=</span> <span class="n">alpha</span> <span class="o">/</span> <span class="p">(</span><span class="n">q</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">target_status_list</span><span class="p">))</span>
-                <span class="n">gammaAlphaijk</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">lgamma</span><span class="p">(</span><span class="n">alphaijk</span><span class="p">)</span>
-                <span class="n">gammaAlphaijkri</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">lgamma</span><span class="p">(</span><span class="n">alphaijkri</span><span class="p">)</span>
-                <span class="n">temp_score</span> <span class="o">=</span> <span class="mi">0</span>
-                <span class="n">temptemp</span> <span class="o">=</span> <span class="mi">0</span>
-                <span class="k">for</span> <span class="n">classifier_value</span> <span class="ow">in</span> <span class="n">target_status_list</span><span class="p">:</span>
-                    <span class="n">classifier_count</span> <span class="o">=</span> <span class="n">unique_value_count_onefeature_map</span><span class="p">[</span><span class="n">classifier_value</span><span class="p">]</span>
-                    <span class="k">if</span> <span class="n">classifier_count</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                        <span class="k">continue</span>
-                    <span class="n">sijk_sum</span> <span class="o">+=</span> <span class="n">classifier_count</span>
-                    <span class="n">alphaijkri_sum</span> <span class="o">=</span> <span class="n">alphaijkri</span> <span class="o">+</span> <span class="n">classifier_count</span>
-                    <span class="n">sumri_lgamma</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">lgamma</span><span class="p">(</span><span class="n">alphaijkri_sum</span><span class="p">)</span>
-                    <span class="n">final_product</span> <span class="o">=</span> <span class="n">sumri_lgamma</span> <span class="o">-</span> <span class="n">gammaAlphaijkri</span>
-                    <span class="n">temptemp</span> <span class="o">+=</span> <span class="n">final_product</span>
-                <span class="n">alphaijkAndSumSijk_sum</span> <span class="o">=</span> <span class="n">alphaijk</span> <span class="o">+</span> <span class="n">sijk_sum</span>
-                <span class="n">alphaijkAndSumSijk_sum_lgamma</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">lgamma</span><span class="p">(</span><span class="n">alphaijkAndSumSijk_sum</span><span class="p">)</span>
-                <span class="n">temp_score</span> <span class="o">=</span> <span class="n">gammaAlphaijk</span> <span class="o">-</span> <span class="n">alphaijkAndSumSijk_sum_lgamma</span>
-                <span class="n">temp_score</span> <span class="o">+=</span> <span class="n">temptemp</span>
-                <span class="n">score</span> <span class="o">+=</span> <span class="n">temp_score</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;the null score is &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">score</span><span class="p">))</span>
-            <span class="n">res</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">each_com</span><span class="p">)]</span> <span class="o">=</span> <span class="n">score</span>
-        <span class="k">return</span> <span class="n">res</span></div></div>
+            <span class="n">res</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">each_com</span><span class="p">)]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculate_score_each_subset</span><span class="p">(</span><span class="n">each_com</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">top</span> <span class="o">==</span> <span class="s1">&#39;all&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">res</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">item</span><span class="p">:</span> <span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)[:</span><span class="n">top</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="BDeuScore.check_if_add"><a class="viewcode-back" href="../BDeuScore.html#BDeuScore.BDeuScore.check_if_add">[docs]</a>    <span class="k">def</span> <span class="nf">check_if_add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">curset</span><span class="p">,</span> <span class="n">threshold</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">):</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">m</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span>
+        <span class="n">dataset_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_df</span>
+        <span class="k">def</span> <span class="nf">isExitCase</span><span class="p">(</span><span class="n">single_set</span><span class="p">,</span><span class="n">single_set_ig</span><span class="p">,</span><span class="n">curset</span><span class="p">,</span><span class="n">curset_ig</span><span class="p">):</span>
+            <span class="n">set_minus_A</span> <span class="o">=</span> <span class="n">curset</span><span class="p">[:]</span>
+            <span class="n">set_minus_A</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">single_set</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="c1"># print(set_minus_A)</span>
+            <span class="n">set_minus_A_ig</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculate_informationgain_each_subset</span><span class="p">(</span><span class="n">set_minus_A</span><span class="p">)</span> <span class="o">*</span> <span class="n">m</span>
+            <span class="c1">#set_minus_A_score = self.calculate_score_each_subset(set_minus_A, dataset_model_withoutA) * m</span>
+            <span class="n">sum_score</span> <span class="o">=</span> <span class="n">single_set_ig</span> <span class="o">+</span> <span class="n">set_minus_A_ig</span>
+            <span class="n">cur_is</span> <span class="o">=</span> <span class="p">(</span><span class="n">curset_ig</span> <span class="o">-</span> <span class="n">sum_score</span><span class="p">)</span> <span class="o">/</span> <span class="n">curset_ig</span>
+            <span class="k">if</span> <span class="n">cur_is</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">IS</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">IS</span> <span class="o">=</span> <span class="n">cur_is</span>
+            <span class="k">return</span> <span class="n">cur_is</span> <span class="o">&lt;</span> <span class="n">threshold</span>
+        <span class="k">def</span> <span class="nf">stillAddable</span><span class="p">(</span><span class="n">curset</span><span class="p">,</span><span class="n">curset_ig</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">curset</span><span class="p">:</span>
+                <span class="n">single_set</span> <span class="o">=</span> <span class="p">[</span><span class="n">feature</span><span class="p">]</span>
+                <span class="n">single_set_ig</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculate_informationgain_each_subset</span><span class="p">(</span><span class="n">single_set</span><span class="p">)</span> <span class="o">*</span> <span class="n">m</span>
+                <span class="c1">#single_set_score = self.calculate_score_each_subset(single_set, dataset_model_single) * m</span>
+                <span class="c1"># calculate the set without the single</span>
+                <span class="c1"># print(curset)</span>
+
+                <span class="k">if</span> <span class="n">isExitCase</span><span class="p">(</span><span class="n">single_set</span><span class="p">,</span><span class="n">single_set_ig</span><span class="p">,</span><span class="n">curset</span><span class="p">,</span><span class="n">curset_ig</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="n">add</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">IS</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">curset_ig</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculate_informationgain_each_subset</span><span class="p">(</span><span class="n">curset</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">m</span>
+        <span class="c1">#curset_score = self.calculate_score_each_subset(curset, dataset_model) * self.m</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">curset</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">add</span> <span class="o">=</span> <span class="n">stillAddable</span><span class="p">(</span><span class="n">curset</span><span class="p">,</span><span class="n">curset_ig</span><span class="p">)</span>
+        <span class="c1"># is the size of subset is greater than 3, we need to use recursive to break it into all two possible combination</span>
+
+        <span class="c1"># if add and len(curset) &gt; 3:</span>
+        <span class="c1">#     add =</span>
+        <span class="c1">#I need to use add = recursiveInfoSearch exhaustiveinformationgain 241</span>
+
+        <span class="k">if</span> <span class="n">add</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">interaction_strength</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">curset</span><span class="p">)]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">IS</span>
+        <span class="k">return</span> <span class="n">add</span></div>
+
+
+<div class="viewcode-block" id="BDeuScore.calculate_interaction_strength"><a class="viewcode-back" href="../BDeuScore.html#BDeuScore.BDeuScore.calculate_interaction_strength">[docs]</a>    <span class="k">def</span> <span class="nf">calculate_interaction_strength</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subset_size</span><span class="p">,</span> <span class="n">threshold</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">subset_size</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">feature_list_excepet_target</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+            <span class="n">feature_list_excepet_target</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
+            <span class="n">subsets</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_subset</span><span class="p">(</span><span class="n">feature_list_excepet_target</span><span class="p">,</span> <span class="n">subset_size</span><span class="p">)</span>
+            <span class="c1"># print(subsets)</span>
+            <span class="k">for</span> <span class="n">subset</span> <span class="ow">in</span> <span class="n">subsets</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">check_if_add</span><span class="p">(</span><span class="n">curset</span> <span class="o">=</span> <span class="n">subset</span><span class="p">,</span><span class="n">threshold</span> <span class="o">=</span> <span class="n">threshold</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">interaction_strength</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;the subset_size must greater than 2&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">[]</span></div></div>
+
+
 
     <span class="c1"># {&quot;age&quot;:[0,1,3],&quot;race&quot;:[0,1,2,3]}</span>
     <span class="c1"># we will create one dataset model for each subset</span>
+<div class="viewcode-block" id="TrueParents"><a class="viewcode-back" href="../BDeuScore.html#BDeuScore.TrueParents">[docs]</a><span class="k">class</span> <span class="nc">TrueParents</span><span class="p">:</span>
+<div class="viewcode-block" id="TrueParents.__init__"><a class="viewcode-back" href="../BDeuScore.html#BDeuScore.TrueParents.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_dataset</span><span class="p">,</span><span class="n">alpha</span><span class="p">,</span><span class="n">target</span><span class="p">,</span><span class="n">maximum_number_of_edges</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">new_dataset</span> <span class="o">=</span> <span class="n">new_dataset</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">new_dataset</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">target</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="n">alpha</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent_list</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">score</span> <span class="o">=</span> <span class="n">BDeuScore</span><span class="p">(</span><span class="n">dataset_df</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">new_dataset</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maximum_number_of_edges</span> <span class="o">=</span> <span class="n">maximum_number_of_edges</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">true_parents</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">detecting_true_parents</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="TrueParents.detecting_true_parents"><a class="viewcode-back" href="../BDeuScore.html#BDeuScore.TrueParents.detecting_true_parents">[docs]</a>    <span class="k">def</span> <span class="nf">detecting_true_parents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># parent_list will be B  [&#39;B&#39;, &#39;C&#39;]  [&#39;B&#39;, &#39;F&#39;]  [&#39;C&#39;, &#39;D&#39;]  [&#39;D&#39;, &#39;F&#39;]  [&#39;C&#39;, &#39;F&#39;]  E</span>
+        <span class="c1"># 1. [&quot;BC&quot; ,&quot;BF&quot;, &quot;DF&quot;, &quot;CD&quot;,&quot;CF&quot;,0,]</span>
+        <span class="c1"># 2. parent_list = [1,0], i = 1, [],[]</span>
+        <span class="c1"># print(new_dataset)</span>
+        <span class="c1"># parent_list = list(new_dataset.columns)</span>
+        <span class="c1"># print(parent_list)</span>
+        <span class="k">def</span> <span class="nf">iterator</span><span class="p">(</span><span class="n">parent_list</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">parent_list</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">item</span>
+        <span class="k">def</span> <span class="nf">getsubsets</span><span class="p">(</span><span class="nb">input</span> <span class="p">,</span><span class="n">length</span><span class="p">):</span>
+            <span class="c1">#print(input)</span>
+            <span class="k">def</span> <span class="nf">dfs</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">start_index</span><span class="p">,</span> <span class="n">acc</span><span class="p">,</span> <span class="n">sol</span><span class="p">):</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">acc</span><span class="p">)</span> <span class="o">==</span> <span class="n">length</span><span class="p">):</span>
+                    <span class="n">sol</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">acc</span><span class="p">[:])</span>
+                    <span class="k">return</span>
+                <span class="k">if</span> <span class="nb">input</span> <span class="ow">and</span> <span class="n">start_index</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="nb">input</span><span class="p">):</span>
+                    <span class="k">return</span>
+                <span class="n">element</span> <span class="o">=</span> <span class="nb">input</span><span class="p">[</span><span class="n">start_index</span><span class="p">]</span>
+                <span class="n">acc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+                <span class="n">dfs</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">start_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">acc</span><span class="p">,</span> <span class="n">sol</span><span class="p">)</span>
+                <span class="n">acc</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+                <span class="n">dfs</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">start_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">acc</span><span class="p">,</span><span class="n">sol</span><span class="p">)</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">dfs</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">[],</span> <span class="n">res</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">res</span>
+
+        <span class="k">def</span> <span class="nf">increaseScore</span><span class="p">(</span><span class="nb">input</span><span class="p">):</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="n">cur_list_score</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">score</span><span class="o">.</span><span class="n">calculate_score_each_subset</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Score computed for set &quot;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">B</span><span class="p">)</span> <span class="o">+</span><span class="s2">&quot; is: &quot;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">cur_list_score</span><span class="p">))</span>
+            <span class="n">list_B</span> <span class="o">=</span> <span class="nb">input</span><span class="p">[:]</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">list_B</span><span class="p">:</span>
+                <span class="n">copy_list</span> <span class="o">=</span> <span class="n">list_B</span><span class="p">[:]</span>
+                <span class="n">copy_list</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">copy_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;stop&quot;</span><span class="p">)</span>
+                <span class="n">new_score</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">score</span><span class="o">.</span><span class="n">calculate_score_each_subset</span><span class="p">(</span><span class="n">copy_list</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;New score is &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">copy_list</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">new_score</span><span class="p">))</span>
+                <span class="k">if</span> <span class="n">new_score</span> <span class="o">&gt;</span> <span class="n">cur_list_score</span><span class="p">:</span>
+                    <span class="n">cur_list_score</span> <span class="o">=</span> <span class="n">new_score</span>
+                    <span class="n">index</span> <span class="o">=</span> <span class="n">list_B</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">index</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="nb">input</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">list_B</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
+        <span class="c1"># parent_list =</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parent_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">i</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">maximum_number_of_edges</span><span class="p">):</span>
+            <span class="c1">#self.parent_list = iterator(self.parent_list)</span>
+            <span class="k">for</span> <span class="n">predictor</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent_list</span><span class="p">[:]:</span>
+                <span class="n">cur_parent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent_list</span><span class="p">[:]</span>
+                <span class="n">cur_parent</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">predictor</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;cur_parent &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">cur_parent</span><span class="p">)</span> <span class="o">+</span><span class="s2">&quot; i &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+                <span class="n">blockersofsizeI</span> <span class="o">=</span> <span class="n">getsubsets</span><span class="p">(</span><span class="n">cur_parent</span><span class="p">,</span><span class="n">i</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;blockersofsizeI &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">blockersofsizeI</span><span class="p">))</span>
+                <span class="c1">#print()</span>
+                <span class="k">for</span> <span class="n">subset</span> <span class="ow">in</span> <span class="n">blockersofsizeI</span><span class="p">:</span>
+                    <span class="n">B</span> <span class="o">=</span> <span class="p">[]</span>
+                    <span class="k">if</span> <span class="n">predictor</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent_list</span><span class="p">:</span>
+                        <span class="n">B</span> <span class="o">=</span> <span class="n">subset</span><span class="p">[:]</span>
+                        <span class="c1">#print(predictor)</span>
+                        <span class="n">B</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">predictor</span><span class="p">)</span>
+                        <span class="n">increaseScore</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">predictor</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">B</span><span class="p">:</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">parent_list</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">predictor</span><span class="p">)</span>
+            <span class="n">i</span><span class="o">+=</span><span class="mi">1</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;hhhhh&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parent_list</span><span class="p">)</span></div></div>
+
+    <span class="c1"># self.detecting_true_parents(self.new_dataset)</span>
+
+<div class="viewcode-block" id="Search"><a class="viewcode-back" href="../BDeuScore.html#BDeuScore.Search">[docs]</a><span class="k">class</span> <span class="nc">Search</span><span class="p">:</span>
+    <span class="c1"># get top single predictors and top interaction predictors and transform dataset df and new_status_dataset</span>
+<div class="viewcode-block" id="Search.__init__"><a class="viewcode-back" href="../BDeuScore.html#BDeuScore.Search.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">threshold</span><span class="p">,</span> <span class="n">max_single_predictors</span><span class="p">,</span> <span class="n">max_interaction_predictors</span><span class="p">,</span> <span class="n">max_size_interaction</span><span class="p">,</span><span class="n">dataset_df</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="n">alpha</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">target</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span> <span class="o">=</span> <span class="n">threshold</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_single_predictors</span> <span class="o">=</span> <span class="n">max_single_predictors</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_interaction_predictors</span> <span class="o">=</span> <span class="n">max_interaction_predictors</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_size_interaction</span> <span class="o">=</span> <span class="n">max_size_interaction</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">score</span> <span class="o">=</span> <span class="n">BDeuScore</span><span class="p">(</span><span class="n">dataset_df</span><span class="o">=</span><span class="n">dataset_df</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">)</span>
+        <span class="c1">#self.top_interaction_list = collections.OrderedDict()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">top_interaction_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_top_interaction_predictors_score</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">top_single_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_top_singel_predictors_score</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">new_dataset</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transformed_dataset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_new_dataset_after_transform</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">new_status_dataset</span> <span class="o">=</span> <span class="p">{}</span></div>
+
+
+<div class="viewcode-block" id="Search.get_top_singel_predictors_score"><a class="viewcode-back" href="../BDeuScore.html#BDeuScore.Search.get_top_singel_predictors_score">[docs]</a>    <span class="k">def</span> <span class="nf">get_top_singel_predictors_score</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">predictors_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">score</span><span class="o">.</span><span class="n">dataset_head</span>
+        <span class="n">predictors_list</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
+        <span class="n">null_score</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">score</span><span class="o">.</span><span class="n">calculate_score</span><span class="p">(</span><span class="n">subset_size</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+        <span class="n">null_score</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">null_score</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">score_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">score</span><span class="o">.</span><span class="n">calculate_score</span><span class="p">(</span><span class="n">subset_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">)</span>
+        <span class="n">single_res</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">val</span> <span class="ow">in</span> <span class="n">score_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">null_score</span><span class="p">:</span>
+                <span class="n">single_res</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">key</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;[]&#39;&#39;&quot;</span><span class="p">),</span><span class="n">val</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">single_res</span></div>
+
+<div class="viewcode-block" id="Search.get_top_interaction_predictors_score"><a class="viewcode-back" href="../BDeuScore.html#BDeuScore.Search.get_top_interaction_predictors_score">[docs]</a>    <span class="k">def</span> <span class="nf">get_top_interaction_predictors_score</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">interaction_res</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="c1">#score = BDeuScore(dataset_input_directory=self.dataset_input_directory, alpha=self.alpha, target=self.target)</span>
+        <span class="c1">#number_of_predictors = score.n</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">max_size_interaction</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">cur_infoGain_stren</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">score</span><span class="o">.</span><span class="n">calculate_interaction_strength</span><span class="p">(</span><span class="n">subset_size</span><span class="o">=</span><span class="n">i</span><span class="p">,</span><span class="n">threshold</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span><span class="p">)</span>
+            <span class="n">cur_score_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">score</span><span class="o">.</span><span class="n">calculate_score</span><span class="p">(</span><span class="n">subset_size</span><span class="o">=</span><span class="n">i</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">val</span> <span class="ow">in</span> <span class="n">cur_score_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">cur_infoGain_stren</span><span class="p">:</span>
+                    <span class="n">interaction_res</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">cur_score_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="c1">#return Counter(self.top_interaction_list).most_common(1)</span>
+        <span class="k">return</span> <span class="n">Counter</span><span class="p">(</span><span class="n">interaction_res</span><span class="p">)</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_interaction_predictors</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Search.get_new_dataset_after_transform"><a class="viewcode-back" href="../BDeuScore.html#BDeuScore.Search.get_new_dataset_after_transform">[docs]</a>    <span class="k">def</span> <span class="nf">get_new_dataset_after_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">generate_inter_list</span><span class="p">(</span><span class="n">interaction</span><span class="p">):</span>
+            <span class="n">interaction</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">interaction</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="p">))</span>
+            <span class="n">new_col</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">score</span><span class="o">.</span><span class="n">m</span><span class="p">):</span>
+                <span class="n">new_val</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+                <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">interaction</span><span class="p">:</span>
+                    <span class="n">item</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">)</span>
+                    <span class="n">new_val</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">score</span><span class="o">.</span><span class="n">dataset_df</span><span class="p">[</span><span class="n">item</span><span class="p">][</span><span class="n">i</span><span class="p">])</span>
+
+                <span class="n">new_col</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_val</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">new_col</span>
+
+        <span class="k">def</span> <span class="nf">generate_new_status_dataset</span><span class="p">(</span><span class="n">newdataset</span><span class="p">):</span>
+            <span class="n">newdataset_matrix</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">newdataset</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">newdataset_matrix</span><span class="p">)</span>
+            <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">newdataset_matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">new_status_dataset</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">)]</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+                <span class="n">status_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">newdataset_matrix</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+                <span class="n">status_set</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">newdataset_matrix</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+                <span class="n">status_set_add_size</span> <span class="o">=</span> <span class="p">[</span><span class="n">status_size</span><span class="p">]</span>
+                <span class="c1">#print(status_set_add_size)</span>
+                <span class="n">status_set_add_size</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">status_set</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">status_set_add_size</span><span class="p">)):</span>
+                    <span class="n">new_status_dataset</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">status_set_add_size</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">new_status_dataset</span>
+
+
+        <span class="c1"># score = BDeuScore(dataset_input_directory=self.dataset_input_directory, alpha=self.alpha, target=self.target)</span>
+
+        <span class="c1">#new_dataset = collections.defaultdict(list)</span>
+        <span class="c1">#self.new_dataset = {}</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">top_single_list</span><span class="p">:</span>
+            <span class="n">new_col</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">hash_table</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">feature_original_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">score</span><span class="o">.</span><span class="n">dataset_df</span><span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+            <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">feature_original_list</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">val</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">hash_table</span><span class="p">:</span>
+                    <span class="n">hash_table</span><span class="p">[</span><span class="n">val</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+                    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">new_col</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hash_table</span><span class="p">[</span><span class="n">val</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">new_dataset</span><span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">new_col</span>
+        <span class="c1"># print(new_dataset)</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">top_interaction_list</span><span class="p">:</span>
+            <span class="n">new_feature_list</span> <span class="o">=</span> <span class="n">generate_inter_list</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+            <span class="n">new_col</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">hash_table</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">new_feature_list</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">val</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">hash_table</span><span class="p">:</span>
+                    <span class="n">hash_table</span><span class="p">[</span><span class="n">val</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+                    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">new_col</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hash_table</span><span class="p">[</span><span class="n">val</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">new_dataset</span><span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">new_col</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">new_dataset</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">score</span><span class="o">.</span><span class="n">target</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">score</span><span class="o">.</span><span class="n">dataset_df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">score</span><span class="o">.</span><span class="n">target</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">new_status_dataset</span> <span class="o">=</span> <span class="n">generate_new_status_dataset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">new_dataset</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">new_dataset</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">new_dataset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">new_dataset</span><span class="p">)</span>
+        <span class="c1"># format the key from &quot;[&#39;B&#39;,&#39;C&#39;]&quot; to &quot;BC&quot;</span>
+        <span class="c1"># for key,val in self.new_dataset.items():</span>
+        <span class="c1">#     key = key[1:-1].split(&#39;,&#39;)</span>
+        <span class="c1">#     print(key)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">new_dataset</span></div></div>
+
+
+
+
+        <span class="c1"># for item in self.top_interaction_list:</span>
+        <span class="c1">#     status = item[0]</span>
+        <span class="c1">#     status = list(status[1:-1].split(&quot;, &quot;))</span>
+        <span class="c1">#     new_status = &quot;&quot;</span>
+        <span class="c1">#     print(status)</span>
+        <span class="c1">#     new_list = []</span>
+        <span class="c1">#     for item in status:</span>
+        <span class="c1">#         item = item.strip()</span>
+        <span class="c1">#         new_status += item</span>
+        <span class="c1">#</span>
+        <span class="c1">#     print(new_status)</span>
+        <span class="c1">#</span>
+
+        <span class="c1">#     dataset_model = Dataset(score.dataset_df, score.target, status)</span>
+        <span class="c1">#     subset_status = dataset_model.get_subset_status()</span>
+        <span class="c1">#     #print(subset_status)</span>
+        <span class="c1">#     possible_value_list = list(list(subset_status.values()))</span>
+        <span class="c1">#     possible_value_list.reverse()</span>
+        <span class="c1">#     #print(possible_value_list)</span>
+        <span class="c1">#     hash_table = {}</span>
+        <span class="c1">#     new_col = []</span>
+        <span class="c1">#     i = 0</span>
+        <span class="c1">#     for item in itertools.product(*possible_value_list):</span>
+        <span class="c1">#         val = str(list(reversed(item)))</span>
+        <span class="c1">#         if val not in hash_table:</span>
+        <span class="c1">#             hash_table[val] = i</span>
+        <span class="c1">#             i += 1</span>
+        <span class="c1">#         new_col.append(hash_table[val])</span>
+        <span class="c1">#     new_dataset[str(status)] = new_col</span>
+        <span class="c1"># print(new_dataset)</span>
+            <span class="c1"># for i in range(len(possible_value_list) -1,-1):</span>
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -319,6 +650,7 @@
 
 <span class="sd">        :return list: A list that include all unique values of classifier</span>
 <span class="sd">        &#39;&#39;&#39;</span>
+
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="Dataset.get_subset_status"><a class="viewcode-back" href="../BDeuScore.html#BDeuScore.Dataset.get_subset_status">[docs]</a>    <span class="k">def</span> <span class="nf">get_subset_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -330,7 +662,9 @@
 <span class="sd">        :return map: A map include all unique values of features in subset</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">subset_status_map</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+        <span class="c1">#print(self.subset)</span>
         <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">subset</span><span class="p">:</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">)</span>
             <span class="n">subset_status_map</span><span class="p">[</span><span class="n">item</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">[</span><span class="n">item</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">subset_status_map</span></div>
 
@@ -361,9 +695,9 @@
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
             <span class="n">node_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">node_list</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 
-        <span class="nb">print</span><span class="p">(</span><span class="n">node_list</span><span class="p">)</span>
+        <span class="c1">#print(node_list)</span>
         <span class="n">parent_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="o">*</span><span class="n">node_list</span><span class="p">))</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">parent_list</span><span class="p">)</span>
+        <span class="c1">#print(parent_list)</span>
         <span class="k">return</span> <span class="n">parent_list</span></div>
 
 <div class="viewcode-block" id="Dataset.get_all_count"><a class="viewcode-back" href="../BDeuScore.html#BDeuScore.Dataset.get_all_count">[docs]</a>    <span class="k">def</span> <span class="nf">get_all_count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">subset</span><span class="p">,</span><span class="n">parent</span><span class="p">,</span><span class="n">target_status</span><span class="p">):</span>
@@ -411,21 +745,32 @@
 
 
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">dataset_input_directory</span> <span class="o">=</span> <span class="s2">&quot;../datasets/TEST.txt&quot;</span>
-    <span class="c1">#dataset_input_directory = &quot;C:/Users/CHX37/PycharmProjects/LSM-15Year.txt&quot;</span>
-    <span class="n">output_directory</span> <span class="o">=</span> <span class="s2">&quot;C:/Users/CHX37/Practice&quot;</span>
-    <span class="n">alpha</span> <span class="o">=</span> <span class="mi">4</span>
-    <span class="n">target</span> <span class="o">=</span> <span class="s2">&quot;E&quot;</span>
-    <span class="c1">#target = &quot;distant_recurrence\r&quot;</span>
-    <span class="c1">#subset_size_list = [0,1,2,3]</span>
-    <span class="n">subset_size_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="c1">#subset_size = 2</span>
-    <span class="k">for</span> <span class="n">subset_size</span> <span class="ow">in</span> <span class="n">subset_size_list</span><span class="p">:</span>
-        <span class="n">score</span> <span class="o">=</span> <span class="n">BDeuScore</span><span class="p">(</span><span class="n">dataset_input_directory</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">subset_size</span><span class="p">)</span>
-        <span class="n">res</span> <span class="o">=</span> <span class="n">score</span><span class="o">.</span><span class="n">calculate_score</span><span class="p">()</span>
-        <span class="c1">#res = score.calculate_information_gain()</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="c1"># if __name__ == &quot;__main__&quot;:</span>
+<span class="c1">#     #dataset_input_directory = &quot;../datasets/TEST.txt&quot;</span>
+<span class="c1">#     dataset_input_directory = &quot;../datasets/LSM-15Year.txt&quot;</span>
+<span class="c1">#     output_directory = &quot;C:/Users/CHX37/Practice&quot;</span>
+<span class="c1">#     #alpha = 4</span>
+<span class="c1">#     alpha = 240</span>
+<span class="c1">#     #target = &quot;E&quot;</span>
+<span class="c1">#     target = &quot;distant_recurrence&quot;</span>
+<span class="c1">#     subset_size_list = [0,1,2]</span>
+<span class="c1">#     top = 20</span>
+<span class="c1">#     #subset_size_list = [1]</span>
+<span class="c1">#     #subset_size = 2</span>
+<span class="c1">#     res1 = {}</span>
+<span class="c1">#     res2 = {}</span>
+<span class="c1">#     for subset_size in subset_size_list:</span>
+<span class="c1">#         score = BDeuScore(dataset_input_directory, alpha, target, subset_size)</span>
+<span class="c1">#         ir_score = score.calculate_score()</span>
+<span class="c1">#         res1.update(ir_score)</span>
+<span class="c1">#         #res1.append(ir_score)</span>
+<span class="c1">#         ig_score = score.calculate_information_gain()</span>
+<span class="c1">#         res2.update(ig_score)</span>
+<span class="c1">#         #res2.append(ig_score)</span>
+<span class="c1">#     res1_sorted = sorted(res1.items(), key=lambda item: item[1])</span>
+<span class="c1">#     res2_sorted = sorted(res2.items(), key=lambda item: item[1])</span>
+<span class="c1">#     print(res1_sorted[:top])</span>
+<span class="c1">#     print(res2_sorted[:top])</span>
 
 
 

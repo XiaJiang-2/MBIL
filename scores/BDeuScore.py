@@ -31,24 +31,17 @@ class ReadDataset:
         columns_name = list(dataset_df.columns)
         columns_name[-1] = columns_name[-1].strip()
         dataset_df.columns = columns_name
-        # dataset_df = pd.read_csv(file, sep)
-        # dataset_df = dataset_df.iloc[:, :-1]
-        #dataset_df = dataset_df.iloc[:,:-1]
-        #print(f'dataset directory: {file}')
-        #print(f'dataset shape: {dataset_df.shape}')
-        #print(f'dataset dimension: {dataset_df.ndim}')
 
         return dataset_df
 
 class BDeuScore:
     def __init__(self,dataset_df, alpha=4.0, target="E"):
         '''
-        init function of BDeuScore class
+        init function of BDeuScore class,include functions "generate_subset", "calculate_information_gain", "calculate_score" and so on.
 
-        :param dataset_input_directory: the dataset df you want to use
+        :param dataset_df: the dataset df you want to use, the return object from ReadDataset class
         :param alpha: A parameter of Bayesian score
         :param target: the name of the target you want to use, the target must be included in dataset
-        :param subset_size: the size of the subset
 
         '''
         self.alpha = alpha
@@ -65,12 +58,12 @@ class BDeuScore:
 
     def generate_subset(self, feature_list, subset_size):
         '''
-        A function to generate all posiible subset according to the subset_size
+        A function to generate all possible subset according to the subset_size
 
-        :param feature_list: the list that includes all features in the dataset, it will be ["B", "C", "D"] based on example dataset
+        :param feature_list: the list that includes all features in the dataset, it will be ["B", "C", "D", "F"] based on example dataset
         :param subset_size:  the size of the subset you want to generate
 
-        :return list: a list that include all possible subset, if the subset_size == 2, it will be [["B", "C"], ["B", "D"], ["C", "D"]]
+        :return list: a list that include all possible subset, if the subset_size == 2, it will be [["B", "C"], ["B", "D"], ["B", "F"], ["C", "D"],["C", "F"], ["D","F"]]
         '''
         if subset_size == 0:
             return [[]]
@@ -88,6 +81,14 @@ class BDeuScore:
         return result
 
     def calculate_informationgain_each_subset(self, subset):
+        '''
+        A function to calculate information gain for each_subset
+
+        :param subset: the specific subset, like ["B", "C"] or ["B", "D"] based on example dataset
+
+        :return float: the corresponding information gain score of this subset
+        '''
+
         dataset_model = Dataset(self.dataset_df, self.target, subset)
         if len(subset) == 0:
             score = 1
@@ -129,11 +130,12 @@ class BDeuScore:
 
     def calculate_information_gain(self,subset_size,top = "all"):
         '''
-        A function to calculate information gain
+        A function to calculate information gain based on subset_size, it will return the score of all possible specific subset with the input subset_size
 
         :param self: instance of BDeuScore class
+        :param subset_size: a int to represent the length of the subset
 
-        :return score: the score
+        :return score: a hash map to store all possible result, the key is the subset and the value is the information score, like{"['B','C']":0.5709505944546684, "['B','D']":0.4199730940219749,...}
         '''
 
         m = self.dataset_df.shape[0]
