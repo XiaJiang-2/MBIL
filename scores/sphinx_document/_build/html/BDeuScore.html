@@ -130,13 +130,16 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="BDeuScore.BDeuScore.calculate_score">
 <span class="sig-name descname"><span class="pre">calculate_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subset_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/BDeuScore.html#BDeuScore.calculate_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BDeuScore.BDeuScore.calculate_score" title="Permalink to this definition"></a></dt>
-<dd><p>A function to calculate BDeuScore</p>
+<dd><p>A function to calculate BDeuscore based on subset_size, it will return the score of all possible specific subset with the input subset_size</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>self</strong> – instance of BDeuScore class</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> – instance of BDeuScore class</p></li>
+<li><p><strong>subset_size</strong> – a int to represent the length of the subset</p></li>
+</ul>
 </dd>
 <dt class="field-even">Return score</dt>
-<dd class="field-even"><p>the score</p>
+<dd class="field-even"><p>a hash map to store all possible result, the key is the subset and the value is the BDeu score, like{“[‘B’,’C’]”:-3.7534179752515073, “[‘B’,’D’]”:-4.382026634673881,…}</p>
 </dd>
 </dl>
 </dd></dl>
@@ -144,12 +147,34 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="BDeuScore.BDeuScore.calculate_score_each_subset">
 <span class="sig-name descname"><span class="pre">calculate_score_each_subset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">each_com</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/BDeuScore.html#BDeuScore.calculate_score_each_subset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BDeuScore.BDeuScore.calculate_score_each_subset" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>A function to calculate BDeuscore for each_subset</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>subset</strong> – the specific subset, like [“B”, “C”] or [“B”, “D”] based on example dataset</p>
+</dd>
+<dt class="field-even">Return float</dt>
+<dd class="field-even"><p>the corresponding BDeuscore of this subset</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="BDeuScore.BDeuScore.check_if_add">
 <span class="sig-name descname"><span class="pre">check_if_add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">curset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/BDeuScore.html#BDeuScore.check_if_add"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BDeuScore.BDeuScore.check_if_add" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>A function to check is this curset interaction can be added to the</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> – instance of BDeuScore class</p></li>
+<li><p><strong>curset</strong> – </p></li>
+<li><p><strong>threshold</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return score</dt>
+<dd class="field-even"><p>a hash map to store all possible result, the key is the subset and the value is the BDeu score, like{“[‘B’,’C’]”:-3.7534179752515073, “[‘B’,’D’]”:-4.382026634673881,…}</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="BDeuScore.BDeuScore.generate_subset">

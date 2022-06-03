@@ -160,6 +160,13 @@ class BDeuScore:
             return sorted(res.items(), key=lambda item: item[1], reverse=True)[:top]
 
     def calculate_score_each_subset(self, each_com):
+        '''
+        A function to calculate BDeuscore for each_subset
+
+        :param subset: the specific subset, like ["B", "C"] or ["B", "D"] based on example dataset
+
+        :return float: the corresponding BDeuscore of this subset
+        '''
         dataset_model = Dataset(self.dataset_df, self.target, each_com)
         subset_status_map = dataset_model.get_subset_status()
         parent_set = dataset_model.get_parent(subset_status_map)
@@ -230,11 +237,12 @@ class BDeuScore:
 
     def calculate_score(self, subset_size, top = "all"):
         '''
-        A function to calculate BDeuScore
+        A function to calculate BDeuscore based on subset_size, it will return the score of all possible specific subset with the input subset_size
 
         :param self: instance of BDeuScore class
+        :param subset_size: a int to represent the length of the subset
 
-        :return score: the score
+        :return score: a hash map to store all possible result, the key is the subset and the value is the BDeu score, like{"['B','C']":-3.7534179752515073, "['B','D']":-4.382026634673881,...}
         '''
 
         feature_list_excepet_target = list(self.dataset_df.columns)
@@ -257,6 +265,15 @@ class BDeuScore:
             return sorted(res.items(), key=lambda item: item[1], reverse=True)[:top]
 
     def check_if_add(self, curset, threshold = 0.05):
+        '''
+        A function to check is this curset interaction can be added to the
+
+        :param self: instance of BDeuScore class
+        :param curset:
+        :param threshold:
+        :return score: a hash map to store all possible result, the key is the subset and the value is the BDeu score, like{"['B','C']":-3.7534179752515073, "['B','D']":-4.382026634673881,...}
+        '''
+
         m = self.m
         target = self.target
         dataset_df = self.dataset_df
@@ -360,15 +377,15 @@ class TrueParents:
         def increaseScore(input):
             index = -1
             cur_list_score = self.score.calculate_score_each_subset(input)
-            print("Score computed for set "+ str(B) +" is: "+ str(cur_list_score))
+            #print("Score computed for set "+ str(B) +" is: "+ str(cur_list_score))
             list_B = input[:]
             for item in list_B:
                 copy_list = list_B[:]
                 copy_list.remove(item)
-                if len(copy_list) == 0:
-                    print("stop")
+                # if len(copy_list) == 0:
+                #     #print("stop")
                 new_score = self.score.calculate_score_each_subset(copy_list)
-                print("New score is " + str(copy_list) + str(new_score))
+                #print("New score is " + str(copy_list) + str(new_score))
                 if new_score > cur_list_score:
                     cur_list_score = new_score
                     index = list_B.index(item)
@@ -381,9 +398,9 @@ class TrueParents:
             for predictor in self.parent_list[:]:
                 cur_parent = self.parent_list[:]
                 cur_parent.remove(predictor)
-                print("cur_parent " + str(cur_parent) +" i " + str(i))
+                #print("cur_parent " + str(cur_parent) +" i " + str(i))
                 blockersofsizeI = getsubsets(cur_parent,i)
-                print("blockersofsizeI " + str(blockersofsizeI))
+                #print("blockersofsizeI " + str(blockersofsizeI))
                 #print()
                 for subset in blockersofsizeI:
                     B = []
@@ -395,8 +412,7 @@ class TrueParents:
                         if predictor not in B:
                             self.parent_list.remove(predictor)
             i+=1
-        print("hhhhh")
-        print(self.parent_list)
+        return self.parent_list
 
     # self.detecting_true_parents(self.new_dataset)
 
