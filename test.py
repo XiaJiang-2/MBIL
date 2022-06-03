@@ -1,22 +1,20 @@
-from scores import BDeuScore
+from mbil import BDeuScore
 
 
-dataset_input_directory = "datasets/TEST.txt"
-output_directory = "C:/Users/CHX37/Practice"
-alpha = 4
-target = "E"
-subset_size = [1,2,3]
-top = 20
-threshold = 0.05
+# dataset_input_directory = "datasets/TEST.txt"
+# output_directory = "C:/Users/CHX37/Practice"
+# alpha = 4
+# target = "E"
+# top = 20
+# threshold = 0.05
 
-# dataset_input_directory = "datasets/LSM-15Year.txt"
-# alpha = 240
-# target = "distant_recurrence"
-# threshold=0.05
-# subset_size = 3
+dataset_input_directory = "datasets/LSM-15Year.txt"
+alpha = 240
+target = "distant_recurrence"
+threshold=0.05
+subset_size = 3
 
 #subset_size_list = [0, 1, 2]
-
 
 #score = BDeuScore.BDeuScore(dataset_input_directory = dataset_input_directory, alpha = alpha, target = target)
 #self, threshold, max_single_predictors, max_interaction_predictors, max_size_interaction,dataset_input_directory, alpha, target):
@@ -24,12 +22,12 @@ dataset_df = BDeuScore.ReadDataset(file=dataset_input_directory, sep='\t').datas
 score = BDeuScore.BDeuScore(dataset_df=dataset_df, alpha=alpha, target=target)
 search = BDeuScore.Search(threshold=threshold,max_single_predictors= 20,max_interaction_predictors=20, max_size_interaction= 3,dataset_df = dataset_df, alpha = alpha, target = target)
 true_parents = BDeuScore.TrueParents(search.transformed_dataset, alpha= alpha, target = target, maximum_number_of_edges=7)
-ir_score = score.calculate_score(top = top, subset_size = 2)
-ig_score = score.calculate_information_gain(top = top,subset_size = 2)
-print("ir_score for subset size 2")
-print(ir_score)
-print("ig_score for subset size 2")
-print(ig_score)
+# ir_score = score.calculate_score(top = top, subset_size = 2)
+# ig_score = score.calculate_information_gain(top = top,subset_size = 2)
+# print("ir_score for subset size 2")
+# print(ir_score)
+# print("ig_score for subset size 2")
+# print(ig_score)
 print("interaction_strength")
 print(score.interaction_strength)
 print("top_single_list")
