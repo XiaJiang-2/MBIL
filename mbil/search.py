@@ -6,67 +6,16 @@ import itertools
 
 # Output: should be natural log of score
 
-    def check_if_add(self, curset, threshold = 0.05):
-        '''
-        A function to check is this curset interaction can be added to the
-
-        :param self: instance of BDeuScore class
-        :param curset:
-        :param threshold:
-        :return score: a hash map to store all possible result, the key is the subset and the value is the BDeu score, like{"['B','C']":-3.7534179752515073, "['B','D']":-4.382026634673881,...}
-        '''
-
-        m = self.m
-        target = self.target
-        dataset_df = self.dataset_df
-        def isExitCase(single_set,single_set_ig,curset,curset_ig):
-            set_minus_A = curset[:]
-            set_minus_A.remove(single_set[0])
-            # print(set_minus_A)
-            set_minus_A_ig = self.calculate_informationgain_each_subset(set_minus_A) * m
-            #set_minus_A_score = self.calculate_score_each_subset(set_minus_A, dataset_model_withoutA) * m
-            sum_score = single_set_ig + set_minus_A_ig
-            cur_is = (curset_ig - sum_score) / curset_ig
-            if cur_is < self.IS:
-                self.IS = cur_is
-            return cur_is < threshold
-        def stillAddable(curset,curset_ig):
-            for feature in curset:
-                single_set = [feature]
-                single_set_ig = self.calculate_informationgain_each_subset(single_set) * m
-                #single_set_score = self.calculate_score_each_subset(single_set, dataset_model_single) * m
-                # calculate the set without the single
-                # print(curset)
-
-                if isExitCase(single_set,single_set_ig,curset,curset_ig):
-                    return False
-            return True
-        add = False
-        self.IS = 1
-        curset_ig = self.calculate_informationgain_each_subset(curset) * self.m
-        #curset_score = self.calculate_score_each_subset(curset, dataset_model) * self.m
-
-        if len(curset) > 1:
-            add = stillAddable(curset,curset_ig)
-        # is the size of subset is greater than 3, we need to use recursive to break it into all two possible combination
-
-        # if add and len(curset) > 3:
-        #     add =
-        #I need to use add = recursiveInfoSearch exhaustiveinformationgain 241
-
-        if add:
-            self.interaction_strength[str(curset)] = self.IS
-        return add
 
 class TrueParents:
-    def __init__(self, new_dataset,alpha,target,maximum_number_of_edges):
+    def __init__(self, new_dataset,alpha,target,maximum_number_of_parents):
         self.new_dataset = new_dataset
         self.parent_list = list(self.new_dataset.columns)
         self.target = target
         self.alpha = alpha
         self.parent_list.remove(self.target)
         self.score = BDeuScore(dataset_df=self.new_dataset, alpha=self.alpha, target=self.target)
-        self.maximum_number_of_edges = maximum_number_of_edges
+        self.maximum_number_of_parents = maximum_number_of_parents
         self.true_parents = self.detecting_true_parents()
 
 
@@ -116,7 +65,7 @@ class TrueParents:
                 input.remove(list_B[index])
         # parent_list =
         i = 0
-        while (len(self.parent_list) > i) and (i <= self.maximum_number_of_edges):
+        while (len(self.parent_list) > i) and (i <= self.maximum_number_of_parents):
             #self.parent_list = iterator(self.parent_list)
             for predictor in self.parent_list[:]:
                 cur_parent = self.parent_list[:]
@@ -248,43 +197,6 @@ class Search:
         #     key = key[1:-1].split(',')
         #     print(key)
         return self.new_dataset
-
-
-
-
-        # for item in self.top_interaction_list:
-        #     status = item[0]
-        #     status = list(status[1:-1].split(", "))
-        #     new_status = ""
-        #     print(status)
-        #     new_list = []
-        #     for item in status:
-        #         item = item.strip()
-        #         new_status += item
-        #
-        #     print(new_status)
-        #
-
-        #     dataset_model = Dataset(score.dataset_df, score.target, status)
-        #     subset_status = dataset_model.get_subset_status()
-        #     #print(subset_status)
-        #     possible_value_list = list(list(subset_status.values()))
-        #     possible_value_list.reverse()
-        #     #print(possible_value_list)
-        #     hash_table = {}
-        #     new_col = []
-        #     i = 0
-        #     for item in itertools.product(*possible_value_list):
-        #         val = str(list(reversed(item)))
-        #         if val not in hash_table:
-        #             hash_table[val] = i
-        #             i += 1
-        #         new_col.append(hash_table[val])
-        #     new_dataset[str(status)] = new_col
-        # print(new_dataset)
-            # for i in range(len(possible_value_list) -1,-1):
-
-
 
 
 

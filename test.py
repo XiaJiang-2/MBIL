@@ -1,10 +1,16 @@
-from mbil import BDeuScore
+from mbil import scores
+from mbil import dataset
+from mbil import search
+from mbil import scores_abs
 
 
 # dataset_input_directory = "datasets/TEST.txt"
 # output_directory = "C:/Users/CHX37/Practice"
 # alpha = 4
 # target = "E"
+
+# subset_size = [1,2,3]
+
 # top = 20
 # threshold = 0.05
 
@@ -13,6 +19,8 @@ alpha = 240
 target = "distant_recurrence"
 threshold=0.05
 subset_size = 3
+top = 20
+
 
 #subset_size_list = [0, 1, 2]
 
