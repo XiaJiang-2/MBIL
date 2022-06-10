@@ -1,9 +1,13 @@
 from mbil import scores
 class utils:
-    def __init__(self,dataset_df, target):
+    def __init__(self,dataset_df, target, alpha):
         self.dataset_df = dataset_df
         self.target = target
         self.m = self.dataset_df.shape[0]
+        self.alpha = alpha
+
+        # self.bdeu = scores.BDeuScore(dataset_df=dataset_df, alpha=alpha, target=target)
+        # self.
 
 
     def generate_subset(self, feature_list, subset_size):
@@ -39,20 +43,21 @@ class utils:
 
         :return score: a hash map to store all possible result, the key is the subset and the value is the BDeu score, like{"['B','C']":-3.7534179752515073, "['B','D']":-4.382026634673881,...}
         '''
-
+        Bdeu = scores.BDeuScore(dataset_df=self.dataset_df, alpha=self.alpha, target=self.target)
         feature_list_excepet_target = list(self.dataset_df.columns)
 
         #print(feature_list_excepet_target)
         feature_list_excepet_target.remove(self.target)
         #print(feature_list_excepet_target)
         subset = self.generate_subset(feature_list_excepet_target, subset_size)
+
         res = {}
         #print(subset)
         for subset in subset:
             # print("h")
             # print(subset)
 
-            res[str(subset)] = scores.BDeuScore.calculate_BDeu(subset)
+            res[str(subset)] = Bdeu.calculate_BDeu(subset)
 
         if top == 'all':
             return res
@@ -71,6 +76,7 @@ class utils:
 
         m = self.dataset_df.shape[0]
         feature_list_excepet_target = list(self.dataset_df.columns)
+        IGain = scores.IGain(dataset_df=self.dataset_df, alpha=self.alpha, target=self.target)
         res = {}
 
         #print(feature_list_excepet_target)
@@ -82,7 +88,7 @@ class utils:
             if len(each_com) == 0:
                 score = 1
             else:
-                score = scores.IGain.calculate_IGain(each_com)
+                score = IGain.calculate_IGain(each_com)
             res[str(each_com)] = score
 
         if top == 'all':

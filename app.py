@@ -13,27 +13,28 @@ from mbil import search
 from mbil import scores_abs
 
 
-dataset_input_directory = "datasets/TEST.txt"
+#dataset_input_directory = "datasets/TEST.txt"
 #output_directory = "C:/Users/CHX37/Practice"
-alpha = 4
-target = "E"
+# alpha = 4
+# target = "E"
+# top = 20
+# max_single_predictors = 20
+# max_interaction_predictors = 20
+# max_size_interaction = 3
+# threshold = 0.05
+# maximum_number_of_parents=7
+
+
+
+dataset_input_directory = "datasets/LSM-15Year.txt"
+alpha = 240
+target = "distant_recurrence"
 top = 20
 max_single_predictors = 20
 max_interaction_predictors = 20
 max_size_interaction = 3
 threshold = 0.05
 maximum_number_of_parents=7
-
-# subset_size = [1,2,3]
-
-
-
-# dataset_input_directory = "datasets/LSM-15Year.txt"
-# alpha = 240
-# target = "distant_recurrence"
-# threshold=0.05
-# subset_size = 3
-# top = 20
 
 
 #subset_size_list = [0, 1, 2]
@@ -42,15 +43,19 @@ maximum_number_of_parents=7
 #self, threshold, max_single_predictors, max_interaction_predictors, max_size_interaction,dataset_input_directory, alpha, target):
 dataset_df = dataset.ReadDataset(file=dataset_input_directory, sep='\t').dataset_df
 #score = BDeuScore.BDeuScore(dataset_df=dataset_df, alpha=alpha, target=target)
-search = search.Search(threshold=threshold,
+search_test_object = search.Search(threshold=threshold,
                        max_single_predictors= max_single_predictors,
                        max_interaction_predictors=max_interaction_predictors,
                        max_size_interaction= max_size_interaction,
                        dataset_df = dataset_df,
                        alpha = alpha,
                        target = target)
+print(search_test_object.top_single_list)
+print(search_test_object.top_interaction_list)
+#print(search_test_object.transformed_dataset)
+
 true_parents = search.TrueParents(
-    search.transformed_dataset,
+    new_dataset = search_test_object.transformed_dataset,
     alpha= alpha,
     target = target,
     maximum_number_of_parents = maximum_number_of_parents)

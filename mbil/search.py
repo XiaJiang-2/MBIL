@@ -18,7 +18,7 @@ class TrueParents:
         self.alpha = alpha
         self.parent_list.remove(self.target)
         self.score = scores.BDeuScore(dataset_df=self.new_dataset, alpha=self.alpha, target=self.target)
-        self.utils = scores_abs.utils(dataset_df=self.new_dataset,target=self.target)
+        self.utils = scores_abs.utils(dataset_df=self.new_dataset,target=self.target, alpha = self.alpha)
         self.maximum_number_of_parents = maximum_number_of_parents
         self.true_parents = self.detecting_true_parents()
 
@@ -103,11 +103,13 @@ class Search:
         self.max_interaction_predictors = max_interaction_predictors
         self.max_size_interaction = max_size_interaction
         self.score = scores.BDeuScore(dataset_df=dataset_df, alpha=alpha, target=target)
-        self.utils = scores_abs.utils(dataset_df=self.dataset, target=self.target)
+        self.utils = scores_abs.utils(dataset_df=self.dataset, target=self.target,alpha = self.alpha)
         #self.top_interaction_list = collections.OrderedDict()
         self.top_interaction_list = self.get_top_interaction_predictors_score()
         self.top_single_list = self.get_top_singel_predictors_score()
+        # initialize the new dataset, kind of global variable
         self.new_dataset = {}
+        # use get_new_dataset_after_transform to fill transform dataset
         self.transformed_dataset = self.get_new_dataset_after_transform()
         self.new_status_dataset = {}
 
@@ -115,9 +117,9 @@ class Search:
     def get_top_singel_predictors_score(self):
         predictors_list = self.score.dataset_head
         predictors_list.remove(self.target)
-        null_score = self.score.calculate_BDeu(subset_size=0, top="all").values()
+        null_score = self.utils.calculate_score(subset_size=0, top="all").values()
         null_score = list(null_score)[0]
-        score_dict = self.score.calculate_BDeu(subset_size=1, top="all")
+        score_dict = self.utils.calculate_score(subset_size=1, top="all")
         single_res = []
 
         for key,val in score_dict.items():
@@ -196,7 +198,7 @@ class Search:
             self.new_dataset[item[0]] = new_col
         self.new_dataset[self.score.target] = list(self.score.dataset_df[self.score.target])
         self.new_status_dataset = generate_new_status_dataset(self.new_dataset)
-        print(self.new_dataset)
+        #print(self.new_dataset)
         self.new_dataset = pd.DataFrame(self.new_dataset)
         # format the key from "['B','C']" to "BC"
         # for key,val in self.new_dataset.items():

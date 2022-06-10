@@ -21,10 +21,10 @@ class BDeuScore():
         self.dataset_head = list(self.dataset_df.columns)
         self.m = self.dataset_df.shape[0]
         self.n = self.dataset_df.shape[1]
-        self.utils = scores_abs.utils(dataset_df=self.dataset_df,target=self.target)
+        self.utils = scores_abs.utils(dataset_df=self.dataset_df,target=self.target,alpha=self.alpha)
         self.igain = IGain(dataset_df=self.dataset_df,alpha=self.alpha,target=self.target)
         self.interaction_strength = {}
-    def calculate_BDeu(self, subset,top="all"):  #Needs to Define a BDeu class instead of a function.
+    def calculate_BDeu(self, subset):  #Needs to Define a BDeu class instead of a function.
         '''
         A function to calculate BDeuscore for each_subset
 
