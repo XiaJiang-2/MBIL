@@ -2,6 +2,9 @@ import collections
 import math
 from collections import defaultdict, Counter
 import pandas as pd
+from mbil import scores
+from mbil import scores_abs
+
 import itertools
 
 # Output: should be natural log of score
@@ -14,7 +17,8 @@ class TrueParents:
         self.target = target
         self.alpha = alpha
         self.parent_list.remove(self.target)
-        self.score = BDeuScore(dataset_df=self.new_dataset, alpha=self.alpha, target=self.target)
+        self.score = scores.BDeuScore(dataset_df=self.new_dataset, alpha=self.alpha, target=self.target)
+        self.utils = scores_abs.utils(dataset_df=self.new_dataset,target=self.target)
         self.maximum_number_of_parents = maximum_number_of_parents
         self.true_parents = self.detecting_true_parents()
 
@@ -48,7 +52,7 @@ class TrueParents:
 
         def increaseScore(input):
             index = -1
-            cur_list_score = self.score.calculate_score_each_subset(input)
+            cur_list_score = self.score.calculate_BDeu(input)
             #print("Score computed for set "+ str(B) +" is: "+ str(cur_list_score))
             list_B = input[:]
             for item in list_B:
@@ -56,7 +60,7 @@ class TrueParents:
                 copy_list.remove(item)
                 # if len(copy_list) == 0:
                 #     #print("stop")
-                new_score = self.score.calculate_score_each_subset(copy_list)
+                new_score = self.score.calculate_BDeu(copy_list)
                 #print("New score is " + str(copy_list) + str(new_score))
                 if new_score > cur_list_score:
                     cur_list_score = new_score
@@ -94,10 +98,12 @@ class Search:
         self.alpha = alpha
         self.target = target
         self.threshold = threshold
+        self.dataset = dataset_df
         self.max_single_predictors = max_single_predictors
         self.max_interaction_predictors = max_interaction_predictors
         self.max_size_interaction = max_size_interaction
-        self.score = BDeuScore(dataset_df=dataset_df, alpha=alpha, target=target)
+        self.score = scores.BDeuScore(dataset_df=dataset_df, alpha=alpha, target=target)
+        self.utils = scores_abs.utils(dataset_df=self.dataset, target=self.target)
         #self.top_interaction_list = collections.OrderedDict()
         self.top_interaction_list = self.get_top_interaction_predictors_score()
         self.top_single_list = self.get_top_singel_predictors_score()
@@ -109,9 +115,9 @@ class Search:
     def get_top_singel_predictors_score(self):
         predictors_list = self.score.dataset_head
         predictors_list.remove(self.target)
-        null_score = self.score.calculate_score(subset_size=0, top="all").values()
+        null_score = self.score.calculate_BDeu(subset_size=0, top="all").values()
         null_score = list(null_score)[0]
-        score_dict = self.score.calculate_score(subset_size=1, top="all")
+        score_dict = self.score.calculate_BDeu(subset_size=1, top="all")
         single_res = []
 
         for key,val in score_dict.items():
@@ -124,8 +130,8 @@ class Search:
         #score = BDeuScore(dataset_input_directory=self.dataset_input_directory, alpha=self.alpha, target=self.target)
         #number_of_predictors = score.n
         for i in range(2,self.max_size_interaction + 1):
-            cur_infoGain_stren = self.score.calculate_interaction_strength(subset_size=i,threshold = self.threshold)
-            cur_score_dict = self.score.calculate_score(subset_size=i, top="all")
+            cur_infoGain_stren = self.score.calculate_interaction_strength(subset_size=i,dataset = self.dataset,threshold = self.threshold)
+            cur_score_dict = self.utils.calculate_score(subset_size=i)
             for key,val in cur_score_dict.items():
                 if key in cur_infoGain_stren:
                     interaction_res[key] = cur_score_dict[key]

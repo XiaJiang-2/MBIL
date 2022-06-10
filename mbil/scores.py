@@ -1,10 +1,11 @@
 from mbil import scores
 from mbil import dataset
 import math
+from mbil import scores_abs
 from collections import defaultdict, Counter
 import pandas as pd
 import itertools
-class BDeuScore:
+class BDeuScore():
     def __init__(self,dataset_df, alpha=4.0, target="E"):
         '''
         init function of BDeuScore class,include functions "generate_subset", "calculate_information_gain", "calculate_score" and so on.
@@ -20,8 +21,10 @@ class BDeuScore:
         self.dataset_head = list(self.dataset_df.columns)
         self.m = self.dataset_df.shape[0]
         self.n = self.dataset_df.shape[1]
+        self.utils = scores_abs.utils(dataset_df=self.dataset_df,target=self.target)
+        self.igain = IGain(dataset_df=self.dataset_df,alpha=self.alpha,target=self.target)
         self.interaction_strength = {}
-    def calculate_BDeu(self, subset):  #Needs to Define a BDeu class instead of a function.
+    def calculate_BDeu(self, subset,top="all"):  #Needs to Define a BDeu class instead of a function.
         '''
         A function to calculate BDeuscore for each_subset
 
@@ -96,6 +99,73 @@ class BDeuScore:
             score += temp_score
             #print("the null score is " + str(score))
         return score
+    def calculate_interaction_strength(self, subset_size,dataset, threshold = 0.05):
+        if subset_size > 1:
+            feature_list_excepet_target = list(self.dataset_df.columns)
+            feature_list_excepet_target.remove(self.target)
+            subsets = self.utils.generate_subset(feature_list_excepet_target, subset_size)
+            # print(subsets)
+            for subset in subsets:
+                self.check_if_add(curset = subset,threshold = threshold)
+            return self.interaction_strength
+
+        else:
+            print("the subset_size must greater than 2")
+            return []
+
+    def check_if_add(self, curset,threshold = 0.05):
+        '''
+        A function to check is this curset interaction can be added to the
+
+        :param self: instance of BDeuScore class
+        :param curset:
+        :param threshold:
+        :return score: a hash map to store all possible result, the key is the subset and the value is the BDeu score, like{"['B','C']":-3.7534179752515073, "['B','D']":-4.382026634673881,...}
+        '''
+
+        m = self.m
+        target = self.target
+        dataset_df = self.dataset_df
+        igain = self.igain
+        def isExitCase(single_set,single_set_ig,curset,curset_ig):
+            set_minus_A = curset[:]
+            set_minus_A.remove(single_set[0])
+            # print(set_minus_A)
+            set_minus_A_ig = igain.calculate_IGain(set_minus_A) * m
+            #set_minus_A_score = self.calculate_score_each_subset(set_minus_A, dataset_model_withoutA) * m
+            sum_score = single_set_ig + set_minus_A_ig
+            cur_is = (curset_ig - sum_score) / curset_ig
+            if cur_is < self.IS:
+                self.IS = cur_is
+            return cur_is < threshold
+        def stillAddable(curset,curset_ig):
+            for feature in curset:
+                single_set = [feature]
+                single_set_ig = igain.calculate_IGain(single_set) * m
+                #single_set_score = self.calculate_score_each_subset(single_set, dataset_model_single) * m
+                # calculate the set without the single
+                # print(curset)
+
+                if isExitCase(single_set,single_set_ig,curset,curset_ig):
+                    return False
+            return True
+        add = False
+        self.IS = 1
+
+        curset_ig = igain.calculate_IGain(curset) * self.m
+        #curset_score = self.calculate_score_each_subset(curset, dataset_model) * self.m
+
+        if len(curset) > 1:
+            add = stillAddable(curset,curset_ig)
+        # is the size of subset is greater than 3, we need to use recursive to break it into all two possible combination
+
+        # if add and len(curset) > 3:
+        #     add =
+        #I need to use add = recursiveInfoSearch exhaustiveinformationgain 241
+
+        if add:
+            self.interaction_strength[str(curset)] = self.IS
+        return add
 
 class AIC:
     def __init__(self,dataset_df, alpha=4.0, target="E"):
@@ -159,16 +229,4 @@ class IGain:
                     score += logscore
         return score
 
-    def calculate_interaction_strength(self, subset_size, threshold = 0.05):
-        if subset_size > 1:
-            feature_list_excepet_target = list(self.dataset_df.columns)
-            feature_list_excepet_target.remove(self.target)
-            subsets = self.generate_subset(feature_list_excepet_target, subset_size)
-            # print(subsets)
-            for subset in subsets:
-                self.check_if_add(curset = subset,threshold = threshold)
-            return self.interaction_strength
 
-        else:
-            print("the subset_size must greater than 2")
-            return []

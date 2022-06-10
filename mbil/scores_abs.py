@@ -1,8 +1,10 @@
 from mbil import scores
 class utils:
-    def __init__(self,dataset_df, target, ):
+    def __init__(self,dataset_df, target):
         self.dataset_df = dataset_df
         self.target = target
+        self.m = self.dataset_df.shape[0]
+
 
     def generate_subset(self, feature_list, subset_size):
         '''
@@ -88,7 +90,7 @@ class utils:
         else:
             return sorted(res.items(), key=lambda item: item[1], reverse=True)[:top]
 
-    def check_if_add(self, curset, threshold = 0.05):
+    def check_if_add(self, curset, dataset,threshold = 0.05):
         '''
         A function to check is this curset interaction can be added to the
 
@@ -125,7 +127,7 @@ class utils:
             return True
         add = False
         self.IS = 1
-        curset_ig = self.calculate_informationgain_each_subset(curset) * self.m
+        curset_ig = scores.IGain.calculate_IGain(curset) * self.m
         #curset_score = self.calculate_score_each_subset(curset, dataset_model) * self.m
 
         if len(curset) > 1:
