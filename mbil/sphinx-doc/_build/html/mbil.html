@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mbil package &mdash; MBIL 0.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="mbil" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> MBIL
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">mbil</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">mbil package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-mbil.dataset">mbil.dataset module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-mbil.scores">mbil.scores module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-mbil.scores_abs">mbil.scores_abs module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-mbil.search">mbil.search module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-mbil">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">MBIL</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">mbil</a> &raquo;</li>
+      <li>mbil package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/mbil.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="mbil-package">
+<h1>mbil package<a class="headerlink" href="#mbil-package" title="Permalink to this headline"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
+</section>
+<section id="module-mbil.dataset">
+<span id="mbil-dataset-module"></span><h2>mbil.dataset module<a class="headerlink" href="#module-mbil.dataset" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="mbil.dataset.Dataset">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mbil.dataset.</span></span><span class="sig-name descname"><span class="pre">Dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'E'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['B',</span> <span class="pre">'C']</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/dataset.html#Dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.dataset.Dataset" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mbil.dataset.Dataset.get_all_count">
+<span class="sig-name descname"><span class="pre">get_all_count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_status</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/dataset.html#Dataset.get_all_count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.dataset.Dataset.get_all_count" title="Permalink to this definition"></a></dt>
+<dd><p>A function to get the count of records according to current subset and parent set</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> – the instance of dataset class</p></li>
+<li><p><strong>subset</strong> – the current subset like [“B”,”C”] or [“C”,”D”]</p></li>
+<li><p><strong>parent</strong> – one of possible parents based on the current subset, if the subset is [“B”,”C”],B(2,3),C(0,1) the parent list will be [0,0] or [0,1] or [1,0] or [1,1]</p></li>
+<li><p><strong>target_status</strong> – the current target status like “0” or “1”</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return count</dt>
+<dd class="field-even"><p>it will be the int the represents how many records you have in the dataset based these conditions</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mbil.dataset.Dataset.get_dataset_size">
+<span class="sig-name descname"><span class="pre">get_dataset_size</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/dataset.html#Dataset.get_dataset_size"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.dataset.Dataset.get_dataset_size" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mbil.dataset.Dataset.get_feature_count">
+<span class="sig-name descname"><span class="pre">get_feature_count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/dataset.html#Dataset.get_feature_count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.dataset.Dataset.get_feature_count" title="Permalink to this definition"></a></dt>
+<dd><p>A function to get the count of different feature by feature name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> – the instance of dataset class</p></li>
+<li><p><strong>feature_name</strong> – the name of feature you want to count</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return Counter</dt>
+<dd class="field-even"><p>A map that key is the different values for this feature_name and the value is the corresponding count of this value</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mbil.dataset.Dataset.get_feature_count_according_target">
+<span class="sig-name descname"><span class="pre">get_feature_count_according_target</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/dataset.html#Dataset.get_feature_count_according_target"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.dataset.Dataset.get_feature_count_according_target" title="Permalink to this definition"></a></dt>
+<dd><p>A function to get the count of different feature by feature name and feature value</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> – the instance of dataset class</p></li>
+<li><p><strong>feature_name</strong> – the name of current feature like “B”</p></li>
+<li><p><strong>feature_value</strong> – one feature name will have different values, for feature “B”, it includes “2” or “3”</p></li>
+<li><p><strong>target_value</strong> – the current target value like “0” or “1”</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return count</dt>
+<dd class="field-even"><p>it will be the int the represents how many records you have according to the specific condition for the input</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mbil.dataset.Dataset.get_parent">
+<span class="sig-name descname"><span class="pre">get_parent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subset_status_map</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/dataset.html#Dataset.get_parent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.dataset.Dataset.get_parent" title="Permalink to this definition"></a></dt>
+<dd><p>A function to get all the possible parent based on the current dataset</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> – the instance of dataset class</p></li>
+<li><p><strong>subset_status_map</strong> – a map that the key is the name of current feature and the value is the corresponding unique values of this feature</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return parent_list</dt>
+<dd class="field-even"><p>a list that include all possible parent combinations, when the subset_status_map is {“B”:[2,3],”C”:[0,1]}, the parent list will be [[0,0], [0,1], [1,0], [1,1]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mbil.dataset.Dataset.get_subset_status">
+<span class="sig-name descname"><span class="pre">get_subset_status</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/dataset.html#Dataset.get_subset_status"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.dataset.Dataset.get_subset_status" title="Permalink to this definition"></a></dt>
+<dd><p>A function to get the status of the feature in subset</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>self</strong> – the instance of dataset class</p>
+</dd>
+<dt class="field-even">Return map</dt>
+<dd class="field-even"><p>A map include all unique values of features in subset</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mbil.dataset.Dataset.get_target_status">
+<span class="sig-name descname"><span class="pre">get_target_status</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/dataset.html#Dataset.get_target_status"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.dataset.Dataset.get_target_status" title="Permalink to this definition"></a></dt>
+<dd><p>A function to get the status of classifier</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>self</strong> – the instance of dataset class</p>
+</dd>
+<dt class="field-even">Return list</dt>
+<dd class="field-even"><p>A list that include all unique values of classifier</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mbil.dataset.ReadDataset">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mbil.dataset.</span></span><span class="sig-name descname"><span class="pre">ReadDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'\t'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/dataset.html#ReadDataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.dataset.ReadDataset" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mbil.dataset.ReadDataset.read">
+<span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/dataset.html#ReadDataset.read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.dataset.ReadDataset.read" title="Permalink to this definition"></a></dt>
+<dd><p>A function to read the dataset according to the input directory of this dataset</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file</strong> – input directory of this dataset</p></li>
+<li><p><strong>sep</strong> – the delimiter of the dataset like ‘ ‘ or ‘,’, default=’     ‘</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return dataset</dt>
+<dd class="field-even"><p>the dataset with data frame format in python</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-mbil.scores">
+<span id="mbil-scores-module"></span><h2>mbil.scores module<a class="headerlink" href="#module-mbil.scores" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="mbil.scores.AIC">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mbil.scores.</span></span><span class="sig-name descname"><span class="pre">AIC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'E'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/scores.html#AIC"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.scores.AIC" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mbil.scores.BDeuScore">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mbil.scores.</span></span><span class="sig-name descname"><span class="pre">BDeuScore</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'E'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/scores.html#BDeuScore"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.scores.BDeuScore" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mbil.scores.BDeuScore.calculate_BDeu">
+<span class="sig-name descname"><span class="pre">calculate_BDeu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subset</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/scores.html#BDeuScore.calculate_BDeu"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.scores.BDeuScore.calculate_BDeu" title="Permalink to this definition"></a></dt>
+<dd><p>A function to calculate BDeuscore for each_subset</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>subset</strong> – the specific subset, like [“B”, “C”] or [“B”, “D”] based on example dataset</p>
+</dd>
+<dt class="field-even">Return float</dt>
+<dd class="field-even"><p>the corresponding BDeuscore of this subset</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mbil.scores.BDeuScore.calculate_interaction_strength">
+<span class="sig-name descname"><span class="pre">calculate_interaction_strength</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subset_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/scores.html#BDeuScore.calculate_interaction_strength"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.scores.BDeuScore.calculate_interaction_strength" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mbil.scores.BDeuScore.check_if_add">
+<span class="sig-name descname"><span class="pre">check_if_add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">curset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/scores.html#BDeuScore.check_if_add"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.scores.BDeuScore.check_if_add" title="Permalink to this definition"></a></dt>
+<dd><p>A function to check is this curset interaction can be added to the</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> – instance of BDeuScore class</p></li>
+<li><p><strong>curset</strong> – </p></li>
+<li><p><strong>threshold</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return score</dt>
+<dd class="field-even"><p>a hash map to store all possible result, the key is the subset and the value is the BDeu score, like{“[‘B’,’C’]”:-3.7534179752515073, “[‘B’,’D’]”:-4.382026634673881,…}</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mbil.scores.IGain">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mbil.scores.</span></span><span class="sig-name descname"><span class="pre">IGain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'E'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/scores.html#IGain"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.scores.IGain" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mbil.scores.IGain.calculate_IGain">
+<span class="sig-name descname"><span class="pre">calculate_IGain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subset</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/scores.html#IGain.calculate_IGain"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.scores.IGain.calculate_IGain" title="Permalink to this definition"></a></dt>
+<dd><p>A function to calculate information gain for each_subset</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>subset</strong> – the specific subset, like [“B”, “C”] or [“B”, “D”] based on example dataset</p>
+</dd>
+<dt class="field-even">Return float</dt>
+<dd class="field-even"><p>the corresponding information gain score of this subset</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-mbil.scores_abs">
+<span id="mbil-scores-abs-module"></span><h2>mbil.scores_abs module<a class="headerlink" href="#module-mbil.scores_abs" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="mbil.scores_abs.utils">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mbil.scores_abs.</span></span><span class="sig-name descname"><span class="pre">utils</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/scores_abs.html#utils"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.scores_abs.utils" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mbil.scores_abs.utils.calculate_information_gain">
+<span class="sig-name descname"><span class="pre">calculate_information_gain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subset_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/scores_abs.html#utils.calculate_information_gain"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.scores_abs.utils.calculate_information_gain" title="Permalink to this definition"></a></dt>
+<dd><p>A function to calculate information gain based on subset_size, it will return the score of all possible specific subset with the input subset_size</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> – instance of BDeuScore class</p></li>
+<li><p><strong>subset_size</strong> – a int to represent the length of the subset</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return score</dt>
+<dd class="field-even"><p>a hash map to store all possible result, the key is the subset and the value is the information score, like{“[‘B’,’C’]”:0.5709505944546684, “[‘B’,’D’]”:0.4199730940219749,…}</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mbil.scores_abs.utils.calculate_score">
+<span class="sig-name descname"><span class="pre">calculate_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subset_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/scores_abs.html#utils.calculate_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.scores_abs.utils.calculate_score" title="Permalink to this definition"></a></dt>
+<dd><p>A function to calculate BDeuscore based on subset_size, it will return the score of all possible specific subset with the input subset_size</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> – instance of BDeuScore class</p></li>
+<li><p><strong>subset_size</strong> – a int to represent the length of the subset</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return score</dt>
+<dd class="field-even"><p>a hash map to store all possible result, the key is the subset and the value is the BDeu score, like{“[‘B’,’C’]”:-3.7534179752515073, “[‘B’,’D’]”:-4.382026634673881,…}</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mbil.scores_abs.utils.check_if_add">
+<span class="sig-name descname"><span class="pre">check_if_add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">curset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/scores_abs.html#utils.check_if_add"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.scores_abs.utils.check_if_add" title="Permalink to this definition"></a></dt>
+<dd><p>A function to check is this curset interaction can be added to the</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> – instance of BDeuScore class</p></li>
+<li><p><strong>curset</strong> – </p></li>
+<li><p><strong>threshold</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return score</dt>
+<dd class="field-even"><p>a hash map to store all possible result, the key is the subset and the value is the BDeu score, like{“[‘B’,’C’]”:-3.7534179752515073, “[‘B’,’D’]”:-4.382026634673881,…}</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mbil.scores_abs.utils.generate_subset">
+<span class="sig-name descname"><span class="pre">generate_subset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subset_size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/scores_abs.html#utils.generate_subset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.scores_abs.utils.generate_subset" title="Permalink to this definition"></a></dt>
+<dd><p>A function to generate all possible subset according to the subset_size</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>feature_list</strong> – the list that includes all features in the dataset, it will be [“B”, “C”, “D”, “F”] based on example dataset</p></li>
+<li><p><strong>subset_size</strong> – the size of the subset you want to generate</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return list</dt>
+<dd class="field-even"><p>a list that include all possible subset, if the subset_size == 2, it will be [[“B”, “C”], [“B”, “D”], [“B”, “F”], [“C”, “D”],[“C”, “F”], [“D”,”F”]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-mbil.search">
+<span id="mbil-search-module"></span><h2>mbil.search module<a class="headerlink" href="#module-mbil.search" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="mbil.search.Search">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mbil.search.</span></span><span class="sig-name descname"><span class="pre">Search</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">threshold</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_single_predictors</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_interaction_predictors</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_size_interaction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/search.html#Search"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.search.Search" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mbil.search.Search.get_new_dataset_after_transform">
+<span class="sig-name descname"><span class="pre">get_new_dataset_after_transform</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/search.html#Search.get_new_dataset_after_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.search.Search.get_new_dataset_after_transform" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mbil.search.Search.get_top_interaction_predictors_score">
+<span class="sig-name descname"><span class="pre">get_top_interaction_predictors_score</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/search.html#Search.get_top_interaction_predictors_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.search.Search.get_top_interaction_predictors_score" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mbil.search.Search.get_top_singel_predictors_score">
+<span class="sig-name descname"><span class="pre">get_top_singel_predictors_score</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/search.html#Search.get_top_singel_predictors_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.search.Search.get_top_singel_predictors_score" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mbil.search.TrueParents">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mbil.search.</span></span><span class="sig-name descname"><span class="pre">TrueParents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maximum_number_of_parents</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/search.html#TrueParents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.search.TrueParents" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mbil.search.TrueParents.detecting_true_parents">
+<span class="sig-name descname"><span class="pre">detecting_true_parents</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/search.html#TrueParents.detecting_true_parents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.search.TrueParents.detecting_true_parents" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-mbil">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-mbil" title="Permalink to this headline"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules.html" class="btn btn-neutral float-left" title="mbil" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Xia Jiang &amp; Chuhan Xu.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
