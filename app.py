@@ -12,23 +12,11 @@ from mbil import dataset
 from mbil import search
 from mbil import scores_abs
 
-
-#dataset_input_directory = "datasets/TEST.txt"
-#output_directory = "C:/Users/CHX37/Practice"
-# alpha = 4
-# target = "E"
-# top = 20
-# max_single_predictors = 20
-# max_interaction_predictors = 20
-# max_size_interaction = 3
-# threshold = 0.05
-# maximum_number_of_parents=7
-
-
-
-dataset_input_directory = "datasets/LSM-15Year.txt"
-alpha = 240
-target = "distant_recurrence"
+#
+dataset_input_directory = "datasets/TEST.txt"
+output_directory = "C:/Users/CHX37/Practice"
+alpha = 4
+target = "E"
 top = 20
 max_single_predictors = 20
 max_interaction_predictors = 20
@@ -37,12 +25,26 @@ threshold = 0.05
 maximum_number_of_parents=7
 
 
+
+# dataset_input_directory = "datasets/LSM-15Year.txt"
+# alpha = 240
+# target = "distant_recurrence"
+# top = 20
+# max_single_predictors = 20
+# max_interaction_predictors = 20
+# max_size_interaction = 3
+# threshold = 0.05
+# maximum_number_of_parents=7
+
+
 #subset_size_list = [0, 1, 2]
 
-#score = BDeuScore.BDeuScore(dataset_input_directory = dataset_input_directory, alpha = alpha, target = target)
+
 #self, threshold, max_single_predictors, max_interaction_predictors, max_size_interaction,dataset_input_directory, alpha, target):
 dataset_df = dataset.ReadDataset(file=dataset_input_directory, sep='\t').dataset_df
-#score = BDeuScore.BDeuScore(dataset_df=dataset_df, alpha=alpha, target=target)
+#score = scores.BDeuScore(dataset_df=dataset_df, alpha=alpha, target=target)
+score = scores_abs.utils(dataset_df=dataset_df, target=target,alpha = alpha)
+
 search_test_object = search.Search(threshold=threshold,
                        max_single_predictors= max_single_predictors,
                        max_interaction_predictors=max_interaction_predictors,
@@ -50,15 +52,33 @@ search_test_object = search.Search(threshold=threshold,
                        dataset_df = dataset_df,
                        alpha = alpha,
                        target = target)
-print(search_test_object.top_single_list)
-print(search_test_object.top_interaction_list)
+ir_score = score.calculate_score(top = top, subset_size = 1)
+ig_score = score.calculate_information_gain(top = top,subset_size = 1)
+print("ir_score for subset size 1")
+print(ir_score)
+print("ig_score for subset size 1")
+print(ig_score)
+ir_score = score.calculate_score(top = top, subset_size = 2)
+ig_score = score.calculate_information_gain(top = top,subset_size = 2)
+print("ir_score for subset size 2")
+print(ir_score)
+print("ig_score for subset size 2")
+print(ig_score)
+print("Now printing the Bayesian Score of sigle predictor during the exaustive search: ")
+print(search_test_object.single_list_score)
+print("Now printing the Bayesian Score of interaction predictor during the exaustive search: ")
+print(search_test_object.interaction_list_score)
 #print(search_test_object.transformed_dataset)
+
 
 true_parents = search.TrueParents(
     new_dataset = search_test_object.transformed_dataset,
     alpha= alpha,
     target = target,
     maximum_number_of_parents = maximum_number_of_parents)
+print("Now printing the true parents")
+print(true_parents.true_parents)
+
 # ir_score = score.calculate_score(top = top, subset_size = 2)
 # ig_score = score.calculate_information_gain(top = top,subset_size = 2)
 # print("ir_score for subset size 2")
@@ -68,11 +88,12 @@ true_parents = search.TrueParents(
 # print("interaction_strength")
 # print(score.interaction_strength)
 # print("top_single_list")
-# print(search.top_single_list)
+#print(search.top_single_list)
 # print("top_interaction_list")
 # print(search.top_interaction_list)
-print("true_parents")
-print(true_parents.true_parents)
+# print("true_parents")
+# print(true_parents.true_parents)
+
 # res = search.get_top_singel_predictors_score()
 #res = search.get_top_interaction_predictors_score()
 # print(search.top_single_list)

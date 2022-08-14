@@ -104,9 +104,9 @@ class Search:
         self.max_size_interaction = max_size_interaction
         self.score = scores.BDeuScore(dataset_df=dataset_df, alpha=alpha, target=target)
         self.utils = scores_abs.utils(dataset_df=self.dataset, target=self.target,alpha = self.alpha)
-        #self.top_interaction_list = collections.OrderedDict()
-        self.top_interaction_list = self.get_top_interaction_predictors_score()
-        self.top_single_list = self.get_top_singel_predictors_score()
+        #self.interaction_list_score = collections.OrderedDict()
+        self.interaction_list_score = self.get_interaction_predictors_score()
+        self.single_list_score = self.get_singel_predictors_score()
         # initialize the new dataset, kind of global variable
         self.new_dataset = {}
         # use get_new_dataset_after_transform to fill transform dataset
@@ -114,7 +114,7 @@ class Search:
         self.new_status_dataset = {}
 
 
-    def get_top_singel_predictors_score(self):
+    def get_singel_predictors_score(self):
         predictors_list = self.score.dataset_head
         predictors_list.remove(self.target)
         null_score = self.utils.calculate_score(subset_size=0, top="all").values()
@@ -127,7 +127,7 @@ class Search:
                 single_res.append((key.strip("[]''"),val))
         return single_res
 
-    def get_top_interaction_predictors_score(self):
+    def get_interaction_predictors_score(self):
         interaction_res = {}
         #score = BDeuScore(dataset_input_directory=self.dataset_input_directory, alpha=self.alpha, target=self.target)
         #number_of_predictors = score.n
@@ -137,7 +137,7 @@ class Search:
             for key,val in cur_score_dict.items():
                 if key in cur_infoGain_stren:
                     interaction_res[key] = cur_score_dict[key]
-        #return Counter(self.top_interaction_list).most_common(1)
+        #return Counter(self.interaction_list_score).most_common(1)
         return Counter(interaction_res).most_common(self.max_interaction_predictors)
 
     def get_new_dataset_after_transform(self):
@@ -173,7 +173,7 @@ class Search:
 
         #new_dataset = collections.defaultdict(list)
         #self.new_dataset = {}
-        for item in self.top_single_list:
+        for item in self.single_list_score:
             new_col = []
             hash_table = {}
             i = 0
@@ -185,7 +185,7 @@ class Search:
                 new_col.append(hash_table[val])
             self.new_dataset[item[0]] = new_col
         # print(new_dataset)
-        for item in self.top_interaction_list:
+        for item in self.interaction_list_score:
             new_feature_list = generate_inter_list(item)
             new_col = []
             hash_table = {}
