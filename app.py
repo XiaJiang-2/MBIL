@@ -13,8 +13,9 @@ from mbil import search
 from mbil import scores_abs
 
 #
-dataset_input_directory = "datasets/TEST.txt"
-output_directory = "C:/Users/CHX37/Practice"
+#dataset_input_directory = "datasets/TEST.txt"
+#output_directory = "C:/Users/CHX37/Practice"
+dataset_input_directory="/Users/xij6/Documents/Research/git/XiaJiang-2Github/MBIL/datasets/TEST.txt"
 alpha = 4
 target = "E"
 top = 20
