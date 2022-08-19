@@ -1,0 +1,72 @@
+The user entered values for the parameters: 
+alpha1: 4.0
+alpha2: 4.0
+type: 4
+Maximum Number of Parents: 7
+maximum Number of Single Predictors: 20
+maxSetLength: 3
+Maximum Numbers Interactions Reported: 20
+Class Name: E
+threshold: 0.05
+
+Current dataset path: C:\Users\CHX37\PycharmProjects\TEST.txt
+
+Predictor labels after data are processed [Ljava.lang.String;@548a9f61
+Number Of Predictors: 4
+Number Of Records: 5
+
+Null Score: -3.8430301339411956
+Now printing the score of each of the single predictor models:
+Feature 0: B scored: -3.58351893845611
+Feature 1: C scored: -4.276666119016055
+Feature 2: D scored: -4.025351690735149
+Feature 3: F scored: -4.276666119016055
+Top 20 features: [0]
+Time taken IGain: -1.660517027932E9
+
+Now printing interactions and their scores learned by IGain
+[0, 1];-3.7534179752515073
+[0, 3];-4.1588830833596715
+[2, 3];-4.382026634673882
+[1, 2];-4.382026634673882
+[1, 3];-4.852030263919617
+
+Now printing interactions and their Interaction Strength learned by IGain
+[1, 3];0.7663290486273061
+[0, 3];0.22944963659394155
+[2, 3];0.22944963659394169
+[1, 2];0.22944963659394155
+[0, 1];0.22944963659394155
+
+Now printing IGain Score of a model learned by IGain
+[0, 1, 2];0.5709505944546684
+[1, 3];0.17095059445466854
+[2];0.4199730940219749
+[3];0.01997309402197498
+[0, 1];0.5709505944546684
+[0];0.4199730940219749
+[0, 1, 3];0.5709505944546684
+[1, 2, 3];0.5709505944546684
+[0, 2, 3];0.5709505944546684
+[1];0.01997309402197498
+[0, 3];0.5709505944546684
+[2, 3];0.5709505944546686
+[1, 2];0.5709505944546684
+[0, 2];0.4199730940219749
+Time taken by transformation: -1.660517027943E9
+
+Top Features after transformation: [0, 4, 5, 6, 7, 8]
+
+Parent Nodes Indices Identified: [0]
+
+Parent Nodes Names Identified: [0]
+B
+
+True Parents Identified: 
+[B]
+
+
+Retracted Parent Nodes Indices: 
+[0]
+Retracted Parent Nodes Names: 
+[B]

@@ -11,11 +11,14 @@ from mbil import scores
 from mbil import dataset
 from mbil import search
 from mbil import scores_abs
+from mbil import output
 
 #
 #dataset_input_directory = "datasets/TEST.txt"
 #output_directory = "C:/Users/CHX37/Practice"
-dataset_input_directory="/Users/xij6/Documents/Research/git/XiaJiang-2Github/MBIL/datasets/TEST.txt"
+
+dataset_input_directory="C:/Users/CHX37/PycharmProjects/MBIL/datasets/TEST.txt"
+#dataset_input_directory="/Users/xij6/Documents/Research/git/XiaJiang-2Github/MBIL/datasets/TEST.txt"
 alpha = 4
 target = "E"
 top = 20
@@ -53,22 +56,31 @@ search_test_object = search.Search(threshold=threshold,
                        dataset_df = dataset_df,
                        alpha = alpha,
                        target = target)
-ir_score = score.calculate_score(top = top, subset_size = 1)
-ig_score = score.calculate_information_gain(top = top,subset_size = 1)
+
+
+
+null_score = score.calculate_score(top = top, subset_size = 0)
+
+
+ir_score_size1 = score.calculate_score(top = top, subset_size = 1)
+ig_score_size1 = score.calculate_information_gain(top = top,subset_size = 1)
+
 print("ir_score for subset size 1")
-print(ir_score)
+print(ir_score_size1)
 print("ig_score for subset size 1")
-print(ig_score)
-ir_score = score.calculate_score(top = top, subset_size = 2)
-ig_score = score.calculate_information_gain(top = top,subset_size = 2)
+print(ig_score_size1)
+ir_score_size2 = score.calculate_score(top = top, subset_size = 2)
+ig_score_size2 = score.calculate_information_gain(top = top,subset_size = 2)
 print("ir_score for subset size 2")
-print(ir_score)
+print(ir_score_size2)
 print("ig_score for subset size 2")
-print(ig_score)
+print(ig_score_size2)
 print("Now printing the Bayesian Score of sigle predictor during the exaustive search: ")
-print(search_test_object.single_list_score)
+single_list_score = search_test_object.single_list_score
+print(single_list_score)
 print("Now printing the Bayesian Score of interaction predictor during the exaustive search: ")
-print(search_test_object.interaction_list_score)
+interaction_list_score = search_test_object.interaction_list_score
+print(interaction_list_score)
 #print(search_test_object.transformed_dataset)
 
 
@@ -79,6 +91,28 @@ true_parents = search.TrueParents(
     maximum_number_of_parents = maximum_number_of_parents)
 print("Now printing the true parents")
 print(true_parents.true_parents)
+
+##########################################
+interaction_information_gain = {}
+for i in range(1, max_size_interaction + 1):
+
+    name = "size" + str(i)
+    interaction_information_gain[name] = score.calculate_information_gain(top = top,subset_size = i)
+dataset_name = "TEST"
+all_input_hash_map = {"alpha": alpha,"target":target, "top":top, "max_single_predictors":max_single_predictors, "max_interaction_predictors":max_interaction_predictors, "max_size_interaction":max_size_interaction, "threshold":threshold, "maximum_number_of_parents":maximum_number_of_parents}
+number_of_predictors = dataset_df.shape[1] - 1
+number_of_records = dataset_df.shape[0]
+predictors_records_number = {"number_of_predictors":number_of_predictors, "number_of_records":number_of_records}
+output.output(  dataset_name=dataset_name,
+                allinput =all_input_hash_map,
+                datasetpath = dataset_input_directory,
+                dataset_information = predictors_records_number,
+                null_score = null_score,
+                single_score = ir_score_size1,
+                interaction_score = interaction_list_score,
+                interaction_information_gain = interaction_information_gain,
+                true_parent = true_parents.true_parents
+       )
 
 # ir_score = score.calculate_score(top = top, subset_size = 2)
 # ig_score = score.calculate_information_gain(top = top,subset_size = 2)
@@ -128,6 +162,8 @@ print(true_parents.true_parents)
 # res2_sorted = sorted(res2.items(), key=lambda item: item[1])
 # print(res1_sorted[:top])
 # print(res2_sorted[:top])
+
+
 
 
 
