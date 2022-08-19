@@ -4,6 +4,7 @@ from collections import defaultdict, Counter
 import pandas as pd
 from mbil import scores
 from mbil import scores_abs
+import matplotlib.pyplot as plt
 
 import itertools
 
@@ -206,11 +207,18 @@ class Search:
         #     print(key)
         return self.new_dataset
 
+    def plot_score(self,size):
+        res = self.utils.calculate_score(subset_size = size)
+        plt.bar(*zip(*res.items()))
+        plt.title("Bdeu score of " + str(size) + " predictors")
+        plt.show()
+        #print(res_hash)
 
-
-
-
-
+    def plot_information_gain(self, size):
+        res = self.utils.calculate_information_gain(subset_size = size)
+        plt.bar(*zip(*res.items()))
+        plt.title("Information gain of " + str(size) + " predictors")
+        plt.show()
 
 
 

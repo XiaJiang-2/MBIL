@@ -10,3 +10,5 @@
 
 Example of BDeu Score
 Chuhan finish
+####score_abs is the kind of like tha abstract class to finish basic calculation work which can be reused by other function in the future
+####search_test_object is the class to do the final search according to calculation result from score_abs class

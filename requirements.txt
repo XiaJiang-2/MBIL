@@ -38,3 +38,4 @@ urllib3==1.26.9
 wincertstore==0.2
 yapf==0.32.0
 zipp==3.8.0
+matplotlib

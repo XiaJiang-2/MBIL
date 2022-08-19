@@ -48,7 +48,8 @@ maximum_number_of_parents=7
 dataset_df = dataset.ReadDataset(file=dataset_input_directory, sep='\t').dataset_df
 #score = scores.BDeuScore(dataset_df=dataset_df, alpha=alpha, target=target)
 score = scores_abs.utils(dataset_df=dataset_df, target=target,alpha = alpha)
-
+# score_abs is the kind of like tha abstract class to finish basic calculation work which can be reused by other function in the future
+# search_test_object is the class to do the final search according to calculation result from score_abs class
 search_test_object = search.Search(threshold=threshold,
                        max_single_predictors= max_single_predictors,
                        max_interaction_predictors=max_interaction_predictors,
@@ -81,6 +82,9 @@ print(single_list_score)
 print("Now printing the Bayesian Score of interaction predictor during the exaustive search: ")
 interaction_list_score = search_test_object.interaction_list_score
 print(interaction_list_score)
+## plot function
+search_test_object.plot_score(2)
+search_test_object.plot_information_gain(2)
 #print(search_test_object.transformed_dataset)
 
 
@@ -95,7 +99,6 @@ print(true_parents.true_parents)
 ##########################################
 interaction_information_gain = {}
 for i in range(1, max_size_interaction + 1):
-
     name = "size" + str(i)
     interaction_information_gain[name] = score.calculate_information_gain(top = top,subset_size = i)
 dataset_name = "TEST"
