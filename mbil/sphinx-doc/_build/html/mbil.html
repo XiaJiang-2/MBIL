@@ -385,18 +385,40 @@
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mbil.search.</span></span><span class="sig-name descname"><span class="pre">Search</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">threshold</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_single_predictors</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_interaction_predictors</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_size_interaction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/search.html#Search"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.search.Search" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
+<dt class="sig sig-object py" id="mbil.search.Search.get_interaction_predictors_score">
+<span class="sig-name descname"><span class="pre">get_interaction_predictors_score</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/search.html#Search.get_interaction_predictors_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.search.Search.get_interaction_predictors_score" title="Permalink to this definition"></a></dt>
+<dd><p>A function to get top interaction predictors and corresponding score according to the input self.max_interaction_predictors</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return float</dt>
+<dd class="field-odd"><p>a list including all interaction predictors and corresponding score</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="mbil.search.Search.get_new_dataset_after_transform">
 <span class="sig-name descname"><span class="pre">get_new_dataset_after_transform</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/search.html#Search.get_new_dataset_after_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.search.Search.get_new_dataset_after_transform" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="mbil.search.Search.get_top_interaction_predictors_score">
-<span class="sig-name descname"><span class="pre">get_top_interaction_predictors_score</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/search.html#Search.get_top_interaction_predictors_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.search.Search.get_top_interaction_predictors_score" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="mbil.search.Search.get_single_predictors_score">
+<span class="sig-name descname"><span class="pre">get_single_predictors_score</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/search.html#Search.get_single_predictors_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.search.Search.get_single_predictors_score" title="Permalink to this definition"></a></dt>
+<dd><p>A function to get all single predictors which the score is greater than null_score</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return float</dt>
+<dd class="field-odd"><p>a list including all single predictors and corresponding score</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mbil.search.Search.plot_information_gain">
+<span class="sig-name descname"><span class="pre">plot_information_gain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/search.html#Search.plot_information_gain"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.search.Search.plot_information_gain" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="mbil.search.Search.get_top_singel_predictors_score">
-<span class="sig-name descname"><span class="pre">get_top_singel_predictors_score</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/search.html#Search.get_top_singel_predictors_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.search.Search.get_top_singel_predictors_score" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="mbil.search.Search.plot_score">
+<span class="sig-name descname"><span class="pre">plot_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/search.html#Search.plot_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.search.Search.plot_score" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>

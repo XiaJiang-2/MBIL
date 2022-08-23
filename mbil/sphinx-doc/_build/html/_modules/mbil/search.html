@@ -70,6 +70,7 @@
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">mbil</span> <span class="kn">import</span> <span class="n">scores</span>
 <span class="kn">from</span> <span class="nn">mbil</span> <span class="kn">import</span> <span class="n">scores_abs</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <span class="kn">import</span> <span class="nn">itertools</span>
 
@@ -161,6 +162,14 @@
 <div class="viewcode-block" id="Search"><a class="viewcode-back" href="../../mbil.html#mbil.search.Search">[docs]</a><span class="k">class</span> <span class="nc">Search</span><span class="p">:</span>
     <span class="c1"># get top single predictors and top interaction predictors and transform dataset df and new_status_dataset</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">threshold</span><span class="p">,</span> <span class="n">max_single_predictors</span><span class="p">,</span> <span class="n">max_interaction_predictors</span><span class="p">,</span> <span class="n">max_size_interaction</span><span class="p">,</span><span class="n">dataset_df</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        init function of search class,include functions &quot;get_single_predictors_score&quot;, &quot;get_interaction_predictors_score&quot;, &quot;get_new_dataset_after_transform&quot; and so on.</span>
+
+<span class="sd">        :param single_list_score: A list to store the single predictor and their corresponding score after MBIL search process</span>
+<span class="sd">        :param interaction_list_score: A list to store the interaction predictor and their corresponding score after MBIL search process</span>
+<span class="sd">        :param transformed_dataset: A dictionary to store the transformed dataset</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="n">alpha</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">target</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span> <span class="o">=</span> <span class="n">threshold</span>
@@ -170,9 +179,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">max_size_interaction</span> <span class="o">=</span> <span class="n">max_size_interaction</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">score</span> <span class="o">=</span> <span class="n">scores</span><span class="o">.</span><span class="n">BDeuScore</span><span class="p">(</span><span class="n">dataset_df</span><span class="o">=</span><span class="n">dataset_df</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">utils</span> <span class="o">=</span> <span class="n">scores_abs</span><span class="o">.</span><span class="n">utils</span><span class="p">(</span><span class="n">dataset_df</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">,</span><span class="n">alpha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="p">)</span>
-        <span class="c1">#self.top_interaction_list = collections.OrderedDict()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">top_interaction_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_top_interaction_predictors_score</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">top_single_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_top_singel_predictors_score</span><span class="p">()</span>
+        <span class="c1">#self.interaction_list_score = collections.OrderedDict()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">interaction_list_score</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_interaction_predictors_score</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">single_list_score</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_single_predictors_score</span><span class="p">()</span>
         <span class="c1"># initialize the new dataset, kind of global variable</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">new_dataset</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="c1"># use get_new_dataset_after_transform to fill transform dataset</span>
@@ -180,7 +189,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">new_status_dataset</span> <span class="o">=</span> <span class="p">{}</span>
 
 
-<div class="viewcode-block" id="Search.get_top_singel_predictors_score"><a class="viewcode-back" href="../../mbil.html#mbil.search.Search.get_top_singel_predictors_score">[docs]</a>    <span class="k">def</span> <span class="nf">get_top_singel_predictors_score</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Search.get_single_predictors_score"><a class="viewcode-back" href="../../mbil.html#mbil.search.Search.get_single_predictors_score">[docs]</a>    <span class="k">def</span> <span class="nf">get_single_predictors_score</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        A function to get all single predictors which the score is greater than null_score</span>
+
+<span class="sd">        :return float: a list including all single predictors and corresponding score</span>
+<span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">predictors_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">score</span><span class="o">.</span><span class="n">dataset_head</span>
         <span class="n">predictors_list</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
         <span class="n">null_score</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">calculate_score</span><span class="p">(</span><span class="n">subset_size</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
@@ -193,7 +207,12 @@
                 <span class="n">single_res</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">key</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;[]&#39;&#39;&quot;</span><span class="p">),</span><span class="n">val</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">single_res</span></div>
 
-<div class="viewcode-block" id="Search.get_top_interaction_predictors_score"><a class="viewcode-back" href="../../mbil.html#mbil.search.Search.get_top_interaction_predictors_score">[docs]</a>    <span class="k">def</span> <span class="nf">get_top_interaction_predictors_score</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Search.get_interaction_predictors_score"><a class="viewcode-back" href="../../mbil.html#mbil.search.Search.get_interaction_predictors_score">[docs]</a>    <span class="k">def</span> <span class="nf">get_interaction_predictors_score</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        A function to get top interaction predictors and corresponding score according to the input self.max_interaction_predictors</span>
+
+<span class="sd">        :return float: a list including all interaction predictors and corresponding score</span>
+<span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">interaction_res</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="c1">#score = BDeuScore(dataset_input_directory=self.dataset_input_directory, alpha=self.alpha, target=self.target)</span>
         <span class="c1">#number_of_predictors = score.n</span>
@@ -203,7 +222,7 @@
             <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">val</span> <span class="ow">in</span> <span class="n">cur_score_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">cur_infoGain_stren</span><span class="p">:</span>
                     <span class="n">interaction_res</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">cur_score_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-        <span class="c1">#return Counter(self.top_interaction_list).most_common(1)</span>
+        <span class="c1">#return Counter(self.interaction_list_score).most_common(1)</span>
         <span class="k">return</span> <span class="n">Counter</span><span class="p">(</span><span class="n">interaction_res</span><span class="p">)</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_interaction_predictors</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Search.get_new_dataset_after_transform"><a class="viewcode-back" href="../../mbil.html#mbil.search.Search.get_new_dataset_after_transform">[docs]</a>    <span class="k">def</span> <span class="nf">get_new_dataset_after_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -239,7 +258,7 @@
 
         <span class="c1">#new_dataset = collections.defaultdict(list)</span>
         <span class="c1">#self.new_dataset = {}</span>
-        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">top_single_list</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">single_list_score</span><span class="p">:</span>
             <span class="n">new_col</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="n">hash_table</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
@@ -251,7 +270,7 @@
                 <span class="n">new_col</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hash_table</span><span class="p">[</span><span class="n">val</span><span class="p">])</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">new_dataset</span><span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">new_col</span>
         <span class="c1"># print(new_dataset)</span>
-        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">top_interaction_list</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">interaction_list_score</span><span class="p">:</span>
             <span class="n">new_feature_list</span> <span class="o">=</span> <span class="n">generate_inter_list</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
             <span class="n">new_col</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="n">hash_table</span> <span class="o">=</span> <span class="p">{}</span>
@@ -270,13 +289,20 @@
         <span class="c1"># for key,val in self.new_dataset.items():</span>
         <span class="c1">#     key = key[1:-1].split(&#39;,&#39;)</span>
         <span class="c1">#     print(key)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">new_dataset</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">new_dataset</span></div>
 
+<div class="viewcode-block" id="Search.plot_score"><a class="viewcode-back" href="../../mbil.html#mbil.search.Search.plot_score">[docs]</a>    <span class="k">def</span> <span class="nf">plot_score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">size</span><span class="p">):</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">calculate_score</span><span class="p">(</span><span class="n">subset_size</span> <span class="o">=</span> <span class="n">size</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="o">*</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">res</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Bdeu score of &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; predictors&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+        <span class="c1">#print(res_hash)</span>
 
-
-
-
-
+<div class="viewcode-block" id="Search.plot_information_gain"><a class="viewcode-back" href="../../mbil.html#mbil.search.Search.plot_information_gain">[docs]</a>    <span class="k">def</span> <span class="nf">plot_information_gain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">calculate_information_gain</span><span class="p">(</span><span class="n">subset_size</span> <span class="o">=</span> <span class="n">size</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="o">*</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">res</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Information gain of &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; predictors&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div></div>
 
 
 
