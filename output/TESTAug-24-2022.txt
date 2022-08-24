@@ -1,0 +1,33 @@
+The user entered values for the parameters:alpha: 4
+target: E
+top: 20
+max_single_predictors: 20
+max_interaction_predictors: 20
+max_size_interaction: 3
+threshold: 0.05
+maximum_number_of_parents: 7
+
+Current dataset path:C:/Users/CHX37/PycharmProjects/MBIL/datasets/TEST.txt
+number_of_predictors: 4
+number_of_records: 5
+
+Null Score:[('[]', -3.8430301339411947)]
+Now printing the score of each of the single predictor models:
+("['B']", -3.5835189384561104)
+("['D']", -4.025351690735145)
+("['C']", -4.276666119016055)
+("['F']", -4.276666119016055)
+
+Now printing interactions and their scores learned by IGain:
+("['B', 'C']", -3.753417975251508)
+("['B', 'F']", -4.158883083359674)
+("['C', 'D']", -4.382026634673884)
+("['D', 'F']", -4.382026634673884)
+("['C', 'F']", -4.85203026391962)
+
+Now printing IGain Score of a model learned by IGain:
+size1: [("['B']", 0.4199730940219749), ("['D']", 0.4199730940219749), ("['C']", 0.01997309402197498), ("['F']", 0.01997309402197498)]
+size2: [("['D', 'F']", 0.5709505944546686), ("['B', 'C']", 0.5709505944546684), ("['B', 'F']", 0.5709505944546684), ("['C', 'D']", 0.5709505944546684), ("['B', 'D']", 0.4199730940219749), ("['C', 'F']", 0.17095059445466854)]
+size3: [("['B', 'C', 'D']", 0.5709505944546684), ("['B', 'C', 'F']", 0.5709505944546684), ("['B', 'D', 'F']", 0.5709505944546684), ("['C', 'D', 'F']", 0.5709505944546684)]
+
+True Parents Identified: ['B']

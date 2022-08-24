@@ -375,18 +375,57 @@
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="mbil.scores_abs.utils.plot_information_gain">
+<span class="sig-name descname"><span class="pre">plot_information_gain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/scores_abs.html#utils.plot_information_gain"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.scores_abs.utils.plot_information_gain" title="Permalink to this definition"></a></dt>
+<dd><p>A function to plot the bar graph of final interaction predictors according to the size of subset</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>bar graph</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mbil.scores_abs.utils.plot_score">
+<span class="sig-name descname"><span class="pre">plot_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/scores_abs.html#utils.plot_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.scores_abs.utils.plot_score" title="Permalink to this definition"></a></dt>
+<dd><p>A function to plot the bar graph of final single predictors according to the size of subset</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>bar graph</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </section>
 <section id="module-mbil.search">
 <span id="mbil-search-module"></span><h2>mbil.search module<a class="headerlink" href="#module-mbil.search" title="Permalink to this headline"></a></h2>
 <dl class="py class">
-<dt class="sig sig-object py" id="mbil.search.Search">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mbil.search.</span></span><span class="sig-name descname"><span class="pre">Search</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">threshold</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_single_predictors</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_interaction_predictors</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_size_interaction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/search.html#Search"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.search.Search" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="mbil.search.TrueParents">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mbil.search.</span></span><span class="sig-name descname"><span class="pre">TrueParents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maximum_number_of_parents</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/search.html#TrueParents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.search.TrueParents" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
-<dt class="sig sig-object py" id="mbil.search.Search.get_interaction_predictors_score">
-<span class="sig-name descname"><span class="pre">get_interaction_predictors_score</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/search.html#Search.get_interaction_predictors_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.search.Search.get_interaction_predictors_score" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="mbil.search.TrueParents.detecting_true_parents">
+<span class="sig-name descname"><span class="pre">detecting_true_parents</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/search.html#TrueParents.detecting_true_parents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.search.TrueParents.detecting_true_parents" title="Permalink to this definition"></a></dt>
+<dd><p>A function to detect the true parents according to the parent list, parent_list will be like B  [‘B’, ‘C’]  [‘B’, ‘F’]  [‘C’, ‘D’]  [‘D’, ‘F’]  [‘C’, ‘F’]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return float</dt>
+<dd class="field-odd"><p>a list including all direct cause according to the parent list</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mbil.search.mbilsearch">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mbil.search.</span></span><span class="sig-name descname"><span class="pre">mbilsearch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">threshold</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_single_predictors</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_interaction_predictors</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_size_interaction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/search.html#mbilsearch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.search.mbilsearch" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mbil.search.mbilsearch.get_interaction_predictors_score">
+<span class="sig-name descname"><span class="pre">get_interaction_predictors_score</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/search.html#mbilsearch.get_interaction_predictors_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.search.mbilsearch.get_interaction_predictors_score" title="Permalink to this definition"></a></dt>
 <dd><p>A function to get top interaction predictors and corresponding score according to the input self.max_interaction_predictors</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return float</dt>
@@ -396,13 +435,19 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="mbil.search.Search.get_new_dataset_after_transform">
-<span class="sig-name descname"><span class="pre">get_new_dataset_after_transform</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/search.html#Search.get_new_dataset_after_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.search.Search.get_new_dataset_after_transform" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dt class="sig sig-object py" id="mbil.search.mbilsearch.get_new_dataset_after_transform">
+<span class="sig-name descname"><span class="pre">get_new_dataset_after_transform</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/search.html#mbilsearch.get_new_dataset_after_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.search.mbilsearch.get_new_dataset_after_transform" title="Permalink to this definition"></a></dt>
+<dd><p>A function to generate transformed dataset according to search result like, [[B, [‘B’, ‘C’], [‘B’, ‘F’], [‘C’, ‘D’], [‘D’, ‘F’], [‘C’, ‘F’], E], [0, 0, 0, 0, 0, 0, 0], [1, 1, 1, 1, 1, 1, 1],[1, 2, 2, 2, 2, 2, 0],[1, 2, 2, 2, 2, 2, 1],[0, 0, 3, 3, 3, 1, 0]]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>dataframe see above</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="mbil.search.Search.get_single_predictors_score">
-<span class="sig-name descname"><span class="pre">get_single_predictors_score</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/search.html#Search.get_single_predictors_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.search.Search.get_single_predictors_score" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="mbil.search.mbilsearch.get_single_predictors_score">
+<span class="sig-name descname"><span class="pre">get_single_predictors_score</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/search.html#mbilsearch.get_single_predictors_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.search.mbilsearch.get_single_predictors_score" title="Permalink to this definition"></a></dt>
 <dd><p>A function to get all single predictors which the score is greater than null_score</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return float</dt>
@@ -412,25 +457,26 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="mbil.search.Search.plot_information_gain">
-<span class="sig-name descname"><span class="pre">plot_information_gain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/search.html#Search.plot_information_gain"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.search.Search.plot_information_gain" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="mbil.search.Search.plot_score">
-<span class="sig-name descname"><span class="pre">plot_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/search.html#Search.plot_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.search.Search.plot_score" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
+<dt class="sig sig-object py" id="mbil.search.mbilsearch.plot_information_gain_aftersearch">
+<span class="sig-name descname"><span class="pre">plot_information_gain_aftersearch</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/search.html#mbilsearch.plot_information_gain_aftersearch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.search.mbilsearch.plot_information_gain_aftersearch" title="Permalink to this definition"></a></dt>
+<dd><p>A function to plot the bar graph of final interaction predictors according to the result of MBIL search</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>bar graph</p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="py class">
-<dt class="sig sig-object py" id="mbil.search.TrueParents">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mbil.search.</span></span><span class="sig-name descname"><span class="pre">TrueParents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maximum_number_of_parents</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/search.html#TrueParents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.search.TrueParents" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
-<dt class="sig sig-object py" id="mbil.search.TrueParents.detecting_true_parents">
-<span class="sig-name descname"><span class="pre">detecting_true_parents</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/search.html#TrueParents.detecting_true_parents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.search.TrueParents.detecting_true_parents" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dt class="sig sig-object py" id="mbil.search.mbilsearch.plot_score_aftersearch">
+<span class="sig-name descname"><span class="pre">plot_score_aftersearch</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/search.html#mbilsearch.plot_score_aftersearch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.search.mbilsearch.plot_score_aftersearch" title="Permalink to this definition"></a></dt>
+<dd><p>A function to plot the bar graph of final single predictors according to the result of MBIL search</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>bar graph</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 

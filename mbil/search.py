@@ -11,7 +11,7 @@ import itertools
 # Output: should be natural log of score
 
 
-class TrueParents:
+class directCause:
     def __init__(self, new_dataset,alpha,target,maximum_number_of_parents):
         self.new_dataset = new_dataset
         self.parent_list = list(self.new_dataset.columns)
@@ -21,16 +21,17 @@ class TrueParents:
         self.score = scores.BDeuScore(dataset_df=self.new_dataset, alpha=self.alpha, target=self.target)
         self.utils = scores_abs.utils(dataset_df=self.new_dataset,target=self.target, alpha = self.alpha)
         self.maximum_number_of_parents = maximum_number_of_parents
-        self.true_parents = self.detecting_true_parents()
+        self.direc_cause = self.detecting_direct_cause()
 
 
-    def detecting_true_parents(self):
-        # parent_list will be B  ['B', 'C']  ['B', 'F']  ['C', 'D']  ['D', 'F']  ['C', 'F']  E
-        # 1. ["BC" ,"BF", "DF", "CD","CF",0,]
-        # 2. parent_list = [1,0], i = 1, [],[]
-        # print(new_dataset)
-        # parent_list = list(new_dataset.columns)
-        # print(parent_list)
+    def detecting_direct_cause(self):
+        '''
+        A function to detect the true parents according to the parent list, parent_list will be like B  ['B', 'C']  ['B', 'F']  ['C', 'D']  ['D', 'F']  ['C', 'F']
+
+        :return float: a list including all direct cause according to the parent list
+        '''
+
+
         def iterator(parent_list):
             for item in parent_list:
                 yield item
@@ -91,11 +92,19 @@ class TrueParents:
             i+=1
         return self.parent_list
 
-    # self.detecting_true_parents(self.new_dataset)
 
-class Search:
+
+class mbilsearch:
     # get top single predictors and top interaction predictors and transform dataset df and new_status_dataset
     def __init__(self, threshold, max_single_predictors, max_interaction_predictors, max_size_interaction,dataset_df, alpha, target):
+        '''
+        init function of search class,include functions "get_single_predictors_score", "get_interaction_predictors_score", "get_new_dataset_after_transform" and so on.
+
+        :param single_list_score: A list to store the single predictor and their corresponding score after MBIL search process
+        :param interaction_list_score: A list to store the interaction predictor and their corresponding score after MBIL search process
+        :param transformed_dataset: A dictionary to store the transformed dataset
+
+        '''
         self.alpha = alpha
         self.target = target
         self.threshold = threshold
@@ -107,7 +116,7 @@ class Search:
         self.utils = scores_abs.utils(dataset_df=self.dataset, target=self.target,alpha = self.alpha)
         #self.interaction_list_score = collections.OrderedDict()
         self.interaction_list_score = self.get_interaction_predictors_score()
-        self.single_list_score = self.get_singel_predictors_score()
+        self.single_list_score = self.get_single_predictors_score()
         # initialize the new dataset, kind of global variable
         self.new_dataset = {}
         # use get_new_dataset_after_transform to fill transform dataset
@@ -115,7 +124,12 @@ class Search:
         self.new_status_dataset = {}
 
 
-    def get_singel_predictors_score(self):
+    def get_single_predictors_score(self):
+        '''
+        A function to get all single predictors which the score is greater than null_score
+
+        :return float: a list including all single predictors and corresponding score
+        '''
         predictors_list = self.score.dataset_head
         predictors_list.remove(self.target)
         null_score = self.utils.calculate_score(subset_size=0, top="all").values()
@@ -129,6 +143,11 @@ class Search:
         return single_res
 
     def get_interaction_predictors_score(self):
+        '''
+        A function to get top interaction predictors and corresponding score according to the input self.max_interaction_predictors
+
+        :return float: a list including all interaction predictors and corresponding score
+        '''
         interaction_res = {}
         #score = BDeuScore(dataset_input_directory=self.dataset_input_directory, alpha=self.alpha, target=self.target)
         #number_of_predictors = score.n
@@ -142,6 +161,11 @@ class Search:
         return Counter(interaction_res).most_common(self.max_interaction_predictors)
 
     def get_new_dataset_after_transform(self):
+        '''
+        A function to generate transformed dataset according to search result like, [[B, ['B', 'C'], ['B', 'F'], ['C', 'D'], ['D', 'F'], ['C', 'F'], E], [0, 0, 0, 0, 0, 0, 0], [1, 1, 1, 1, 1, 1, 1],[1, 2, 2, 2, 2, 2, 0],[1, 2, 2, 2, 2, 2, 1],[0, 0, 3, 3, 3, 1, 0]]
+
+        :return: dataframe see above
+        '''
         def generate_inter_list(interaction):
             interaction = list(interaction[0][1:-1].split(", "))
             new_col = []
@@ -155,6 +179,12 @@ class Search:
             return new_col
 
         def generate_new_status_dataset(newdataset):
+            '''
+            A function
+
+            :return: bar graph
+            '''
+
             newdataset_matrix = list(newdataset.values())
             m = len(newdataset_matrix)
             n = len(newdataset_matrix[0])
@@ -207,17 +237,36 @@ class Search:
         #     print(key)
         return self.new_dataset
 
-    def plot_score(self,size):
-        res = self.utils.calculate_score(subset_size = size)
-        plt.bar(*zip(*res.items()))
-        plt.title("Bdeu score of " + str(size) + " predictors")
+    def plot_score_aftersearch(self):
+        '''
+        A function to plot the bar graph of final single predictors according to the result of MBIL search
+
+        :return: bar graph
+        '''
+
+        res = self.single_list_score
+        dic = {}
+        for item in res:
+            dic[item[0]] = item[1]
+        print(res)
+        plt.bar(*zip(*dic.items()))
+        plt.title("Bdeu score of " + str(len(res)) + " predictors after MBIL search")
         plt.show()
         #print(res_hash)
 
-    def plot_information_gain(self, size):
-        res = self.utils.calculate_information_gain(subset_size = size)
-        plt.bar(*zip(*res.items()))
-        plt.title("Information gain of " + str(size) + " predictors")
+    def plot_information_gain_aftersearch(self):
+        '''
+        A function to plot the bar graph of final interaction predictors according to the result of MBIL search
+
+        :return: bar graph
+        '''
+
+        res = self.interaction_list_score
+        dic = {}
+        for item in res:
+            dic[item[0]] = item[1]
+        plt.bar(*zip(*dic.items()))
+        plt.title("Information gain of " + str(len(res)) + " predictors after MBIL search")
         plt.show()
 
 

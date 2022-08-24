@@ -50,7 +50,7 @@ dataset_df = dataset.ReadDataset(file=dataset_input_directory, sep='\t').dataset
 score = scores_abs.utils(dataset_df=dataset_df, target=target,alpha = alpha)
 # score_abs is the kind of like tha abstract class to finish basic calculation work which can be reused by other function in the future
 # search_test_object is the class to do the final search according to calculation result from score_abs class
-search_test_object = search.Search(threshold=threshold,
+search_test_object = search.mbilsearch(threshold=threshold,
                        max_single_predictors= max_single_predictors,
                        max_interaction_predictors=max_interaction_predictors,
                        max_size_interaction= max_size_interaction,
@@ -83,18 +83,25 @@ print("Now printing the Bayesian Score of interaction predictor during the exaus
 interaction_list_score = search_test_object.interaction_list_score
 print(interaction_list_score)
 ## plot function
-search_test_object.plot_score(2)
-search_test_object.plot_information_gain(2)
+# score.plot_score(2)
+# score.plot_information_gain(2)
+search_test_object.plot_score_aftersearch()
+search_test_object.plot_information_gain_aftersearch()
+print("new dataset after search")
+print(search_test_object.new_dataset)
+print("dataset status")
+print(search_test_object.new_status_dataset)
+
 #print(search_test_object.transformed_dataset)
 
 
-true_parents = search.TrueParents(
+direct_cause_obj = search.directCause(
     new_dataset = search_test_object.transformed_dataset,
     alpha= alpha,
     target = target,
     maximum_number_of_parents = maximum_number_of_parents)
 print("Now printing the true parents")
-print(true_parents.true_parents)
+print(direct_cause_obj.direc_cause)
 
 ##########################################
 interaction_information_gain = {}
@@ -114,7 +121,7 @@ output.output(  dataset_name=dataset_name,
                 single_score = ir_score_size1,
                 interaction_score = interaction_list_score,
                 interaction_information_gain = interaction_information_gain,
-                true_parent = true_parents.true_parents
+                true_parent = direct_cause_obj.direc_cause
        )
 
 # ir_score = score.calculate_score(top = top, subset_size = 2)

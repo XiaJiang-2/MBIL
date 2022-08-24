@@ -1,3 +1,5 @@
+from matplotlib import pyplot as plt
+
 from mbil import scores
 class utils:
     def __init__(self,dataset_df, target, alpha):
@@ -147,6 +149,29 @@ class utils:
         if add:
             self.interaction_strength[str(curset)] = self.IS
         return add
+
+    def plot_score(self,size):
+        '''
+        A function to plot the bar graph of final single predictors according to the size of subset
+
+        :return: bar graph
+        '''
+        res = self.calculate_score(subset_size = size)
+        plt.bar(*zip(*res.items()))
+        plt.title("Bdeu score of " + str(size) + " predictors")
+        plt.show()
+        #print(res_hash)
+
+    def plot_information_gain(self, size):
+        '''
+        A function to plot the bar graph of final interaction predictors according to the size of subset
+
+        :return: bar graph
+        '''
+        res = self.calculate_information_gain(subset_size = size)
+        plt.bar(*zip(*res.items()))
+        plt.title("Information gain of " + str(size) + " predictors")
+        plt.show()
 # from abc import ABC, abstractmethod
 #
 #
