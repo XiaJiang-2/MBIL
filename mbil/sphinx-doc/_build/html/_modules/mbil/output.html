@@ -79,6 +79,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">interaction_score</span> <span class="o">=</span> <span class="n">interaction_score</span><span class="p">,</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">direc_cause</span> <span class="o">=</span> <span class="n">direc_cause</span>
 <div class="viewcode-block" id="output.output_log"><a class="viewcode-back" href="../../mbil.html#mbil.output.output.output_log">[docs]</a>    <span class="k">def</span> <span class="nf">output_log</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">output_path</span> <span class="o">=</span> <span class="s2">&quot;output/&quot;</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        A function to output the log file</span>
+
+<span class="sd">        :param output_path: the output_path to store the text file</span>
+
+<span class="sd">        :return float: the text file including all input information and final result</span>
+<span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;Log &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">today</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%b-</span><span class="si">%d</span><span class="s2">-%Y&quot;</span><span class="p">))</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_path</span> <span class="o">+</span> <span class="n">file_name</span> <span class="o">+</span> <span class="s1">&#39;.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;The user entered values for the parameters:&quot;</span><span class="p">)</span>
@@ -111,35 +118,60 @@
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Put log file in &quot;</span> <span class="o">+</span> <span class="n">output_path</span> <span class="o">+</span> <span class="s2">&quot; successfully&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="output.output_single_predictors"><a class="viewcode-back" href="../../mbil.html#mbil.output.output.output_single_predictors">[docs]</a>    <span class="k">def</span> <span class="nf">output_single_predictors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_path</span> <span class="o">=</span> <span class="s2">&quot;output/&quot;</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        A function to output the single predictors</span>
+
+<span class="sd">        :param output_path: the output_path to store the cvs file</span>
+
+<span class="sd">        :return float: the cvs file including all single predictors after mbil search</span>
+<span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;Learned_nodes_&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">today</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%b-</span><span class="si">%d</span><span class="s2">-%Y&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.csv&quot;</span><span class="p">)</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_path</span><span class="o">+</span> <span class="n">file_name</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;UTF8&#39;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_path</span><span class="o">+</span> <span class="n">file_name</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;UTF8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="c1"># create the csv writer</span>
             <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">single_score</span><span class="p">:</span>
             <span class="c1"># write a row to the csv file</span>
                 <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Put single nodes file in &quot;</span> <span class="o">+</span> <span class="n">output_path</span> <span class="o">+</span> <span class="s2">&quot; successfully&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="output.output_interaction_predictors"><a class="viewcode-back" href="../../mbil.html#mbil.output.output.output_interaction_predictors">[docs]</a>    <span class="k">def</span> <span class="nf">output_interaction_predictors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_path</span> <span class="o">=</span> <span class="s2">&quot;output/&quot;</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        A function to output the interaction predictors</span>
+
+<span class="sd">        :param output_path: the output_path to store the cvs file</span>
+
+<span class="sd">        :return float: the cvs file including all interaction predictors after mbil search</span>
+<span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;Learned_interactions_&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">today</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%b-</span><span class="si">%d</span><span class="s2">-%Y&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.csv&quot;</span><span class="p">)</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_path</span> <span class="o">+</span> <span class="n">file_name</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;UTF8&#39;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_path</span> <span class="o">+</span> <span class="n">file_name</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;UTF8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="c1"># create the csv writer</span>
             <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">interaction_score</span><span class="p">:</span>
             <span class="c1"># write a row to the csv file</span>
                 <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Put interaction nodes file in &quot;</span> <span class="o">+</span> <span class="n">output_path</span> <span class="o">+</span> <span class="s2">&quot; successfully&quot;</span><span class="p">)</span></div>
 
 
 
 <div class="viewcode-block" id="output.output_direct_cause"><a class="viewcode-back" href="../../mbil.html#mbil.output.output.output_direct_cause">[docs]</a>    <span class="k">def</span> <span class="nf">output_direct_cause</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_path</span> <span class="o">=</span> <span class="s2">&quot;output/&quot;</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        A function to output the direct cause</span>
+
+<span class="sd">        :param output_path: the output_path to store the cvs file</span>
+
+<span class="sd">        :return float: the cvs file including all direct cause after mbil search</span>
+<span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;Learned_direct_cause_&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">today</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%b-</span><span class="si">%d</span><span class="s2">-%Y&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.csv&quot;</span><span class="p">)</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_path</span> <span class="o">+</span> <span class="n">file_name</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;UTF8&#39;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_path</span> <span class="o">+</span> <span class="n">file_name</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;UTF8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="c1"># create the csv writer</span>
-            <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">direc_cause</span><span class="p">:</span>
                 <span class="c1"># write a row to the csv file</span>
                 <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Put direct cause file in &quot;</span> <span class="o">+</span> <span class="n">output_path</span> <span class="o">+</span> <span class="s2">&quot; successfully&quot;</span><span class="p">)</span></div></div>
 
 

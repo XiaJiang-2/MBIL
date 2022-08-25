@@ -100,6 +100,14 @@ class BDeuScore():
             #print("the null score is " + str(score))
         return score
     def calculate_interaction_strength(self, subset_size,dataset, threshold = 0.05):
+        '''
+        A function to calculate interaction_strength
+
+        :param subset_size: the size of the set you want to calculate interaction_strength
+        :param dataset: original dataset
+        :param threshold: the input threshold
+        :return score: a hash map to store all possible result, the key is the subset and the value is the interaction_strength }
+        '''
         if subset_size > 1:
             feature_list_excepet_target = list(self.dataset_df.columns)
             feature_list_excepet_target.remove(self.target)
@@ -118,8 +126,8 @@ class BDeuScore():
         A function to check is this curset interaction can be added to the
 
         :param self: instance of BDeuScore class
-        :param curset:
-        :param threshold:
+        :param curset: the current set that should be checked if add
+        :param threshold: the input threshold
         :return score: a hash map to store all possible result, the key is the subset and the value is the BDeu score, like{"['B','C']":-3.7534179752515073, "['B','D']":-4.382026634673881,...}
         '''
 

@@ -340,11 +340,6 @@
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="mbil.mbilsearch.directCause.output_direc_cause_to_csv">
-<span class="sig-name descname"><span class="pre">output_direc_cause_to_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/mbilsearch.html#directCause.output_direc_cause_to_csv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.mbilsearch.directCause.output_direc_cause_to_csv" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
@@ -385,20 +380,9 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="mbil.mbilsearch.mbilsearch.plot_information_gain_aftersearch">
-<span class="sig-name descname"><span class="pre">plot_information_gain_aftersearch</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/mbilsearch.html#mbilsearch.plot_information_gain_aftersearch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.mbilsearch.mbilsearch.plot_information_gain_aftersearch" title="Permalink to this definition"></a></dt>
-<dd><p>A function to plot the bar graph of final interaction predictors according to the result of MBIL search</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>bar graph</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="mbil.mbilsearch.mbilsearch.plot_score_aftersearch">
 <span class="sig-name descname"><span class="pre">plot_score_aftersearch</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/mbilsearch.html#mbilsearch.plot_score_aftersearch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.mbilsearch.mbilsearch.plot_score_aftersearch" title="Permalink to this definition"></a></dt>
-<dd><p>A function to plot the bar graph of final single predictors according to the result of MBIL search</p>
+<dd><p>A function to plot the bar graph of final  predictors(both single nodes and interactions) according to the result of MBIL search</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>bar graph</p>
@@ -418,22 +402,58 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="mbil.output.output.output_direct_cause">
 <span class="sig-name descname"><span class="pre">output_direct_cause</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'output/'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/output.html#output.output_direct_cause"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.output.output.output_direct_cause" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>A function to output the direct cause</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>output_path</strong> – the output_path to store the cvs file</p>
+</dd>
+<dt class="field-even">Return float</dt>
+<dd class="field-even"><p>the cvs file including all direct cause after mbil search</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mbil.output.output.output_interaction_predictors">
 <span class="sig-name descname"><span class="pre">output_interaction_predictors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'output/'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/output.html#output.output_interaction_predictors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.output.output.output_interaction_predictors" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>A function to output the interaction predictors</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>output_path</strong> – the output_path to store the cvs file</p>
+</dd>
+<dt class="field-even">Return float</dt>
+<dd class="field-even"><p>the cvs file including all interaction predictors after mbil search</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mbil.output.output.output_log">
 <span class="sig-name descname"><span class="pre">output_log</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'output/'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/output.html#output.output_log"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.output.output.output_log" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>A function to output the log file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>output_path</strong> – the output_path to store the text file</p>
+</dd>
+<dt class="field-even">Return float</dt>
+<dd class="field-even"><p>the text file including all input information and final result</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mbil.output.output.output_single_predictors">
 <span class="sig-name descname"><span class="pre">output_single_predictors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'output/'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/output.html#output.output_single_predictors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.output.output.output_single_predictors" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>A function to output the single predictors</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>output_path</strong> – the output_path to store the cvs file</p>
+</dd>
+<dt class="field-even">Return float</dt>
+<dd class="field-even"><p>the cvs file including all single predictors after mbil search</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
@@ -467,7 +487,20 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="mbil.scores.BDeuScore.calculate_interaction_strength">
 <span class="sig-name descname"><span class="pre">calculate_interaction_strength</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subset_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mbil/scores.html#BDeuScore.calculate_interaction_strength"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mbil.scores.BDeuScore.calculate_interaction_strength" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>A function to calculate interaction_strength</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>subset_size</strong> – the size of the set you want to calculate interaction_strength</p></li>
+<li><p><strong>dataset</strong> – original dataset</p></li>
+<li><p><strong>threshold</strong> – the input threshold</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return score</dt>
+<dd class="field-even"><p>a hash map to store all possible result, the key is the subset and the value is the interaction_strength }</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mbil.scores.BDeuScore.check_if_add">
@@ -477,8 +510,8 @@
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>self</strong> – instance of BDeuScore class</p></li>
-<li><p><strong>curset</strong> – </p></li>
-<li><p><strong>threshold</strong> – </p></li>
+<li><p><strong>curset</strong> – the current set that should be checked if add</p></li>
+<li><p><strong>threshold</strong> – the input threshold</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return score</dt>

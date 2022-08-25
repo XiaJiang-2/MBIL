@@ -93,14 +93,7 @@ class directCause:
             i+=1
         return self.parent_list
 
-    def output_direc_cause_to_csv(self,output_path = None):
-        if output_path:
-            with open(output_path, 'w') as f:
-                # create the csv writer
-                writer = csv.writer(f)
-                for item in self.direc_cause:
-                    # write a row to the csv file
-                    writer.writerow(item)
+
 
 
 
@@ -255,35 +248,24 @@ class mbilsearch:
 
     def plot_score_aftersearch(self):
         '''
-        A function to plot the bar graph of final single predictors according to the result of MBIL search
+        A function to plot the bar graph of final  predictors(both single nodes and interactions) according to the result of MBIL search
 
         :return: bar graph
         '''
 
         res = self.single_list_score
+
         dic = {}
         for item in res:
             dic[item[0]] = item[1]
-        print(res)
+        for item in self.interaction_list_score:
+            dic[item[0]] = item[1]
+
         plt.bar(*zip(*dic.items()))
-        plt.title("Bdeu score of " + str(len(res)) + " predictors after MBIL search")
+        plt.title("Bdeu score of " + str(len(dic)) + " predictors after MBIL search")
         plt.show()
         #print(res_hash)
 
-    def plot_information_gain_aftersearch(self):
-        '''
-        A function to plot the bar graph of final interaction predictors according to the result of MBIL search
-
-        :return: bar graph
-        '''
-
-        res = self.interaction_list_score
-        dic = {}
-        for item in res:
-            dic[item[0]] = item[1]
-        plt.bar(*zip(*dic.items()))
-        plt.title("Information gain of " + str(len(res)) + " predictors after MBIL search")
-        plt.show()
 
 
 

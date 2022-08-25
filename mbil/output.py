@@ -13,6 +13,13 @@ class output:
         self.interaction_score = interaction_score,
         self.direc_cause = direc_cause
     def output_log(self,output_path = "output/"):
+        '''
+        A function to output the log file
+
+        :param output_path: the output_path to store the text file
+
+        :return float: the text file including all input information and final result
+        '''
         file_name = "Log " + self.dataset_name + str(today.strftime("%b-%d-%Y"))
         with open(output_path + file_name + '.txt', 'w') as f:
             f.write("The user entered values for the parameters:")
@@ -45,35 +52,60 @@ class output:
             print("Put log file in " + output_path + " successfully")
 
     def output_single_predictors(self, output_path = "output/"):
+        '''
+        A function to output the single predictors
+
+        :param output_path: the output_path to store the cvs file
+
+        :return float: the cvs file including all single predictors after mbil search
+        '''
         file_name = "Learned_nodes_" + self.dataset_name + "_" + str(today.strftime("%b-%d-%Y") + ".csv")
-        with open(output_path+ file_name, 'w', encoding='UTF8', newline='\n') as f:
+        with open(output_path+ file_name, 'w', encoding='UTF8') as f:
             # create the csv writer
             writer = csv.writer(f)
             for item in self.single_score:
             # write a row to the csv file
                 writer.writerow(item)
+
         print("Put single nodes file in " + output_path + " successfully")
 
     def output_interaction_predictors(self, output_path = "output/"):
+        '''
+        A function to output the interaction predictors
+
+        :param output_path: the output_path to store the cvs file
+
+        :return float: the cvs file including all interaction predictors after mbil search
+        '''
         file_name = "Learned_interactions_" + self.dataset_name + "_" + str(today.strftime("%b-%d-%Y") + ".csv")
-        with open(output_path + file_name, 'w', encoding='UTF8', newline='\n') as f:
+        with open(output_path + file_name, 'w', encoding='UTF8') as f:
             # create the csv writer
             writer = csv.writer(f)
             for item in self.interaction_score:
             # write a row to the csv file
                 writer.writerow(item)
+
+
         print("Put interaction nodes file in " + output_path + " successfully")
 
 
 
     def output_direct_cause(self, output_path = "output/"):
+        '''
+        A function to output the direct cause
+
+        :param output_path: the output_path to store the cvs file
+
+        :return float: the cvs file including all direct cause after mbil search
+        '''
         file_name = "Learned_direct_cause_" + self.dataset_name + "_" + str(today.strftime("%b-%d-%Y") + ".csv")
-        with open(output_path + file_name, 'w', encoding='UTF8', newline='\n') as f:
+        with open(output_path + file_name, 'w', encoding='UTF8') as f:
             # create the csv writer
-            writer = csv.writer(f)
+            writer = csv.writer(f,delimiter=',')
             for item in self.direc_cause:
                 # write a row to the csv file
                 writer.writerow(item)
+
         print("Put direct cause file in " + output_path + " successfully")
 
 
