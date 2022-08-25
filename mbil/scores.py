@@ -1,7 +1,7 @@
 from mbil import scores
 from mbil import dataset
 import math
-from mbil import scores_abs
+from mbil import mbilscore
 from collections import defaultdict, Counter
 import pandas as pd
 import itertools
@@ -21,7 +21,7 @@ class BDeuScore():
         self.dataset_head = list(self.dataset_df.columns)
         self.m = self.dataset_df.shape[0]
         self.n = self.dataset_df.shape[1]
-        self.utils = scores_abs.utils(dataset_df=self.dataset_df,target=self.target,alpha=self.alpha)
+        self.mbilscore = mbilscore.mbilscore(dataset_df=self.dataset_df, target=self.target, alpha=self.alpha)
         self.igain = IGain(dataset_df=self.dataset_df,alpha=self.alpha,target=self.target)
         self.interaction_strength = {}
     def calculate_BDeu(self, subset):  #Needs to Define a BDeu class instead of a function.
@@ -103,7 +103,7 @@ class BDeuScore():
         if subset_size > 1:
             feature_list_excepet_target = list(self.dataset_df.columns)
             feature_list_excepet_target.remove(self.target)
-            subsets = self.utils.generate_subset(feature_list_excepet_target, subset_size)
+            subsets = self.mbilscore.generate_subset(feature_list_excepet_target, subset_size)
             # print(subsets)
             for subset in subsets:
                 self.check_if_add(curset = subset,threshold = threshold)

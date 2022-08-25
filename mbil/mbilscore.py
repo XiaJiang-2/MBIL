@@ -1,7 +1,7 @@
 from matplotlib import pyplot as plt
-
 from mbil import scores
-class utils:
+# scores_abs will use the class and function that defined in scores.py
+class mbilscore:
     def __init__(self,dataset_df, target, alpha):
         self.dataset_df = dataset_df
         self.target = target
@@ -103,8 +103,8 @@ class utils:
         A function to check is this curset interaction can be added to the
 
         :param self: instance of BDeuScore class
-        :param curset:
-        :param threshold:
+        :param curset: the set you want to use to check if should be added
+        :param threshold: the threshold you want to use
         :return score: a hash map to store all possible result, the key is the subset and the value is the BDeu score, like{"['B','C']":-3.7534179752515073, "['B','D']":-4.382026634673881,...}
         '''
 
@@ -150,27 +150,27 @@ class utils:
             self.interaction_strength[str(curset)] = self.IS
         return add
 
-    def plot_score(self,size):
+    def plot_score(self,subset_size):
         '''
         A function to plot the bar graph of final single predictors according to the size of subset
-
+        :param subset_size: the subset size you want to use to plot the bar graph
         :return: bar graph
         '''
-        res = self.calculate_score(subset_size = size)
+        res = self.calculate_score(subset_size = subset_size)
         plt.bar(*zip(*res.items()))
-        plt.title("Bdeu score of " + str(size) + " predictors")
+        plt.title("Bdeu score of " + str(subset_size) + " predictors")
         plt.show()
         #print(res_hash)
 
-    def plot_information_gain(self, size):
+    def plot_information_gain(self, subset_size):
         '''
         A function to plot the bar graph of final interaction predictors according to the size of subset
-
+        :param subset_size: the subset size you want to use to plot the bar graph
         :return: bar graph
         '''
-        res = self.calculate_information_gain(subset_size = size)
+        res = self.calculate_information_gain(subset_size = subset_size)
         plt.bar(*zip(*res.items()))
-        plt.title("Information gain of " + str(size) + " predictors")
+        plt.title("Information gain of " + str(subset_size) + " predictors")
         plt.show()
 # from abc import ABC, abstractmethod
 #

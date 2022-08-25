@@ -1,7 +1,7 @@
 from mbil import scores
 from mbil import dataset
-from mbil import search
-from mbil import scores_abs
+from mbil import mbilsearch
+from mbil import mbilscore
 
 
 # dataset_input_directory = "datasets/TEST.txt"

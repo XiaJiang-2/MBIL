@@ -1,9 +1,10 @@
 import collections
+import csv
 import math
 from collections import defaultdict, Counter
 import pandas as pd
 from mbil import scores
-from mbil import scores_abs
+from mbil import mbilscore
 import matplotlib.pyplot as plt
 
 import itertools
@@ -19,7 +20,7 @@ class directCause:
         self.alpha = alpha
         self.parent_list.remove(self.target)
         self.score = scores.BDeuScore(dataset_df=self.new_dataset, alpha=self.alpha, target=self.target)
-        self.utils = scores_abs.utils(dataset_df=self.new_dataset,target=self.target, alpha = self.alpha)
+        self.mbilscore = mbilscore.mbilscore(dataset_df=self.new_dataset, target=self.target, alpha = self.alpha)
         self.maximum_number_of_parents = maximum_number_of_parents
         self.direc_cause = self.detecting_direct_cause()
 
@@ -92,6 +93,16 @@ class directCause:
             i+=1
         return self.parent_list
 
+    def output_direc_cause_to_csv(self,output_path = None):
+        if output_path:
+            with open(output_path, 'w') as f:
+                # create the csv writer
+                writer = csv.writer(f)
+                for item in self.direc_cause:
+                    # write a row to the csv file
+                    writer.writerow(item)
+
+
 
 
 class mbilsearch:
@@ -113,7 +124,7 @@ class mbilsearch:
         self.max_interaction_predictors = max_interaction_predictors
         self.max_size_interaction = max_size_interaction
         self.score = scores.BDeuScore(dataset_df=dataset_df, alpha=alpha, target=target)
-        self.utils = scores_abs.utils(dataset_df=self.dataset, target=self.target,alpha = self.alpha)
+        self.mbilscore = mbilscore.mbilscore(dataset_df=self.dataset, target=self.target, alpha = self.alpha)
         #self.interaction_list_score = collections.OrderedDict()
         self.interaction_list_score = self.get_interaction_predictors_score()
         self.single_list_score = self.get_single_predictors_score()
@@ -126,21 +137,25 @@ class mbilsearch:
 
     def get_single_predictors_score(self):
         '''
-        A function to get all single predictors which the score is greater than null_score
+        A function to get all single predictors which the score is greater than null_score, the user can give the specific path to write it out.
 
         :return float: a list including all single predictors and corresponding score
         '''
         predictors_list = self.score.dataset_head
         predictors_list.remove(self.target)
-        null_score = self.utils.calculate_score(subset_size=0, top="all").values()
+        null_score = self.mbilscore.calculate_score(subset_size=0, top="all").values()
         null_score = list(null_score)[0]
-        score_dict = self.utils.calculate_score(subset_size=1, top="all")
+        score_dict = self.mbilscore.calculate_score(subset_size=1, top="all")
         single_res = []
 
         for key,val in score_dict.items():
             if int(val) > null_score:
                 single_res.append((key.strip("[]''"),val))
+
+
         return single_res
+
+
 
     def get_interaction_predictors_score(self):
         '''
@@ -153,12 +168,13 @@ class mbilsearch:
         #number_of_predictors = score.n
         for i in range(2,self.max_size_interaction + 1):
             cur_infoGain_stren = self.score.calculate_interaction_strength(subset_size=i,dataset = self.dataset,threshold = self.threshold)
-            cur_score_dict = self.utils.calculate_score(subset_size=i)
+            cur_score_dict = self.mbilscore.calculate_score(subset_size=i)
             for key,val in cur_score_dict.items():
                 if key in cur_infoGain_stren:
                     interaction_res[key] = cur_score_dict[key]
         #return Counter(self.interaction_list_score).most_common(1)
-        return Counter(interaction_res).most_common(self.max_interaction_predictors)
+        final_res = Counter(interaction_res).most_common(self.max_interaction_predictors)
+        return final_res
 
     def get_new_dataset_after_transform(self):
         '''
@@ -180,9 +196,9 @@ class mbilsearch:
 
         def generate_new_status_dataset(newdataset):
             '''
-            A function
+            A function to generate the transformed dataset status according to newdataset
 
-            :return: bar graph
+            :return: a matrix
             '''
 
             newdataset_matrix = list(newdataset.values())

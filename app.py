@@ -9,8 +9,8 @@ import itertools
 
 from mbil import scores
 from mbil import dataset
-from mbil import search
-from mbil import scores_abs
+from mbil import mbilsearch
+from mbil import mbilscore
 from mbil import output
 
 #
@@ -47,31 +47,59 @@ maximum_number_of_parents=7
 #self, threshold, max_single_predictors, max_interaction_predictors, max_size_interaction,dataset_input_directory, alpha, target):
 dataset_df = dataset.ReadDataset(file=dataset_input_directory, sep='\t').dataset_df
 #score = scores.BDeuScore(dataset_df=dataset_df, alpha=alpha, target=target)
-score = scores_abs.utils(dataset_df=dataset_df, target=target,alpha = alpha)
+score_test_obj = mbilscore.mbilscore(dataset_df=dataset_df, target=target, alpha = alpha)
 # score_abs is the kind of like tha abstract class to finish basic calculation work which can be reused by other function in the future
 # search_test_object is the class to do the final search according to calculation result from score_abs class
-search_test_object = search.mbilsearch(threshold=threshold,
-                       max_single_predictors= max_single_predictors,
-                       max_interaction_predictors=max_interaction_predictors,
-                       max_size_interaction= max_size_interaction,
-                       dataset_df = dataset_df,
-                       alpha = alpha,
-                       target = target)
+search_test_object = mbilsearch.mbilsearch(threshold=threshold,
+                                           max_single_predictors= max_single_predictors,
+                                           max_interaction_predictors=max_interaction_predictors,
+                                           max_size_interaction= max_size_interaction,
+                                           dataset_df = dataset_df,
+                                           alpha = alpha,
+                                           target = target)
+
+direct_cause_obj = mbilsearch.directCause(
+    new_dataset = search_test_object.transformed_dataset,
+    alpha= alpha,
+    target = target,
+    maximum_number_of_parents = maximum_number_of_parents)
+
+all_input_hash_map = {"alpha": alpha,
+                      "target":target,
+                      "top":top,
+                      "max_single_predictors":max_single_predictors,
+                      "max_interaction_predictors":max_interaction_predictors,
+                      "max_size_interaction":max_size_interaction,
+                      "threshold":threshold,
+                      "maximum_number_of_parents":maximum_number_of_parents}
+output_path = "output/"
+dataset_name = "Test.txt"
+number_of_predictors = dataset_df.shape[1] - 1
+number_of_records = dataset_df.shape[0]
+dataset_information = {"number_of_predictors":number_of_predictors, "number_of_records":number_of_records}
+output_object = output.output(
+                           output_path = output_path,
+                           dataset_name = dataset_name ,
+                           all_input = all_input_hash_map,
+                           dataset_path = dataset_input_directory,
+                           dataset_information = dataset_information,
+                           null_score = score_test_obj.calculate_score(top = top, subset_size = 0),
+                           single_score = search_test_object.single_list_score,
+                           interaction_score = search_test_object.interaction_list_score,
+                           direc_cause = direct_cause_obj.direc_cause)
+
+null_score = score_test_obj.calculate_score(top = top, subset_size = 0)
 
 
-
-null_score = score.calculate_score(top = top, subset_size = 0)
-
-
-ir_score_size1 = score.calculate_score(top = top, subset_size = 1)
-ig_score_size1 = score.calculate_information_gain(top = top,subset_size = 1)
+ir_score_size1 = score_test_obj.calculate_score(top = top, subset_size = 1)
+ig_score_size1 = score_test_obj.calculate_information_gain(top = top,subset_size = 1)
 
 print("ir_score for subset size 1")
 print(ir_score_size1)
 print("ig_score for subset size 1")
 print(ig_score_size1)
-ir_score_size2 = score.calculate_score(top = top, subset_size = 2)
-ig_score_size2 = score.calculate_information_gain(top = top,subset_size = 2)
+ir_score_size2 = score_test_obj.calculate_score(top = top, subset_size = 2)
+ig_score_size2 = score_test_obj.calculate_information_gain(top = top,subset_size = 2)
 print("ir_score for subset size 2")
 print(ir_score_size2)
 print("ig_score for subset size 2")
@@ -95,11 +123,7 @@ print(search_test_object.new_status_dataset)
 #print(search_test_object.transformed_dataset)
 
 
-direct_cause_obj = search.directCause(
-    new_dataset = search_test_object.transformed_dataset,
-    alpha= alpha,
-    target = target,
-    maximum_number_of_parents = maximum_number_of_parents)
+
 print("Now printing the true parents")
 print(direct_cause_obj.direc_cause)
 
@@ -107,22 +131,11 @@ print(direct_cause_obj.direc_cause)
 interaction_information_gain = {}
 for i in range(1, max_size_interaction + 1):
     name = "size" + str(i)
-    interaction_information_gain[name] = score.calculate_information_gain(top = top,subset_size = i)
-dataset_name = "TEST"
-all_input_hash_map = {"alpha": alpha,"target":target, "top":top, "max_single_predictors":max_single_predictors, "max_interaction_predictors":max_interaction_predictors, "max_size_interaction":max_size_interaction, "threshold":threshold, "maximum_number_of_parents":maximum_number_of_parents}
-number_of_predictors = dataset_df.shape[1] - 1
-number_of_records = dataset_df.shape[0]
-predictors_records_number = {"number_of_predictors":number_of_predictors, "number_of_records":number_of_records}
-output.output(  dataset_name=dataset_name,
-                allinput =all_input_hash_map,
-                datasetpath = dataset_input_directory,
-                dataset_information = predictors_records_number,
-                null_score = null_score,
-                single_score = ir_score_size1,
-                interaction_score = interaction_list_score,
-                interaction_information_gain = interaction_information_gain,
-                true_parent = direct_cause_obj.direc_cause
-       )
+    interaction_information_gain[name] = score_test_obj.calculate_information_gain(top = top,subset_size = i)
+
+########### out put function
+output_object.output_log()
+
 
 # ir_score = score.calculate_score(top = top, subset_size = 2)
 # ig_score = score.calculate_information_gain(top = top,subset_size = 2)

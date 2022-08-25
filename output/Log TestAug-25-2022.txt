@@ -1,0 +1,21 @@
+The user entered values for the parameters:alpha: 4
+target: E
+top: 20
+max_single_predictors: 20
+max_interaction_predictors: 20
+max_size_interaction: 3
+threshold: 0.05
+maximum_number_of_parents: 7
+
+Current dataset path:C:/Users/CHX37/PycharmProjects/MBIL/datasets/TEST.txt
+number_of_predictors: 4
+number_of_records: 5
+
+Null Score:([('[]', -3.8430301339411947)],)
+Now printing the score of each of the single predictor models:
+[('B', -3.5835189384561104)]
+
+Now printing interactions and their scores learned by IGain:
+[("['B', 'C']", -3.753417975251508), ("['B', 'F']", -4.158883083359674), ("['C', 'D']", -4.382026634673884), ("['D', 'F']", -4.382026634673884), ("['C', 'F']", -4.85203026391962)]
+
+Direct cause Identified: ['B']

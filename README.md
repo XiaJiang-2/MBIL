@@ -8,6 +8,9 @@
 ![MBILProcedure1_img.png](MBILProcedure1_img.png)
 ## Installation
 
+## Main Classes
+
+
 Example of BDeu Score
 Chuhan finish
 ####score_abs is the kind of like tha abstract class to finish basic calculation work which can be reused by other function in the future
