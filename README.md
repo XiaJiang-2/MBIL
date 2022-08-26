@@ -23,7 +23,7 @@
 6. output.output: output was used to output the log and important result of the mbil search
 
 ## How to use mbil package and specific example
-![img_6.png](img_6.png)
+![img_instruction.png](img_instruction.png)
 
 
 
