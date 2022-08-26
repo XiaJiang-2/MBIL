@@ -8,11 +8,26 @@
 ![MBILProcedure1_img.png](MBILProcedure1_img.png)
 ## Installation
 
-## Main Classes
+
+## Main Classes Introduction
+1. mbilscore.mbilScore: mbilScore was used to calculate the mbilScore according to the input dataset.
+
+2. mbilsearch.mbilSearch: mbilSearch was used to find the strong single predictors and interaction predictors according to the threshold.
+
+3. mbilsearch.directCause: directCause was used to out put the final direct cause after the mbil search.
+
+4. scores.BDeuScore: BDeuScore was used to finish the basic calculation work about BDeuScore.
+
+5. scores.IGain: IGain was used to finish the basic calculation work about IGain.
+
+6. output.output: output was used to output the log and important result of the mbil search
+
+## How to use mbil package and specific example
+![img_6.png](img_6.png)
+
+
+
 
 
 Example of BDeu Score
 Chuhan finish
-
-####score_abs is the kind of like tha abstract class to finish basic calculation work which can be reused by other function in the future
-####search_test_object is the class to do the final search according to calculation result from score_abs class
