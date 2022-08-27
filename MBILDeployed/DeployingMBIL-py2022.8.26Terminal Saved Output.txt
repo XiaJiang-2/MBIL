@@ -1,0 +1,99 @@
+
+The default interactive shell is now zsh.
+To update your account to use zsh, please run `chsh -s /bin/zsh`.
+For more details, please visit https://support.apple.com/kb/HT208050.
+(base) XJ-MacBook-Pro:MBIL xij6$ python -m pip install --user --upgrade setuptools
+Requirement already satisfied: setuptools in /Applications/anaconda3/lib/python3.7/site-packages (61.2.0)
+Collecting setuptools
+  Downloading setuptools-65.3.0-py3-none-any.whl (1.2 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.2/1.2 MB 5.7 MB/s eta 0:00:00
+Installing collected packages: setuptools
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+spyder 4.2.1 requires pyqt5<5.13, which is not installed.
+spyder 4.2.1 requires pyqtwebengine<5.13, which is not installed.
+Successfully installed setuptools-65.3.0
+(base) XJ-MacBook-Pro:MBIL xij6$ python setup.py sdist
+  File "setup.py", line 7
+    description= "The python version of Markov Blanket and Interactive risk factor Learner"
+              ^
+SyntaxError: invalid syntax
+(base) XJ-MacBook-Pro:MBIL xij6$ python setup.py sdist
+Traceback (most recent call last):
+  File "setup.py", line 3, in <module>
+    setuptools.setpu(
+AttributeError: module 'setuptools' has no attribute 'setpu'
+(base) XJ-MacBook-Pro:MBIL xij6$ python setup.py sdist
+running sdist
+running egg_info
+creating mbil_py.egg-info
+writing mbil_py.egg-info/PKG-INFO
+writing dependency_links to mbil_py.egg-info/dependency_links.txt
+writing top-level names to mbil_py.egg-info/top_level.txt
+writing manifest file 'mbil_py.egg-info/SOURCES.txt'
+reading manifest file 'mbil_py.egg-info/SOURCES.txt'
+adding license file 'LICENSE.txt'
+writing manifest file 'mbil_py.egg-info/SOURCES.txt'
+running check
+creating mbil-py-0.0.1
+creating mbil-py-0.0.1/mbil
+creating mbil-py-0.0.1/mbil_py.egg-info
+copying files to mbil-py-0.0.1...
+copying LICENSE.txt -> mbil-py-0.0.1
+copying README.md -> mbil-py-0.0.1
+copying setup.py -> mbil-py-0.0.1
+copying mbil/__init__.py -> mbil-py-0.0.1/mbil
+copying mbil/dataset.py -> mbil-py-0.0.1/mbil
+copying mbil/mbilscore.py -> mbil-py-0.0.1/mbil
+copying mbil/mbilsearch.py -> mbil-py-0.0.1/mbil
+copying mbil/output.py -> mbil-py-0.0.1/mbil
+copying mbil/scores.py -> mbil-py-0.0.1/mbil
+copying mbil_py.egg-info/PKG-INFO -> mbil-py-0.0.1/mbil_py.egg-info
+copying mbil_py.egg-info/SOURCES.txt -> mbil-py-0.0.1/mbil_py.egg-info
+copying mbil_py.egg-info/dependency_links.txt -> mbil-py-0.0.1/mbil_py.egg-info
+copying mbil_py.egg-info/top_level.txt -> mbil-py-0.0.1/mbil_py.egg-info
+Writing mbil-py-0.0.1/setup.cfg
+creating dist
+Creating tar archive
+removing 'mbil-py-0.0.1' (and everything under it)
+(base) XJ-MacBook-Pro:MBIL xij6$ pip install twine
+Requirement already satisfied: twine in /Applications/anaconda3/lib/python3.7/site-packages (1.13.0)
+Requirement already satisfied: requests!=2.15,!=2.16,>=2.5.0 in /Applications/anaconda3/lib/python3.7/site-packages (from twine) (2.28.1)
+Requirement already satisfied: tqdm>=4.14 in /Applications/anaconda3/lib/python3.7/site-packages (from twine) (4.64.0)
+Requirement already satisfied: pkginfo>=1.4.2 in /Applications/anaconda3/lib/python3.7/site-packages (from twine) (1.8.2)
+Requirement already satisfied: requests-toolbelt!=0.9.0,>=0.8.0 in /Applications/anaconda3/lib/python3.7/site-packages (from twine) (0.9.1)
+Requirement already satisfied: setuptools>=0.7.0 in /Users/xij6/.local/lib/python3.7/site-packages (from twine) (65.3.0)
+Requirement already satisfied: readme-renderer>=21.0 in /Applications/anaconda3/lib/python3.7/site-packages (from twine) (24.0)
+Requirement already satisfied: six in /Applications/anaconda3/lib/python3.7/site-packages (from readme-renderer>=21.0->twine) (1.16.0)
+Requirement already satisfied: docutils>=0.13.1 in /Applications/anaconda3/lib/python3.7/site-packages (from readme-renderer>=21.0->twine) (0.18.1)
+Requirement already satisfied: Pygments in /Applications/anaconda3/lib/python3.7/site-packages (from readme-renderer>=21.0->twine) (2.11.2)
+Requirement already satisfied: bleach>=2.1.0 in /Applications/anaconda3/lib/python3.7/site-packages (from readme-renderer>=21.0->twine) (3.3.0)
+Requirement already satisfied: charset-normalizer<3,>=2 in /Applications/anaconda3/lib/python3.7/site-packages (from requests!=2.15,!=2.16,>=2.5.0->twine) (2.0.4)
+Requirement already satisfied: certifi>=2017.4.17 in /Applications/anaconda3/lib/python3.7/site-packages (from requests!=2.15,!=2.16,>=2.5.0->twine) (2022.6.15)
+Requirement already satisfied: idna<4,>=2.5 in /Applications/anaconda3/lib/python3.7/site-packages (from requests!=2.15,!=2.16,>=2.5.0->twine) (3.3)
+Requirement already satisfied: urllib3<1.27,>=1.21.1 in /Applications/anaconda3/lib/python3.7/site-packages (from requests!=2.15,!=2.16,>=2.5.0->twine) (1.26.9)
+Requirement already satisfied: webencodings in /Applications/anaconda3/lib/python3.7/site-packages (from bleach>=2.1.0->readme-renderer>=21.0->twine) (0.5.1)
+Requirement already satisfied: packaging in /Applications/anaconda3/lib/python3.7/site-packages (from bleach>=2.1.0->readme-renderer>=21.0->twine) (21.3)
+Requirement already satisfied: pyparsing!=3.0.5,>=2.0.2 in /Applications/anaconda3/lib/python3.7/site-packages (from packaging->bleach>=2.1.0->readme-renderer>=21.0->twine) (3.0.4)
+(base) XJ-MacBook-Pro:MBIL xij6$ twine upload dist/*
+Enter your username: XiaJiang
+Enter your password: 
+Uploading distributions to https://upload.pypi.org/legacy/
+Uploading mbil-py-0.0.1.tar.gz
+100%|██████████████████████████████████████| 13.4k/13.4k [00:00<00:00, 18.5kB/s]
+NOTE: Try --verbose to see response content.
+HTTPError: 400 Client Error: User 'XiaJiang' does not have a verified primary email address. Please add a verified primary email before attempting to upload to PyPI. See https://pypi.org/help/#verified-email for more information. for url: https://upload.pypi.org/legacy/
+(base) XJ-MacBook-Pro:MBIL xij6$ twine upload dist/*
+Enter your username: XiaJiang
+Enter your password: 
+Uploading distributions to https://upload.pypi.org/legacy/
+Uploading mbil-py-0.0.1.tar.gz
+100%|██████████████████████████████████████| 13.4k/13.4k [00:00<00:00, 20.0kB/s]
+NOTE: Try --verbose to see response content.
+HTTPError: 400 Client Error: User 'XiaJiang' does not have a verified primary email address. Please add a verified primary email before attempting to upload to PyPI. See https://pypi.org/help/#verified-email for more information. for url: https://upload.pypi.org/legacy/
+(base) XJ-MacBook-Pro:MBIL xij6$ twine upload dist/*
+Enter your username: XiaJiang
+Enter your password: 
+Uploading distributions to https://upload.pypi.org/legacy/
+Uploading mbil-py-0.0.1.tar.gz
+100%|██████████████████████████████████████| 13.4k/13.4k [00:01<00:00, 7.95kB/s]
+(base) XJ-MacBook-Pro:MBIL xij6$ 
