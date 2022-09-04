@@ -38,6 +38,7 @@ h3_merged.csv
 h3_merged_top1000.csv
 5_year_decay_M3D8.csv
 5_year_L2_M3D8.csv
+Shap_deeplearning.ipynb
 eggs/
 .eggs/
 lib/
