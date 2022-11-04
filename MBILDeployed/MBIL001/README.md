@@ -1,11 +1,9 @@
 # MBIL
-MBIL (Markov Blanket and Interactive risk factor Learner) is an algorithm designed to detect and learn the risk factors for Breast Cancer Metastasis (BCM). (See [papers](https://github.com/XiaJiang-2/MBIL/blob/main/docs/BINF-D-19-00613_R2(2).pdf) for details and citations.)
+MBIL (Markov Blanket and Interactive risk factor Learner) is an algorithm designed to detect and learn the risk factors  . (See [papers](https://github.com/XiaJiang-2/MBIL/blob/main/docs/BINF-D-19-00613_R2(2).pdf) for details and citations.)
+# please explain what is MBIL using your own words and be complete and accurate. For example, you need to say what theory BMIL is based.
 
-## What is MBIL
-## MBIL Algorithm
+## Explain how to use MBIL Algorithm (functions) by creating example datasets and use cases... 
 
-## Explanation of MBIL Algorithm
-1) determine_single_predictors learns the set PA1 of single-variable risk factors of a target T. The procedure does this by determining whether the BDeu score of the model in which the variable has an edge to T is greater than the BDeu score of the model in which T has no parents.
 ![MBILProcedure1_img.png](MBILProcedure1_img.png)
 ## Installation
 MBIL can be installed from [PyPI](https://pypi.org/project/mbil-py/)
@@ -14,7 +12,7 @@ MBIL can be installed from [PyPI](https://pypi.org/project/mbil-py/)
 ```py
 pip install mbil-py
 ```
-
+#test the installation procedure and see if it works. If not, write about the correct way to install. 
 ##  Importing Libraries
 
 '''py
@@ -26,7 +24,7 @@ from mbil import output
 '''
 
 ##  Input Settings
-
+#These copy and past stuff are not good for explaining how MBIL can be used. 
 ```py
 alpha = 4   #set the desired value of alpha
 target = "E"    #Target featureset
