@@ -98,5 +98,3 @@ Thus the variable can be printed as so
 `print(mbilsearch.interaction_list_score)`
 Output:
 `[("['B', 'C']", -3.753417975251508), ("['B', 'F']", -4.158883083359674), ("['C', 'D']", -4.382026634673884), ("['D', 'F']", -4.382026634673884), ("['C', 'F']", -4.85203026391962)]`
-
-

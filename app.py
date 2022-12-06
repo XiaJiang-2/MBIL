@@ -17,7 +17,7 @@ from mbil import output
 #dataset_input_directory = "datasets/TEST.txt"
 #output_directory = "C:/Users/CHX37/Practice"
 
-dataset_input_directory="C:/Users/CHX37/PycharmProjects/MBIL/datasets/TEST.txt"
+dataset_input_directory="C:/Users/17172/Desktop/MBIL/datasets/TEST.txt"
 #dataset_input_directory="/Users/xij6/Documents/Research/git/XiaJiang-2Github/MBIL/datasets/TEST.txt"
 alpha = 4
 target = "E"
@@ -96,29 +96,46 @@ ig_score_size1 = score_test_obj.calculate_information_gain(top = top,subset_size
 
 print("ir_score for subset size 1")
 print(ir_score_size1)
+print("\n")
+
 print("ig_score for subset size 1")
 print(ig_score_size1)
+print("\n")
+
 ir_score_size2 = score_test_obj.calculate_score(top = top, subset_size = 2)
 ig_score_size2 = score_test_obj.calculate_information_gain(top = top,subset_size = 2)
+
 print("ir_score for subset size 2")
 print(ir_score_size2)
+print("\n")
+
 print("ig_score for subset size 2")
 print(ig_score_size2)
-print("Now printing the Bayesian Score of sigle predictor during the exaustive search: ")
+print("\n")
+
+print("Now printing the Bayesian Score of single predictor during the exaustive search: ")
 single_list_score = search_test_object.single_list_score
 print(single_list_score)
+print("\n")
+
 print("Now printing the Bayesian Score of interaction predictor during the exaustive search: ")
 interaction_list_score = search_test_object.interaction_list_score
 print(interaction_list_score)
+print("\n")
+
 ## plot function
 # score.plot_score(2)
 # score.plot_information_gain(2)
+
+
 search_test_object.plot_score_aftersearch()
-search_test_object.plot_information_gain_aftersearch()
 print("new dataset after search")
 print(search_test_object.new_dataset)
+print("\n")
+
 print("dataset status")
 print(search_test_object.new_status_dataset)
+print("\n")
 
 #print(search_test_object.transformed_dataset)
 
