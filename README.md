@@ -50,6 +50,7 @@ These are the basic direct_cause, score, and search objects:
 ### mbilsearch.get_single_predictors_score
 
 Parameters: The mbilsearch object
+
 Return value: A list of floats with all single predictors whose score is greater than the null score
 
 This function works by taking in the data and parameters set previously and calculates the BDeu score for each predictor and compares it to the null score i.e. if no predictors were present. If the score for said predictor is greater than the null score than it will be added to the list along with its corresponding score.
@@ -57,6 +58,7 @@ This function works by taking in the data and parameters set previously and calc
 The BDeu score is a score that measures the probability of the data given the directed acyclic graph using a parameter alpha to represent prior equivalent sample size.
 
 Example:
+
 When search_test_object is initialized the single_list_score variable is populated with the list from get_single_predictors_score
 
 `single_list_score = search_test_object.single_list_score`
@@ -72,6 +74,7 @@ Output:
 ### mbilsearch.get_interaction_predictors_score
 
 Parameters: The mbilsearch object
+
 Return value: A list of floats with all interaction predictors combinations whose score is greater than the null score
 
 This function works by taking in the data and parameters set previously and calculates the interaction strength between parameters. The number of interactions that can occur i.e. 2 predictors, 3 predictors, etc. is set above and will affect the length of computation time
@@ -79,6 +82,7 @@ This function works by taking in the data and parameters set previously and calc
 The interaction is calculated via the calculate_interaction_strength function in mbil score and more details on how this value is calculated can be found there.
 
 Example:
+
 Similarly to get_single_predictors_score, get_interaction_predictors_score is called when the mbilsearch object is initialized and its value is stored in the interaction_list_score variable.
 
 `interaction_list_score = search_test_object.interaction_list_score`
@@ -96,11 +100,13 @@ Output:
 ### direct_cause_obj.detecting_direct_cause
 
 Parameters: The directCause object
+
 Return value: a list of predictors that are a direct cause according to the parent list
 
 This function works by taking in the data and parameters set previously and calculates what single predictors and interactive predictors can be considered direct causes of the target.
 
 Example:
+
 As with the other functions, this function is called when a directCause object is initialized and its return value is stored in the direc_cause variable.
 
 `print(direct_cause_obj.direc_cause)`
