@@ -1,6 +1,7 @@
 # MBIL
-MBIL (Markov Blanket and Interactive risk factor learner) is an algorithm that utilizes Bayesian networks and information theory to determine direct and interactive risk factor for metastatic breast cancer (MBC). (See papers for details and citations.)
+MBIL (Markov Blanket and Interactive risk factor learner) is an algorithm that utilizes Bayesian networks and information theory to determine direct and interactive risk factor for any appropraite dataset and a given target. (See [papers](https://github.com/XiaJiang-2/MBIL/blob/main/docs/BINF-D-19-00613_R2(2).pdf) for details and citations.)
 
+If anything is unclear in this README, it is highly suggested reading the associated paper.
 
 ## Install
 MBIL can be installed from PyPI:
@@ -27,7 +28,14 @@ These are the set parameters:
 `threshold = 0.05`
 `maximum_number_of_parents=7`
 
-These are the basic score and search objects:
+These are the basic direct_cause, score, and search objects:
+
+`direct_cause_obj = mbilsearch.directCause(
+    new_dataset = search_test_object.transformed_dataset,
+    alpha= alpha,
+    target = target,
+    maximum_number_of_parents = maximum_number_of_parents)`
+
 `score_test_obj = mbilscore.mbilscore(dataset_df=dataset_df, target=target, alpha=alpha)`
 
 `search_test_object = mbilsearch.mbilsearch(threshold=threshold,
@@ -39,62 +47,58 @@ These are the basic score and search objects:
                                            target = target)`
 
 
-## MBILScore functions and their uses:
+## Functions and Examples
 
-### mbilscore.calculate_score
-Parameters: top and subset_size
-Return value: a hashmap storing the results
+### mbilsearch.get_single_predictors_score
 
-Calculates the BDeu score for all possible subsets (maybe P(data | DAG))
+Parameters: The mbilsearch object
+Return value: A list of floats with all single predictors whose score is greater than the null score
+
+This function works by taking in the data and parameters set previously and calculates the BDeu score for each predictor and compares it to the null score i.e. if no predictors were present. If the score for said predictor is greater than the null score than it will be added to the list along with its corresponding score.
 
 The BDeu score is a score that measures the probability of the data given the directed acyclic graph using a parameter alpha to represent prior equivalent sample size.
 
 Example:
-`scores = score_test_obj.calculate_score(top = top, subset_size = 2)`
-`print(scores)`
-Output:
-`[("['B', 'C']", -3.753417975251508), ("['B', 'F']", -4.158883083359674), ("['B', 'D']", -4.382026634673884), ("['C', 'D']", -4.382026634673884), ("['D', 'F']", -4.382026634673884), ("['C', 'F']", -4.85203026391962)]`
-
-
-### mbilscore.calculate_information_gain
-Parameters: top and subset_size
-Return value: a hashmap storing the results
-
-Calculates the information gain for all possible subsets
-
-Information gain is the expected reduction in entropy of a variable conditional on a seperate variable
-
-Example:
-`ig_scores = score_test_obj.calculate_information_gain(top = top, subset_size = 2)`
-`print(ig_scores)`
-Output:
-`[("['D', 'F']", 0.5709505944546686), ("['B', 'C']", 0.5709505944546684), ("['B', 'F']", 0.5709505944546684), ("['C', 'D']", 0.5709505944546684), ("['B', 'D']", 0.4199730940219749), ("['C', 'F']", 0.17095059445466854)]`
-
-
-## MBILSearch functions and their uses:
-
-### mbilsearch.get_single_predictors_score
-Parameters: an mbilsearch object
-Return value: a list of all direct risk predictors and their corresponding Bayesian score as a float
-
-Calculates the Bayesian score for every direct risk predictor
-
-Example:
-When creating an mbilsearch object the function is called when initializing the variable `single_list_score`
-Thus the variable can be printed as so
-`print(search_test_object.single_list_score)`
+When search_test_object is initialized the single_list_score variable is populated with the list from get_single_predictors_score
+`single_list_score = search_test_object.single_list_score`
+`print(single_list_score)`
 Output:
 `[('B', -3.5835189384561104)]`
 
-### mbilsearch.get_interaction_predictors_score
-Parameters: an mbilsearch object
-Return value: a list of the top interactive risk predictors and their corresponding score as a float
+![Diagram showing basics of get_single_predictors_score using a directed acyclic graph](MBILProcedure1_img.png)
 
-Calculates the score between all interactions of predictors
+### mbilsearch.get_interaction_predictors_score
+
+Parameters: The mbilsearch object
+Return value: A list of floats with all interaction predictors combinations whose score is greater than the null score
+
+This function works by taking in the data and parameters set previously and calculates the interaction strength between parameters. The number of interactions that can occur i.e. 2 predictors, 3 predictors, etc. is set above and will affect the length of computation time
+
+The interaction is calculated via the calculate_interaction_strength function in mbil score and more details on how this value is calculated can be found there.
 
 Example:
-When creating an mbilsearch object the function is called when initializing the variable `interaction_list_score`
-Thus the variable can be printed as so
-`print(mbilsearch.interaction_list_score)`
+Similarly to get_single_predictors_score, get_interaction_predictors_score is called when the mbilsearch object is initialized and its value is stored in the interaction_list_score variable.
+`interaction_list_score = search_test_object.interaction_list_score`
+`print(interaction_list_score)`
 Output:
 `[("['B', 'C']", -3.753417975251508), ("['B', 'F']", -4.158883083359674), ("['C', 'D']", -4.382026634673884), ("['D', 'F']", -4.382026634673884), ("['C', 'F']", -4.85203026391962)]`
+
+![Diagram showing basics of get_interaction_predictors_score using a directed acyclic graph](ExampleOfInteractiveModels2022.8.png)
+
+
+
+### direct_cause_obj.detecting_direct_cause
+
+Parameters: The directCause object
+Return value: a list of predictors that are a direct cause according to the parent list
+
+This function works by taking in the data and parameters set previously and calculates what single predictors and interactive predictors can be considered direct causes of the target.
+
+Example:
+As with the other functions, this function is called when a directCause object is initialized and its return value is stored in the direc_cause variable.
+`print(direct_cause_obj.direc_cause)`
+Output:
+`['B']`
+
+
+
