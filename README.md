@@ -58,7 +58,7 @@ This function works by taking in the data and parameters set previously and calc
 
 The BDeu score is a score that measures the probability of the data given the directed acyclic graph using a parameter alpha to represent prior equivalent sample size.
 
-Example:
+#### Example:
 
 When search_test_object is initialized the single_list_score variable is populated with the list from get_single_predictors_score
 
@@ -82,7 +82,7 @@ This function works by taking in the data and parameters set previously and calc
 
 The interaction is calculated via the calculate_interaction_strength function in mbil score and more details on how this value is calculated can be found there.
 
-Example:
+#### Example:
 
 Similarly to get_single_predictors_score, get_interaction_predictors_score is called when the mbilsearch object is initialized and its value is stored in the interaction_list_score variable.
 
@@ -106,7 +106,7 @@ Return value: a list of predictors that are a direct cause according to the pare
 
 This function works by taking in the data and parameters set previously and calculates what single predictors and interactive predictors can be considered direct causes of the target.
 
-Example:
+#### Example:
 
 As with the other functions, this function is called when a directCause object is initialized and its return value is stored in the direc_cause variable.
 
