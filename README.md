@@ -20,12 +20,19 @@ This is the data:
 
 These are the set parameters:
 `alpha = 4`
+
 `target = "E"`
+
 `top = 20`
+
 `max_single_predictors = 20`
+
 `max_interaction_predictors = 20`
+
 `max_size_interaction = 3`
+
 `threshold = 0.05`
+
 `maximum_number_of_parents=7`
 
 These are the basic direct_cause, score, and search objects:
@@ -60,8 +67,10 @@ The BDeu score is a score that measures the probability of the data given the di
 
 Example:
 When search_test_object is initialized the single_list_score variable is populated with the list from get_single_predictors_score
+
 `single_list_score = search_test_object.single_list_score`
 `print(single_list_score)`
+
 Output:
 `[('B', -3.5835189384561104)]`
 
@@ -78,8 +87,10 @@ The interaction is calculated via the calculate_interaction_strength function in
 
 Example:
 Similarly to get_single_predictors_score, get_interaction_predictors_score is called when the mbilsearch object is initialized and its value is stored in the interaction_list_score variable.
+
 `interaction_list_score = search_test_object.interaction_list_score`
 `print(interaction_list_score)`
+
 Output:
 `[("['B', 'C']", -3.753417975251508), ("['B', 'F']", -4.158883083359674), ("['C', 'D']", -4.382026634673884), ("['D', 'F']", -4.382026634673884), ("['C', 'F']", -4.85203026391962)]`
 
