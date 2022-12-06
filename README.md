@@ -38,21 +38,11 @@ These are the set parameters:
 
 These are the basic direct_cause, score, and search objects:
 
-`direct_cause_obj = mbilsearch.directCause(`
-`   new_dataset = search_test_object.transformed_dataset,`
-`   alpha= alpha,`
-`   target = target,`
-`   maximum_number_of_parents = maximum_number_of_parents)`
+`direct_cause_obj = mbilsearch.directCause(new_dataset = search_test_object.transformed_dataset, alpha = alpha, target = target, maximum_number_of_parents = maximum_number_of_parents)`
 
-`score_test_obj = mbilscore.mbilscore(dataset_df=dataset_df, target=target, alpha=alpha)`
+`score_test_obj = mbilscore.mbilscore(dataset_df = dataset_df, target = target, alpha = alpha)`
 
-`search_test_object = mbilsearch.mbilsearch(threshold=threshold,`
-`   max_single_predictors= max_single_predictors,`
-`   max_interaction_predictors=max_interaction_predictors,`
-`   max_size_interaction= max_size_interaction,`
-`   dataset_df = dataset_df,`
-`   alpha = alpha,`
-`   target = target)`
+`search_test_object = mbilsearch.mbilsearch(threshold = threshold, max_single_predictors = max_single_predictors, max_interaction_predictors = max_interaction_predictors, max_size_interaction = max_size_interaction, dataset_df = dataset_df, alpha = alpha, target = target)`
 
 
 ## Functions and Examples
