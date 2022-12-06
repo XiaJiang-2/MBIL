@@ -19,6 +19,7 @@ This is the data:
 |2|	1|	2|	2|	0|
 
 These are the set parameters:
+
 `alpha = 4`
 
 `target = "E"`
@@ -37,21 +38,21 @@ These are the set parameters:
 
 These are the basic direct_cause, score, and search objects:
 
-`direct_cause_obj = mbilsearch.directCause(
-    new_dataset = search_test_object.transformed_dataset,
-    alpha= alpha,
-    target = target,
-    maximum_number_of_parents = maximum_number_of_parents)`
+`direct_cause_obj = mbilsearch.directCause(`
+`   new_dataset = search_test_object.transformed_dataset,`
+`   alpha= alpha,`
+`   target = target,`
+`   maximum_number_of_parents = maximum_number_of_parents)`
 
 `score_test_obj = mbilscore.mbilscore(dataset_df=dataset_df, target=target, alpha=alpha)`
 
-`search_test_object = mbilsearch.mbilsearch(threshold=threshold,
-                                           max_single_predictors= max_single_predictors,
-                                           max_interaction_predictors=max_interaction_predictors, 
-                                           max_size_interaction= max_size_interaction, 
-                                           dataset_df = dataset_df, 
-                                           alpha = alpha,
-                                           target = target)`
+`search_test_object = mbilsearch.mbilsearch(threshold=threshold,`
+`   max_single_predictors= max_single_predictors,`
+`   max_interaction_predictors=max_interaction_predictors,`
+`   max_size_interaction= max_size_interaction,`
+`   dataset_df = dataset_df,`
+`   alpha = alpha,`
+`   target = target)`
 
 
 ## Functions and Examples
@@ -69,9 +70,11 @@ Example:
 When search_test_object is initialized the single_list_score variable is populated with the list from get_single_predictors_score
 
 `single_list_score = search_test_object.single_list_score`
+
 `print(single_list_score)`
 
 Output:
+
 `[('B', -3.5835189384561104)]`
 
 ![Diagram showing basics of get_single_predictors_score using a directed acyclic graph](MBILProcedure1_img.png)
@@ -89,9 +92,11 @@ Example:
 Similarly to get_single_predictors_score, get_interaction_predictors_score is called when the mbilsearch object is initialized and its value is stored in the interaction_list_score variable.
 
 `interaction_list_score = search_test_object.interaction_list_score`
+
 `print(interaction_list_score)`
 
 Output:
+
 `[("['B', 'C']", -3.753417975251508), ("['B', 'F']", -4.158883083359674), ("['C', 'D']", -4.382026634673884), ("['D', 'F']", -4.382026634673884), ("['C', 'F']", -4.85203026391962)]`
 
 ![Diagram showing basics of get_interaction_predictors_score using a directed acyclic graph](ExampleOfInteractiveModels2022.8.png)
@@ -107,8 +112,11 @@ This function works by taking in the data and parameters set previously and calc
 
 Example:
 As with the other functions, this function is called when a directCause object is initialized and its return value is stored in the direc_cause variable.
+
 `print(direct_cause_obj.direc_cause)`
+
 Output:
+
 `['B']`
 
 
