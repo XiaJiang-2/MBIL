@@ -57,8 +57,7 @@ Threshold is used when calculating interaction strength between predictors to de
 
 Maximum number of parents is used by the directCause object in the detecting_direct_cause function. It sets the upper limit of the number of direct cause parents for the target.
 
-\
-
+<br/>
 
 These are the basic direct_cause, score, and search objects:
 
