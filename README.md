@@ -94,6 +94,8 @@ Output:
 
 ![Diagram showing basics of get_single_predictors_score using a directed acyclic graph](MBILProcedure1_img.png)
 
+<br/>
+
 ### mbilsearch.get_interaction_predictors_score
 
 Parameters: The mbilsearch object
@@ -118,7 +120,7 @@ Output:
 
 ![Diagram showing basics of get_interaction_predictors_score using a directed acyclic graph](ExampleOfInteractiveModels2022.8.png)
 
-
+<br/>
 
 ### directCause.detecting_direct_cause
 
