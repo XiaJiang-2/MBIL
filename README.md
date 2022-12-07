@@ -21,21 +21,43 @@ This is the data:
 
 These are the set parameters:
 
+# Add descriptions and ranges for each parameter
+
 `alpha = 4`
+
+alpha is used by the calculate_BDeu function in the scores class and is also known as "equivalent sample size" which is the single hyperparameter when calculating BDeu score. BDeu score calculations are very sensitive to change in this score.
+Range: 
 
 `target = "E"`
 
+Target is the variable that is being determined if any other variables are predictors for.
+
 `top = 20`
+
+Top is the maximum size of the list returned by calculate_score which is called by an mbilscore object.
 
 `max_single_predictors = 20`
 
+Max single predictors is the maximum size of the list returned by get_single_predictors_score.
+
 `max_interaction_predictors = 20`
+
+Max interaction predictors is the maximum size of the list returned by get_interaction_predictors_score.
 
 `max_size_interaction = 3`
 
+Max size interaction is used when determining the maximum size of subsets of interactions between predictors. i.e. 3 would mean the subset could contain 3 predictors ["B", "C", "D"]. 
+
+Note: Using too high of max_size_interaction may cause the program to slow drastically.
+
 `threshold = 0.05`
 
+Threshold is used when calculating interaction strength between predictors to determine whether that interaction is a strong enough interaction to influence the target.
+
 `maximum_number_of_parents=7`
+
+Maximum number of parents is used by the directCause object in the detecting_direct_cause function. It sets the upper limit of the number of direct cause parents for the target.
+
 
 These are the basic direct_cause, score, and search objects:
 
