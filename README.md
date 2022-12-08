@@ -10,14 +10,8 @@ MBIL can be installed from PyPI:
 
 
 ### For all examples shown:
-This is the data:
-|B|	C|	D|	F|	E|
-|-|--|---|---|---|
-|2|	1|	0|	1|	0|
-|3|	1|	1|	2|	1|
-|3|	0|	1|	1|	0|
-|3|	0|	1|	1|	1|
-|2|	1|	2|	2|	0|
+
+The data for the examples can be found [here](https://github.com/XiaJiang-2/MBIL/blob/main/datasets/LSM-15Year.txt)
 
 These are the set parameters:
 
@@ -90,7 +84,7 @@ When search_test_object is initialized the single_list_score variable is populat
 
 Output:
 
-`[('B', -3.5835189384561104)]`
+`[('ethnicity', -522.2549926705351), ('age_at_diagnosis', -523.5126430676971), ('menopause_status', -522.2617336335418), ('t_tnm_stage', -457.84161010478186), ('n_tnm_stage', -206.535586236349), ('stage', -197.65062219483116), ('lymph_node_removed', -334.4424023656752), ('lymph_node_positive', -12.043655034985136), ('size', -475.2257016836076), ('grade', -520.2700620537506), ('invasive', -502.10756560893356), ('histology2', -502.3902665904584), ('invasive_tumor_Location', -517.8283594608185), ('surgical_margins', -522.8691183699473), ('distant_recurrence', -479.8099379450582)]`
 
 ![Diagram showing basics of get_single_predictors_score using a directed acyclic graph](MBILProcedure1_img.png)
 
@@ -116,7 +110,7 @@ Similarly to get_single_predictors_score, get_interaction_predictors_score is ca
 
 Output:
 
-`[("['B', 'C']", -3.753417975251508), ("['B', 'F']", -4.158883083359674), ("['C', 'D']", -4.382026634673884), ("['D', 'F']", -4.382026634673884), ("['C', 'F']", -4.85203026391962)]`
+`[("['ER_percent', 'P53', 'n_tnm_stage']", -229.61047654312242), ("['alcohol_useage', 'n_tnm_stage', 'grade']", -247.33107201813266), ("['family_history', 'ER', 'stage']", -251.35598974902388), ("['family_history', 'ER_percent', 'stage']", -267.55001937152036), ("['family_history', 'PR_percent', 'stage']", -272.0735376165017), ("['family_history', 'PR', 'stage']", -273.84770197402185), ("['alcohol_useage', 'family_history', 'stage']", -283.65802337173835), ("['alcohol_useage', 'family_history', 'n_tnm_stage']", -307.3724355739906), ("['alcohol_useage', 'n_tnm_stage', 'DCIS_level']", -312.3468295757039), ("['ER', 'lymph_node_removed', 'surgical_margins']", -361.93119355717835), ("['smoking', 'side', 'lymph_node_removed']", -362.59608464332837), ("['family_history', 'n_tnm_stage', 'DCIS_level']", -380.1096531444613), ("['family_history', 'TNEG', 'lymph_node_removed']", -393.01803294278534), ("['family_history', 'lymph_node_removed', 'surgical_margins']", -397.2146085038911), ("['family_history', 'ER', 'lymph_node_removed']", -412.57095239825867), ("['family_history', 'ER_percent', 'lymph_node_removed']", -415.1720042660745), ("['age_at_diagnosis', 'lymph_node_removed', 'DCIS_level']", -418.508108825582), ("['family_history', 'age_at_diagnosis', 'lymph_node_removed']", -420.123897008576), ("['ER', 'lymph_node_removed', 'DCIS_level']", -420.283759150574), ("['lymph_node_removed', 'DCIS_level', 'surgical_margins']", -421.43289368440406)]`
 
 ![Diagram showing basics of get_interaction_predictors_score using a directed acyclic graph](ExampleOfInteractiveModels2022.8.png)
 
@@ -138,7 +132,7 @@ As with the other functions, this function is called when a directCause object i
 
 Output:
 
-`['B']`
+`['lymph_node_positive']`
 
 
 
