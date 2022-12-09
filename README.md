@@ -21,7 +21,7 @@ These are the set parameters:
 
 Alpha is used by the calculate_BDeu function in the scores class and is also known as "equivalent sample size" which is the single hyperparameter when calculating BDeu score. BDeu score calculations are very sensitive to change in this score.
 
-`target = "lymph_node_status"`
+`target = "distant_recurrence"`
 
 Target is the variable that is being determined if any other variables are predictors for.
 
@@ -84,7 +84,13 @@ When search_test_object is initialized the single_list_score variable is populat
 
 Output:
 
-`[('ethnicity', -522.2549926705351), ('age_at_diagnosis', -523.5126430676971), ('menopause_status', -522.2617336335418), ('t_tnm_stage', -457.84161010478186), ('n_tnm_stage', -206.535586236349), ('stage', -197.65062219483116), ('lymph_node_removed', -334.4424023656752), ('lymph_node_positive', -12.043655034985136), ('size', -475.2257016836076), ('grade', -520.2700620537506), ('invasive', -502.10756560893356), ('histology2', -502.3902665904584), ('invasive_tumor_Location', -517.8283594608185), ('surgical_margins', -522.8691183699473), ('distant_recurrence', -479.8099379450582)]`
+`[('race', -369.8452513792026), ('ethnicity', -366.3669802964773), ('age_at_diagnosis', -367.5144230392912), ('menopause_status', -369.598618296
+166), ('TNEG', -366.9731301525993), ('ER', -367.3621787201608), ('ER_percent', -367.65151978822803), ('PR', -368.252751312568), ('PR_percent',
+-368.0831950555779), ('P53', -368.365568684018), ('t_tnm_stage', -335.0582136785349), ('n_tnm_stage', -334.48015803286694), ('stage', -329.3514
+061061729), ('lymph_node_removed', -347.8555475785), ('lymph_node_positive', -327.0591540402502), ('lymph_node_status', -325.5865849226134), ('
+size', -344.0126639909387), ('grade', -354.9715104823545), ('invasive', -358.57524130106475), ('histology2', -361.492396116718), ('invasive_tum
+or_Location', -366.060734143025), ('re_excision', -369.4534986096347), ('surgical_margins', -367.9622319094127), ('MRIs_60_surgery', -369.27100
+94976411)]`
 
 ![Diagram showing basics of get_single_predictors_score using a directed acyclic graph](MBILProcedure1_img.png)
 
@@ -110,7 +116,16 @@ Similarly to get_single_predictors_score, get_interaction_predictors_score is ca
 
 Output:
 
-`[("['ER_percent', 'P53', 'n_tnm_stage']", -229.61047654312242), ("['alcohol_useage', 'n_tnm_stage', 'grade']", -247.33107201813266), ("['family_history', 'ER', 'stage']", -251.35598974902388), ("['family_history', 'ER_percent', 'stage']", -267.55001937152036), ("['family_history', 'PR_percent', 'stage']", -272.0735376165017), ("['family_history', 'PR', 'stage']", -273.84770197402185), ("['alcohol_useage', 'family_history', 'stage']", -283.65802337173835), ("['alcohol_useage', 'family_history', 'n_tnm_stage']", -307.3724355739906), ("['alcohol_useage', 'n_tnm_stage', 'DCIS_level']", -312.3468295757039), ("['ER', 'lymph_node_removed', 'surgical_margins']", -361.93119355717835), ("['smoking', 'side', 'lymph_node_removed']", -362.59608464332837), ("['family_history', 'n_tnm_stage', 'DCIS_level']", -380.1096531444613), ("['family_history', 'TNEG', 'lymph_node_removed']", -393.01803294278534), ("['family_history', 'lymph_node_removed', 'surgical_margins']", -397.2146085038911), ("['family_history', 'ER', 'lymph_node_removed']", -412.57095239825867), ("['family_history', 'ER_percent', 'lymph_node_removed']", -415.1720042660745), ("['age_at_diagnosis', 'lymph_node_removed', 'DCIS_level']", -418.508108825582), ("['family_history', 'age_at_diagnosis', 'lymph_node_removed']", -420.123897008576), ("['ER', 'lymph_node_removed', 'DCIS_level']", -420.283759150574), ("['lymph_node_removed', 'DCIS_level', 'surgical_margins']", -421.43289368440406)]`
+`[("['age_at_diagnosis', 'menopause_status', 'lymph_node_status']", -316.57958315640474), ("['ER_percent', 'lymph_node_status']", -323.166074516
+6482), ("['age_at_diagnosis', 'lymph_node_status']", -323.38591931843985), ("['ER', 'lymph_node_status']", -323.6624329636214), ("['age_at_diag
+nosis', 'menopause_status', 'lymph_node_positive']", -325.2652703071466), ("['ER', 'lymph_node_positive']", -327.3258554505689), ("['age_at_dia
+gnosis', 'lymph_node_positive']", -327.3611930742304), ("['ER_percent', 'lymph_node_positive']", -327.397677955001), ("['age_at_diagnosis', 'ly
+mph_node_status', 'grade']", -328.3330212115378), ("['age_at_diagnosis', 'TNEG', 'lymph_node_status']", -329.41650396548073), ("['age_at_diagno
+sis', 'lymph_node_status', 're_excision']", -330.54880597511806), ("['alcohol_useage', 'lymph_node_status']", -330.9462428049852), ("['PR_perce
+nt', 'lymph_node_positive']", -331.7820953526888), ("['n_tnm_stage', 'surgical_margins']", -331.94349696591223), ("['TNEG', 'lymph_node_positiv
+e', 're_excision']", -332.3535728487969), ("['ER', 'HER2', 'lymph_node_status']", -333.0770426415594), ("['lymph_node_status', 'Histology', 'in
+vasive_tumor_Location']", -333.0961085924088), ("['ethnicity', 'TNEG', 'stage']", -333.1903385140786), ("['age_at_diagnosis', 'stage']", -333.4
+8963390421807), ("['age_at_diagnosis', 'ER_percent', 'lymph_node_status']", -333.8132984731466)]`
 
 ![Diagram showing basics of get_interaction_predictors_score using a directed acyclic graph](ExampleOfInteractiveModels2022.8.png)
 
@@ -132,7 +147,7 @@ As with the other functions, this function is called when a directCause object i
 
 Output:
 
-`['lymph_node_positive']`
+`["['age_at_diagnosis', 'menopause_status', 'lymph_node_status']"]`
 
 
 
