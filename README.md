@@ -8,6 +8,10 @@ MBIL can be installed from PyPI:
 
 `pip install mbil-py`
 
+Dependencies:
+- Pandas
+- Matplotlib
+
 
 ### For all examples shown:
 
