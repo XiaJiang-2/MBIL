@@ -152,4 +152,26 @@ Output:
 `["['age_at_diagnosis', 'menopause_status', 'lymph_node_status']"]`
 
 
+<br/>
+
+### mbilsearch.get_new_dataset_after_transform
+
+Parameters: The mbilsearch object
+
+Return value: a new dataframe generated according to the search result
+
+This function works by transforming the original dataset in order to include the new columns that account for interaction between two or more predictors.
+
+#### Example:
+
+As with the other functions mentioned above, this function is called when a mbilsearch object is initialized and its return value is stored in the transformed_dataset variable.
+
+`print(search_test_object.transformed_dataset)`
+
+Alternatively this value is also stored as the new_dataset for a direct_cause object.
+
+`print(direct_cause_obj.new_dataset)`
+
+
+
 
