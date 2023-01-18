@@ -1,0 +1,21 @@
+The user entered values for the parameters:alpha: 4
+target: lymph_node_status
+top: 20
+max_single_predictors: 20
+max_interaction_predictors: 20
+max_size_interaction: 3
+threshold: 0.05
+maximum_number_of_parents: 7
+
+Current dataset path:C:/Users/17172/Desktop/MBIL/datasets/LSM-15Year.txt
+number_of_predictors: 31
+number_of_records: 751
+
+Null Score:([('[]', -523.229335706651)],)
+Now printing the score of each of the single predictor models:
+[('ethnicity', -522.2549926705351), ('age_at_diagnosis', -523.5126430676971), ('menopause_status', -522.2617336335418), ('t_tnm_stage', -457.84161010478186), ('n_tnm_stage', -206.535586236349), ('stage', -197.65062219483116), ('lymph_node_removed', -334.4424023656752), ('lymph_node_positive', -12.043655034985136), ('size', -475.2257016836076), ('grade', -520.2700620537506), ('invasive', -502.10756560893356), ('histology2', -502.3902665904584), ('invasive_tumor_Location', -517.8283594608185), ('surgical_margins', -522.8691183699473), ('distant_recurrence', -479.8099379450582)]
+
+Now printing interactions and their scores learned by IGain:
+[("['ER_percent', 'P53', 'n_tnm_stage']", -229.61047654312242), ("['alcohol_useage', 'n_tnm_stage', 'grade']", -247.33107201813266), ("['family_history', 'ER', 'stage']", -251.35598974902388), ("['family_history', 'ER_percent', 'stage']", -267.55001937152036), ("['family_history', 'PR_percent', 'stage']", -272.0735376165017), ("['family_history', 'PR', 'stage']", -273.84770197402185), ("['alcohol_useage', 'family_history', 'stage']", -283.65802337173835), ("['alcohol_useage', 'family_history', 'n_tnm_stage']", -307.3724355739906), ("['alcohol_useage', 'n_tnm_stage', 'DCIS_level']", -312.3468295757039), ("['ER', 'lymph_node_removed', 'surgical_margins']", -361.93119355717835), ("['smoking', 'side', 'lymph_node_removed']", -362.59608464332837), ("['family_history', 'n_tnm_stage', 'DCIS_level']", -380.1096531444613), ("['family_history', 'TNEG', 'lymph_node_removed']", -393.01803294278534), ("['family_history', 'lymph_node_removed', 'surgical_margins']", -397.2146085038911), ("['family_history', 'ER', 'lymph_node_removed']", -412.57095239825867), ("['family_history', 'ER_percent', 'lymph_node_removed']", -415.1720042660745), ("['age_at_diagnosis', 'lymph_node_removed', 'DCIS_level']", -418.508108825582), ("['family_history', 'age_at_diagnosis', 'lymph_node_removed']", -420.123897008576), ("['ER', 'lymph_node_removed', 'DCIS_level']", -420.283759150574), ("['lymph_node_removed', 'DCIS_level', 'surgical_margins']", -421.43289368440406)]
+
+Direct cause Identified: ['lymph_node_positive']

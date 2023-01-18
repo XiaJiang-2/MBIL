@@ -139,7 +139,7 @@ print("\n")
 
 #print(search_test_object.transformed_dataset)
 
-
+print(search_test_object.transformed_dataset)
 
 print("Now printing the true parents")
 print(direct_cause_obj.direc_cause)

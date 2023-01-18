@@ -7,6 +7,7 @@ If anything is unclear in this README, it is highly suggested reading the associ
 MBIL can be installed from PyPI:
 
 `pip install mbil-py`
+or use the [link](https://pypi.org/project/mbil-py/)
 
 Dependencies:
 - Pandas

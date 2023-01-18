@@ -1,0 +1,21 @@
+The user entered values for the parameters:alpha: 4
+target: distant_recurrence
+top: 20
+max_single_predictors: 20
+max_interaction_predictors: 20
+max_size_interaction: 3
+threshold: 0.05
+maximum_number_of_parents: 7
+
+Current dataset path:C:/Users/17172/Desktop/MBIL/datasets/LSM-15Year.txt
+number_of_predictors: 31
+number_of_records: 751
+
+Null Score:([('[]', -369.0059826842062)],)
+Now printing the score of each of the single predictor models:
+[('race', -369.8452513792026), ('ethnicity', -366.3669802964773), ('age_at_diagnosis', -367.5144230392912), ('menopause_status', -369.598618296166), ('TNEG', -366.9731301525993), ('ER', -367.3621787201608), ('ER_percent', -367.65151978822803), ('PR', -368.252751312568), ('PR_percent', -368.0831950555779), ('P53', -368.365568684018), ('t_tnm_stage', -335.0582136785349), ('n_tnm_stage', -334.48015803286694), ('stage', -329.3514061061729), ('lymph_node_removed', -347.8555475785), ('lymph_node_positive', -327.0591540402502), ('lymph_node_status', -325.5865849226134), ('size', -344.0126639909387), ('grade', -354.9715104823545), ('invasive', -358.57524130106475), ('histology2', -361.492396116718), ('invasive_tumor_Location', -366.060734143025), ('re_excision', -369.4534986096347), ('surgical_margins', -367.9622319094127), ('MRIs_60_surgery', -369.2710094976411)]
+
+Now printing interactions and their scores learned by IGain:
+[("['age_at_diagnosis', 'menopause_status', 'lymph_node_status']", -316.57958315640474), ("['ER_percent', 'lymph_node_status']", -323.1660745166482), ("['age_at_diagnosis', 'lymph_node_status']", -323.38591931843985), ("['ER', 'lymph_node_status']", -323.6624329636214), ("['age_at_diagnosis', 'menopause_status', 'lymph_node_positive']", -325.2652703071466), ("['ER', 'lymph_node_positive']", -327.3258554505689), ("['age_at_diagnosis', 'lymph_node_positive']", -327.3611930742304), ("['ER_percent', 'lymph_node_positive']", -327.397677955001), ("['age_at_diagnosis', 'lymph_node_status', 'grade']", -328.3330212115378), ("['age_at_diagnosis', 'TNEG', 'lymph_node_status']", -329.41650396548073), ("['age_at_diagnosis', 'lymph_node_status', 're_excision']", -330.54880597511806), ("['alcohol_useage', 'lymph_node_status']", -330.9462428049852), ("['PR_percent', 'lymph_node_positive']", -331.7820953526888), ("['n_tnm_stage', 'surgical_margins']", -331.94349696591223), ("['TNEG', 'lymph_node_positive', 're_excision']", -332.3535728487969), ("['ER', 'HER2', 'lymph_node_status']", -333.0770426415594), ("['lymph_node_status', 'Histology', 'invasive_tumor_Location']", -333.0961085924088), ("['ethnicity', 'TNEG', 'stage']", -333.1903385140786), ("['age_at_diagnosis', 'stage']", -333.48963390421807), ("['age_at_diagnosis', 'ER_percent', 'lymph_node_status']", -333.8132984731466)]
+
+Direct cause Identified: ["['age_at_diagnosis', 'menopause_status', 'lymph_node_status']"]

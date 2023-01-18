@@ -99,7 +99,7 @@ class BDeuScore():
             score += temp_score
             #print("the null score is " + str(score))
         return score
-    def calculate_interaction_strength(self, subset_size,dataset, threshold = 0.05):
+    def calculate_interaction_strength(self, subset_size, dataset, threshold = 0.05):
         '''
         A function to calculate interaction_strength
 
