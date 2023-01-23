@@ -174,5 +174,22 @@ Alternatively this value is also stored as the new_dataset for a direct_cause ob
 `print(direct_cause_obj.new_dataset)`
 
 
+</br>
+
+### mbilsearch.generate_new_status_dataset
+
+Parameters: The mbilsearch object
+
+Return Value: A matrix
+
+This function is a subfunction of the above function mbilsearch.get_new_dataset_after_transform and is used to create the matrix that will be stored in the new_dataset dataframe.
+
+#### Example:
+
+As seen in the get_new_dataset_after_transform function:
+
+`self.new_status_dataset = generate_new_status_dataset(self.new_dataset)`
+
+
 
 

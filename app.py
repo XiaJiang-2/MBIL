@@ -17,10 +17,10 @@ from mbil import output
 #dataset_input_directory = "datasets/TEST.txt"
 #output_directory = "C:/Users/CHX37/Practice"
 
-dataset_input_directory="C:/Users/17172/Desktop/MBIL/datasets/TEST.txt"
+dataset_input_directory="C:/Users/17172/Desktop/MBIL/datasets/COVID3_4Nodes3.txt"
 #dataset_input_directory="/Users/xij6/Documents/Research/git/XiaJiang-2Github/MBIL/datasets/TEST.txt"
 alpha = 4
-target = "E"
+target = "COVID"
 top = 20
 max_single_predictors = 20
 max_interaction_predictors = 20
@@ -45,7 +45,7 @@ maximum_number_of_parents=7
 
 
 #self, threshold, max_single_predictors, max_interaction_predictors, max_size_interaction,dataset_input_directory, alpha, target):
-dataset_df = dataset.ReadDataset(file=dataset_input_directory, sep='\t').dataset_df
+dataset_df = dataset.ReadDataset(file=dataset_input_directory, sep=',').dataset_df
 #score = scores.BDeuScore(dataset_df=dataset_df, alpha=alpha, target=target)
 score_test_obj = mbilscore.mbilscore(dataset_df=dataset_df, target=target, alpha = alpha)
 # score_abs is the kind of like tha abstract class to finish basic calculation work which can be reused by other function in the future
