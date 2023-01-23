@@ -187,7 +187,6 @@ This function is a subfunction of the above function mbilsearch.get_new_dataset_
 #### Example:
 
 As seen in the get_new_dataset_after_transform function:
-
 `self.new_status_dataset = generate_new_status_dataset(self.new_dataset)`
 
 
