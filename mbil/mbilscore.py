@@ -14,10 +14,10 @@ class mbilscore:
 
     def generate_subset(self, feature_list, subset_size):
         '''
-        A function to generate all possible subset according to the subset_size
+        A function to generate all possible subsets according to the subset_size
 
         :param feature_list: the list that includes all features in the dataset, it will be ["B", "C", "D", "F"] based on example dataset
-        :param subset_size:  the size of the subset you want to generate
+        :param subset_size:  the max size of the subset you want to generate
 
         :return list: a list that include all possible subset, if the subset_size == 2, it will be [["B", "C"], ["B", "D"], ["B", "F"], ["C", "D"],["C", "F"], ["D","F"]]
         '''
@@ -100,7 +100,7 @@ class mbilscore:
 
     def check_if_add(self, curset, dataset,threshold = 0.05):
         '''
-        A function to check is this curset interaction can be added to the
+        A function to check if this curset interaction can be added to the dataset
 
         :param self: instance of BDeuScore class
         :param curset: the set you want to use to check if should be added

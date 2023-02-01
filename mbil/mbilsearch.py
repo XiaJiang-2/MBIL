@@ -44,6 +44,8 @@ class directCause:
                     return
                 if input and start_index == len(input):
                     return
+                if len(input) == 0:
+                    return
                 element = input[start_index]
                 acc.append(element)
                 dfs(input, length, start_index + 1, acc, sol)
