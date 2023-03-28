@@ -20,7 +20,7 @@ from mbil import output
 dataset_input_directory="C:/Users/17172/Desktop/MBIL/datasets/COVID3_4Nodes3.txt"
 #dataset_input_directory="/Users/xij6/Documents/Research/git/XiaJiang-2Github/MBIL/datasets/TEST.txt"
 alpha = 4
-target = "COVID"
+target = "ED_Visit"
 top = 20
 max_single_predictors = 20
 max_interaction_predictors = 20
