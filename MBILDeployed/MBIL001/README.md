@@ -6,11 +6,11 @@ MBIL (Markov Blanket and Interactive risk factor Learner) is an algorithm design
 
 ![MBILProcedure1_img.png](MBILProcedure1_img.png)
 ## Installation
-MBIL can be installed from [PyPI](https://pypi.org/project/mbil-py/)
+MBIL can be installed from [PyPI](https://pypi.org/project/mbil/)
 
 
 ```py
-pip install mbil-py
+pip install mbil
 ```
 #test the installation procedure and see if it works. If not, write about the correct way to install. 
 ##  Importing Libraries
